@@ -38,6 +38,8 @@ Without a `.env.local`, the app still starts and tells you Supabase isn't config
 3. **Authentication → Email Templates → Magic Link**: include the one-time code so it can be typed into the app on any device, for example `Your Lifeboat code is {{ .Token }}`.
 4. Copy the project URL and anon key from **Project Settings → API** into `.env.local`.
 
+5. Exchange rates (for totals across IDR, EUR, USD and PLN): deploy the rates function with `npx supabase functions deploy fx-rates`, then schedule it daily in **Integrations → Cron** (an HTTP request to the function URL, e.g. every day at 17:00 UTC, after the ECB publishes). Until rates exist, the app shows each foreign-currency amount as not yet included rather than guessing. You can also add a rate by hand in the `fx_rates` table.
+
 Each new user automatically gets a profile, a personal workspace (main currency IDR), starter categories and a Cash account.
 
 ## Data model notes
