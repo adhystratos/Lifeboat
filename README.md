@@ -1,3 +1,65 @@
 # Lifeboat
 
-Agenda + asset and finance tracker for web and mobile.
+Agenda + asset and finance tracker. One TypeScript codebase for web, iOS and Android, built with Expo Router and Supabase.
+
+> Working name. The product plan lives in the project files (`plan/product-and-tech-plan.md`).
+
+## Stack
+
+- **Expo SDK 58 + Expo Router**: one app, rendered on web through React Native Web, built for mobile with EAS.
+- **Supabase**: Postgres, email sign-in, and row-level security.
+- **TanStack Query** for server data.
+- **Vitest** for the framework-free domain logic in `src/core`.
+
+## Layout
+
+```
+src/app/            Screens (Expo Router). (tabs)/ holds Today, Calendar, Money, Assets, Settings
+src/core/           Pure TypeScript: currencies, FX conversion, net worth, recurrence (unit-tested)
+src/lib/            Supabase client, auth provider, data hooks
+src/components/     Shared UI
+supabase/migrations SQL schema, RLS policies, new-user bootstrap
+```
+
+## Getting started
+
+```bash
+npm install
+cp .env.example .env.local   # then fill in your Supabase URL and anon key
+npm run web                  # or: npm run ios / npm run android (Expo Go)
+```
+
+Without a `.env.local`, the app still starts and tells you Supabase isn't configured.
+
+### Supabase setup (one time)
+
+1. Create a project at [supabase.com](https://supabase.com).
+2. Apply the schema. Either paste `supabase/migrations/20261016000000_init.sql` into **SQL Editor** and run it, or use the CLI: `npx supabase link --project-ref <ref>` then `npx supabase db push`.
+3. **Authentication → Email Templates → Magic Link**: include the one-time code so it can be typed into the app on any device, for example `Your Lifeboat code is {{ .Token }}`.
+4. Copy the project URL and anon key from **Project Settings → API** into `.env.local`.
+
+Each new user automatically gets a profile, a personal workspace (main currency IDR), starter categories and a Cash account.
+
+## Data model notes
+
+- Money is stored as integer minor units (`amount_minor`) plus a currency: `IDR`, `EUR`, `USD` or `PLN`. Rupiah is displayed without decimals.
+- Every row belongs to a workspace, and RLS grants access through workspace membership. v1 has one personal workspace per user, so shared access later only needs an invite flow.
+- Recurrence uses a subset of RRULE (`FREQ`, `INTERVAL`, `COUNT`, `UNTIL`) on calendar dates, so bills never shift days across time zones.
+
+## Scripts
+
+| Command | What it does |
+|---|---|
+| `npm run web` | Dev server in the browser |
+| `npm test` | Unit tests for `src/core` |
+| `npm run typecheck` | TypeScript |
+| `npm run lint` | ESLint (Expo config) |
+| `npm run build:web` | Static web build in `dist/` |
+
+## Deploying the web app
+
+`npm run build:web` produces a static single-page app in `dist/`. Host it anywhere static (Vercel, Netlify, Cloudflare Pages, or an Apache/cPanel host). The included `.htaccess` routes deep links back to `index.html` on Apache. Set the `EXPO_PUBLIC_*` variables in the build environment.
+
+## Mobile builds
+
+Use EAS (`npx eas-cli@latest build`). No local Xcode or Android Studio is required.
