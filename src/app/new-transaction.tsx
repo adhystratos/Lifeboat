@@ -1,19 +1,9 @@
-import { router } from 'expo-router';
 import { useState } from 'react';
 
-import { Button } from '@/components/button';
-import { ChipGroup, Field, TextField } from '@/components/form';
-import { Card, EmptyState, Screen } from '@/components/screen';
-import { ThemedText } from '@/components/themed-text';
+import { AmountField, ChipGroup, closeForm, DayField, Field, FormScreen, isDay, TextField } from '@/components/form';
+import { EmptyState } from '@/components/screen';
 import { localToday, parseAmount } from '@/core';
-import { useTheme } from '@/hooks/use-theme';
-import {
-  NewTransaction,
-  useAccountBalances,
-  useCategories,
-  useCreateTransaction,
-  useWorkspace,
-} from '@/lib/queries';
+import { NewTransaction, useAccountBalances, useCategories, useCreateTransaction, useWorkspace } from '@/lib/queries';
 
 const TYPES = [
   { value: 'expense', label: 'Expense' },
@@ -21,11 +11,8 @@ const TYPES = [
   { value: 'transfer', label: 'Transfer' },
 ] as const;
 
-const DAY = /^\d{4}-\d{2}-\d{2}$/;
-
 /** Quick entry: type, amount, account, category. Everything else is optional. */
 export default function NewTransactionScreen() {
-  const theme = useTheme();
   const { data: workspace } = useWorkspace();
   const { data: accounts = [] } = useAccountBalances();
   const { data: categories = [] } = useCategories();
@@ -57,7 +44,7 @@ export default function NewTransactionScreen() {
       account &&
       amountMinor &&
       amountMinor > 0 &&
-      DAY.test(day) &&
+      isDay(day) &&
       (!isTransfer || (toAccount && toAccount.account_id !== account.account_id && toAmountMinor && toAmountMinor > 0)),
   );
 
@@ -75,74 +62,57 @@ export default function NewTransactionScreen() {
         transfer_account_id: isTransfer ? toAccount!.account_id : null,
         transfer_amount_minor: isTransfer ? toAmountMinor : null,
       },
-      { onSuccess: () => router.back() },
+      { onSuccess: closeForm },
     );
   }
 
   const accountOptions = accounts.map((a) => ({ value: a.account_id, label: `${a.name} · ${a.currency}` }));
-  const categoryOptions = categories
-    .filter((c) => c.kind === type)
-    .map((c) => ({ value: c.id, label: c.name }));
+  const categoryOptions = categories.filter((c) => c.kind === type).map((c) => ({ value: c.id, label: c.name }));
 
   return (
-    <Screen title="New transaction">
-      <Card>
-        <ChipGroup
-          options={TYPES}
-          value={type}
-          onChange={(t) => {
-            setType(t);
-            setCategoryId(null);
-          }}
-        />
-        <Field label={account ? `Amount (${account.currency})` : 'Amount'}>
-          <TextField
-            value={amount}
-            onChangeText={setAmount}
-            placeholder="0"
-            keyboardType="decimal-pad"
-            autoFocus
+    <FormScreen title="New transaction" onSave={save} canSave={valid} saving={create.isPending} error={create.error?.message}>
+      <ChipGroup
+        options={TYPES}
+        value={type}
+        onChange={(t) => {
+          setType(t);
+          setCategoryId(null);
+        }}
+      />
+      <Field label={isTransfer ? 'Amount sent' : 'Amount'}>
+        <AmountField currency={account?.currency ?? 'IDR'} value={amount} onChangeText={setAmount} autoFocus />
+      </Field>
+      <Field label={isTransfer ? 'From account' : 'Account'}>
+        {accounts.length ? (
+          <ChipGroup options={accountOptions} value={account?.account_id ?? null} onChange={setAccountId} />
+        ) : (
+          <EmptyState>Add an account first.</EmptyState>
+        )}
+      </Field>
+      {isTransfer ? (
+        <Field label="To account">
+          <ChipGroup
+            options={accountOptions.filter((o) => o.value !== account?.account_id)}
+            value={toAccountId}
+            onChange={setToAccountId}
           />
         </Field>
-        <Field label={isTransfer ? 'From account' : 'Account'}>
-          {accounts.length ? (
-            <ChipGroup options={accountOptions} value={account?.account_id ?? null} onChange={setAccountId} />
-          ) : (
-            <EmptyState>Add an account first.</EmptyState>
-          )}
+      ) : (
+        <Field label="Category">
+          <ChipGroup options={categoryOptions} value={categoryId} onChange={setCategoryId} />
         </Field>
-        {isTransfer ? (
-          <Field label="To account">
-            <ChipGroup
-              options={accountOptions.filter((o) => o.value !== account?.account_id)}
-              value={toAccountId}
-              onChange={setToAccountId}
-            />
-          </Field>
-        ) : (
-          <Field label="Category">
-            <ChipGroup options={categoryOptions} value={categoryId} onChange={setCategoryId} />
-          </Field>
-        )}
-        {crossCurrency && toAccount ? (
-          <Field label={`Amount received (${toAccount.currency})`}>
-            <TextField value={toAmount} onChangeText={setToAmount} placeholder="0" keyboardType="decimal-pad" />
-          </Field>
-        ) : null}
-        <Field label="Date">
-          <TextField value={day} onChangeText={setDay} placeholder="YYYY-MM-DD" />
+      )}
+      {crossCurrency && toAccount ? (
+        <Field label="Amount received" hint="What arrived in the other currency, so both balances stay exact.">
+          <AmountField currency={toAccount.currency} value={toAmount} onChangeText={setToAmount} />
         </Field>
-        <Field label="Note">
-          <TextField value={note} onChangeText={setNote} placeholder="Optional" onSubmitEditing={save} />
-        </Field>
-        {create.error ? (
-          <ThemedText type="small" style={{ color: theme.danger }}>
-            {create.error.message}
-          </ThemedText>
-        ) : null}
-        <Button label="Save" onPress={save} disabled={!valid} loading={create.isPending} />
-        <Button label="Cancel" variant="plain" onPress={() => router.back()} />
-      </Card>
-    </Screen>
+      ) : null}
+      <Field label="Date">
+        <DayField value={day} onChange={setDay} picks="back" />
+      </Field>
+      <Field label="Note">
+        <TextField value={note} onChangeText={setNote} placeholder="Optional" onSubmitEditing={save} />
+      </Field>
+    </FormScreen>
   );
 }

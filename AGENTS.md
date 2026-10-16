@@ -48,3 +48,6 @@ Docs: https://docs.expo.dev/eas/index.md
 - Web output is a single-page app (`web.output: "single"`), so there is no server rendering to account for.
 - In sandboxes where the Expo API is blocked, run `EXPO_OFFLINE=1 npx expo install <pkg>`.
 - Charts (spending, budgets, net worth) follow the dataviz skill: use `src/constants/chart-palette.ts` in its fixed slot order, one y-axis, a legend for 2+ series, direct labels where light-mode contrast is below 3:1, a hover/press tooltip, and status colors only for state with an icon + label.
+- All data access goes through the `Repo` interface (`src/lib/repo.ts`). When you add or change an operation, implement it in both `repo-supabase.ts` and `repo-demo.ts` (sample data), and expose it through a hook in `src/lib/queries.ts`.
+- Never name a route `assets`: Metro serves static files from `/assets` in development and `expo export` writes a `dist/assets/` folder, so the route would break. The Assets tab lives at `/wealth`.
+- Visual rules live in `DESIGN.md` (the "Passport" system) and `PRODUCT.md`. Stamps (`src/components/stamp.tsx`) are only for an entry's state (done, paid, overdue, due), never decoration.

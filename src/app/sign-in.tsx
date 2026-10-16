@@ -1,11 +1,15 @@
+import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/button';
-import { Card, Screen } from '@/components/screen';
+import { Field, TextField } from '@/components/form';
 import { ThemedText } from '@/components/themed-text';
-import { Spacing } from '@/constants/theme';
+import { Wordmark } from '@/components/wordmark';
+import { Radius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { canUseDemo, useAuth } from '@/lib/auth';
 import { isSupabaseConfigured, requireSupabase } from '@/lib/supabase';
 
 /**
@@ -14,29 +18,13 @@ import { isSupabaseConfigured, requireSupabase } from '@/lib/supabase';
  */
 export default function SignInScreen() {
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
+  const { enterDemo } = useAuth();
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [codeSent, setCodeSent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  if (!isSupabaseConfigured) {
-    return (
-      <Screen title="Lifeboat">
-        <Card title="Almost there">
-          <ThemedText type="small">
-            Supabase isn&apos;t configured yet. Copy .env.example to .env.local, fill in your
-            project URL and anon key, then restart the dev server. See the README for details.
-          </ThemedText>
-        </Card>
-      </Screen>
-    );
-  }
-
-  const inputStyle = [
-    styles.input,
-    { color: theme.text, backgroundColor: theme.background, borderColor: theme.backgroundSelected },
-  ];
 
   async function run(action: () => Promise<{ error: Error | null }>, onOk?: () => void) {
     setBusy(true);
@@ -54,61 +42,98 @@ export default function SignInScreen() {
     );
 
   const verify = () =>
-    run(() =>
-      requireSupabase().auth.verifyOtp({ email: email.trim(), token: code.trim(), type: 'email' }),
-    );
+    run(() => requireSupabase().auth.verifyOtp({ email: email.trim(), token: code.trim(), type: 'email' }));
 
   return (
-    <Screen title="Lifeboat">
-      <ThemedText themeColor="textSecondary">Your agenda and your money, in one place.</ThemedText>
-      <Card title={codeSent ? 'Enter the code we emailed you' : 'Sign in or create an account'}>
-        {codeSent ? (
-          <>
-            <TextInput
-              style={inputStyle}
-              value={code}
-              onChangeText={setCode}
-              placeholder="6-digit code"
-              placeholderTextColor={theme.textSecondary}
-              keyboardType="number-pad"
-              autoComplete="one-time-code"
-              onSubmitEditing={verify}
-            />
-            <Button label="Sign in" onPress={verify} loading={busy} disabled={code.trim().length < 6} />
-            <Button label="Use a different email" variant="plain" onPress={() => setCodeSent(false)} />
-          </>
-        ) : (
-          <>
-            <TextInput
-              style={inputStyle}
-              value={email}
-              onChangeText={setEmail}
-              placeholder="you@example.com"
-              placeholderTextColor={theme.textSecondary}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoComplete="email"
-              onSubmitEditing={sendCode}
-            />
-            <Button label="Email me a code" onPress={sendCode} loading={busy} disabled={!email.includes('@')} />
-          </>
-        )}
-        {error ? (
-          <ThemedText type="small" style={{ color: theme.danger }}>
-            {error}
-          </ThemedText>
-        ) : null}
-      </Card>
-    </Screen>
+    <KeyboardAvoidingView
+      style={[styles.fill, { backgroundColor: theme.cover }]}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <StatusBar style="light" />
+      <ScrollView
+        contentContainerStyle={[styles.scroll, { paddingTop: insets.top + Spacing.six, paddingBottom: insets.bottom + Spacing.five }]}
+        keyboardShouldPersistTaps="handled">
+        <View style={styles.column}>
+          <View style={styles.brand}>
+            <Wordmark size="large" />
+            <ThemedText type="title" themeColor="coverText" style={styles.tagline}>
+              Your days and your money, in one ledger.
+            </ThemedText>
+            <ThemedText themeColor="coverTextSecondary">
+              Tasks, events and bills next to every account, asset and debt, in rupiah, euro, dollar and zloty.
+            </ThemedText>
+          </View>
+
+          <View style={[styles.sheet, { backgroundColor: theme.backgroundElement }]}>
+            {!isSupabaseConfigured ? (
+              <>
+                <ThemedText type="heading">Connect your database to sign in</ThemedText>
+                <ThemedText type="small" themeColor="textSecondary">
+                  Supabase isn&apos;t configured on this device yet. Copy .env.example to .env.local, add your
+                  project URL and anon key, then restart the app. The README has the steps.
+                </ThemedText>
+              </>
+            ) : codeSent ? (
+              <>
+                <ThemedText type="heading">Enter the code we emailed you</ThemedText>
+                <Field label="6-digit code">
+                  <TextField
+                    value={code}
+                    onChangeText={setCode}
+                    placeholder="123456"
+                    keyboardType="number-pad"
+                    autoComplete="one-time-code"
+                    onSubmitEditing={verify}
+                    autoFocus
+                  />
+                </Field>
+                <Button label="Sign in" onPress={verify} loading={busy} disabled={code.trim().length < 6} />
+                <Button label="Use a different email" variant="plain" onPress={() => setCodeSent(false)} />
+              </>
+            ) : (
+              <>
+                <ThemedText type="heading">Sign in or create an account</ThemedText>
+                <Field label="Email">
+                  <TextField
+                    value={email}
+                    onChangeText={setEmail}
+                    placeholder="you@example.com"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    autoComplete="email"
+                    onSubmitEditing={sendCode}
+                  />
+                </Field>
+                <Button label="Email me a code" onPress={sendCode} loading={busy} disabled={!email.includes('@')} />
+              </>
+            )}
+            {error ? (
+              <ThemedText type="small" themeColor="danger" accessibilityLiveRegion="polite">
+                {error}
+              </ThemedText>
+            ) : null}
+          </View>
+
+          {canUseDemo ? (
+            <View style={styles.demo}>
+              <Button label="Explore with sample data" variant="cover" icon="compass" onPress={enterDemo} />
+              <ThemedText type="small" themeColor="coverTextSecondary" style={styles.center}>
+                Invented entries, kept only on this screen. Nothing is saved.
+              </ThemedText>
+            </View>
+          ) : null}
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  input: {
-    minHeight: 44,
-    borderWidth: 1,
-    borderRadius: Spacing.two,
-    paddingHorizontal: Spacing.three,
-    fontSize: 16,
-  },
+  fill: { flex: 1 },
+  scroll: { flexGrow: 1, paddingHorizontal: Spacing.three, alignItems: 'center', justifyContent: 'center' },
+  column: { width: '100%', maxWidth: 440, gap: Spacing.five },
+  brand: { gap: Spacing.three },
+  tagline: { marginTop: Spacing.three },
+  sheet: { borderRadius: Radius.sheet, padding: Spacing.four, gap: Spacing.three },
+  demo: { gap: Spacing.two },
+  center: { textAlign: 'center' },
 });

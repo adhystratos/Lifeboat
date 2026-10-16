@@ -1,18 +1,25 @@
 import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-import { Button } from '@/components/button';
+import { relativeDay } from '@/components/agenda-rows';
+import { Button, IconButton } from '@/components/button';
 import { CategoryBars } from '@/components/category-bars';
-import { Card, EmptyState, Screen } from '@/components/screen';
+import { Icon, IconName } from '@/components/icon';
+import { SampleNotice } from '@/components/sample-notice';
+import { CoverFigure, EmptyState, Row, Screen, Section } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
 import { Spacing } from '@/constants/theme';
-import { convertMinor, Currency, formatMoney, localToday, monthBounds, summarize } from '@/core';
-import { useTheme } from '@/hooks/use-theme';
+import { convertMinor, Currency, describeRule, formatMoney, localToday, monthBounds, summarize } from '@/core';
+import { accountTypeLabel } from '@/lib/labels';
 import {
+  AccountType,
+  Bill,
   Transaction,
   useAccountBalances,
+  useBills,
   useCategories,
+  useDeleteBill,
   useDeleteTransaction,
   useFxRates,
   useTransactions,
@@ -21,16 +28,25 @@ import {
 
 const RECENT_LIMIT = 20;
 
-const monthLabel = new Intl.DateTimeFormat(undefined, { month: 'long', year: 'numeric' });
-const dayLabel = new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'short', timeZone: 'UTC' });
+const monthOnly = new Intl.DateTimeFormat(undefined, { month: 'long' });
+
+const ACCOUNT_ICON: Record<AccountType, IconName> = {
+  cash: 'dollar-sign',
+  bank: 'briefcase',
+  ewallet: 'smartphone',
+  credit: 'credit-card',
+  savings: 'archive',
+};
 
 export default function MoneyScreen() {
-  const { start, end } = monthBounds(localToday());
+  const today = localToday();
+  const { start, end } = monthBounds(today);
   const { data: workspace } = useWorkspace();
   const { data: accounts, isLoading, error } = useAccountBalances();
-  const { data: transactions = [] } = useTransactions(start, end);
+  const { data: transactions = [], isLoading: txLoading } = useTransactions(start, end);
   const { data: categories = [] } = useCategories();
   const { data: rates = [] } = useFxRates();
+  const { data: bills = [] } = useBills();
 
   const base: Currency = workspace?.base_currency ?? 'IDR';
   const categoryName = useMemo(() => {
@@ -59,78 +75,125 @@ export default function MoneyScreen() {
       unconverted.add(a.currency);
     }
   }
-  const missing = [...new Set([...summary.missingRates, ...unconverted])];
+  const month = monthOnly.format(new Date());
 
   return (
-    <Screen title="Money">
+    <Screen
+      title="Money"
+      actions={<IconButton icon="plus" label="New transaction" onCover onPress={() => router.push('/new-transaction')} />}
+      cover={
+        <CoverFigure value={formatMoney(summary.expenseMinor, base)} caption={`Spent in ${month}`}>
+          <ThemedText type="default" themeColor="coverTextSecondary" numeric>
+            Income {formatMoney(summary.incomeMinor, base)} · Net {summary.netMinor >= 0 ? '+' : '−'}
+            {formatMoney(Math.abs(summary.netMinor), base)}
+          </ThemedText>
+          {summary.missingRates.length ? (
+            <ThemedText type="small" themeColor="gold" style={styles.missing}>
+              Not yet included: amounts in {summary.missingRates.join(', ')}. No exchange rate to {base} is available yet.
+            </ThemedText>
+          ) : null}
+        </CoverFigure>
+      }>
+      <SampleNotice />
+
       <View style={styles.actions}>
-        <Button label="Add transaction" onPress={() => router.push('/new-transaction')} style={styles.grow} />
+        <Button label="Add transaction" icon="plus" onPress={() => router.push('/new-transaction')} style={styles.grow} />
         <Button label="Add account" variant="plain" onPress={() => router.push('/new-account')} />
       </View>
 
-      <Card title={monthLabel.format(new Date())}>
-        <View style={styles.stats}>
-          <Stat label="Income" value={formatMoney(summary.incomeMinor, base)} />
-          <Stat label="Spent" value={formatMoney(summary.expenseMinor, base)} />
-          <Stat label="Net" value={formatMoney(summary.netMinor, base)} />
-        </View>
-        {missing.length ? (
-          <ThemedText type="small" themeColor="textSecondary">
-            {missing.join(', ')} amounts aren&apos;t included yet: no exchange rate to {base} is available.
-          </ThemedText>
-        ) : null}
-      </Card>
-
-      <Card title="Spending by category">
+      <Section title={`Spending in ${month}`} padded={summary.expenseByCategory.length > 0}>
         {summary.expenseByCategory.length ? (
           <CategoryBars totals={summary.expenseByCategory} currency={base} nameOf={categoryName} />
         ) : (
-          <EmptyState>No spending recorded this month.</EmptyState>
+          <EmptyState action={{ label: 'Record an expense', onPress: () => router.push('/new-transaction') }}>
+            No spending recorded this month. Each expense you add is grouped by category here.
+          </EmptyState>
         )}
-      </Card>
+      </Section>
 
-      <Card title="Accounts">
-        {isLoading ? <ActivityIndicator /> : null}
+      <Section title="Accounts" action={{ label: 'Add account', onPress: () => router.push('/new-account') }}>
+        {isLoading ? <Row title="Loading…" muted leading={<ActivityIndicator />} /> : null}
         {error ? <EmptyState>Couldn&apos;t load accounts: {error.message}</EmptyState> : null}
-        {accounts?.length === 0 ? <EmptyState>No accounts yet.</EmptyState> : null}
+        {accounts?.length === 0 ? (
+          <EmptyState action={{ label: 'Add an account', onPress: () => router.push('/new-account') }}>
+            Add your bank accounts, cash and e-wallets, each in its own currency.
+          </EmptyState>
+        ) : null}
         {accounts?.map((a) => (
-          <View key={a.account_id} style={styles.row}>
-            <View style={styles.shrink}>
-              <ThemedText>{a.name}</ThemedText>
-              <ThemedText type="small" themeColor="textSecondary">
-                {a.type} · {a.currency}
+          <Row
+            key={a.account_id}
+            leading={<Icon name={ACCOUNT_ICON[a.type] ?? 'briefcase'} color="textSecondary" />}
+            title={a.name}
+            subtitle={`${accountTypeLabel(a.type)} · ${a.currency}`}
+            trailing={
+              <ThemedText type="defaultBold" numeric themeColor={a.balance_minor < 0 ? 'danger' : 'text'}>
+                {formatMoney(a.balance_minor, a.currency)}
               </ThemedText>
-            </View>
-            <ThemedText type="smallBold">{formatMoney(a.balance_minor, a.currency)}</ThemedText>
-          </View>
+            }
+          />
         ))}
         {accounts?.length ? (
-          <View style={[styles.row, styles.totalRow]}>
-            <ThemedText type="smallBold">Total</ThemedText>
-            <ThemedText type="smallBold">{formatMoney(total, base)}</ThemedText>
-          </View>
+          <Row
+            title={<ThemedText type="defaultBold">Total in {base}</ThemedText>}
+            subtitle={unconverted.size ? `Without ${[...unconverted].join(', ')}` : undefined}
+            trailing={
+              <ThemedText type="defaultBold" numeric>
+                {formatMoney(total, base)}
+              </ThemedText>
+            }
+          />
         ) : null}
-      </Card>
+      </Section>
 
-      <Card title="Recent">
-        {transactions.length === 0 ? <EmptyState>No transactions this month yet.</EmptyState> : null}
-        {transactions.slice(0, RECENT_LIMIT).map((t) => (
-          <TransactionRow key={t.id} transaction={t} categoryName={categoryName} />
+      <Section title="Bills and regular income" action={{ label: 'New bill', onPress: () => router.push('/new-bill') }}>
+        {bills.length === 0 ? (
+          <EmptyState action={{ label: 'Add a bill', onPress: () => router.push('/new-bill') }}>
+            Rent, subscriptions, insurance or a monthly retainer. Lifeboat reminds you on Today and records the payment when you
+            mark it paid.
+          </EmptyState>
+        ) : null}
+        {bills.map((b) => (
+          <BillSummaryRow key={b.id} bill={b} today={today} />
         ))}
-      </Card>
+      </Section>
+
+      <Section title="Recent">
+        {txLoading ? <Row title="Loading…" muted leading={<ActivityIndicator />} /> : null}
+        {!txLoading && transactions.length === 0 ? <EmptyState>No transactions this month yet.</EmptyState> : null}
+        {transactions.slice(0, RECENT_LIMIT).map((t) => (
+          <TransactionRow key={t.id} transaction={t} categoryName={categoryName} today={today} />
+        ))}
+      </Section>
     </Screen>
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function BillSummaryRow({ bill, today }: { bill: Bill; today: string }) {
+  const remove = useDeleteBill();
+  const [open, setOpen] = useState(false);
+  const income = bill.type === 'income';
   return (
-    <View style={styles.stat}>
-      <ThemedText type="small" themeColor="textSecondary">
-        {label}
-      </ThemedText>
-      <ThemedText type="smallBold" style={styles.statValue}>
-        {value}
-      </ThemedText>
+    <View>
+      <Row
+        leading={<Icon name={income ? 'arrow-down-left' : 'repeat'} color="textSecondary" />}
+        title={bill.name}
+        subtitle={`${describeRule(bill.recurrence_rule)} · ${
+          bill.next_due_on ? `next ${relativeDay(bill.next_due_on, today).toLowerCase()}` : 'ended'
+        }`}
+        trailing={
+          <ThemedText type="defaultBold" numeric themeColor={income ? 'stampGreen' : 'text'}>
+            {income ? '+' : '−'}
+            {formatMoney(bill.amount_minor, bill.account.currency)}
+          </ThemedText>
+        }
+        onPress={() => setOpen((o) => !o)}
+        accessibilityHint="Shows the delete option"
+      />
+      {open ? (
+        <View style={styles.rowActions}>
+          <Button label="Delete bill" variant="danger" compact icon="trash-2" onPress={() => remove.mutate(bill.id)} loading={remove.isPending} />
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -138,74 +201,61 @@ function Stat({ label, value }: { label: string; value: string }) {
 function TransactionRow({
   transaction: t,
   categoryName,
+  today,
 }: {
   transaction: Transaction;
   categoryName: (id: string | null) => string;
+  today: string;
 }) {
-  const theme = useTheme();
   const remove = useDeleteTransaction();
   const [open, setOpen] = useState(false);
 
-  const title =
-    t.type === 'transfer'
-      ? `${t.account.name} → ${t.transfer_account?.name ?? '?'}`
-      : (t.note ?? categoryName(t.category_id));
+  const transfer = t.type === 'transfer';
+  const title = transfer ? `${t.account.name} to ${t.transfer_account?.name ?? '?'}` : (t.note ?? categoryName(t.category_id));
   const subtitle = [
-    dayLabel.format(new Date(`${t.occurred_on}T00:00:00Z`)),
-    t.type === 'transfer' ? 'Transfer' : t.account.name,
-    t.type !== 'transfer' && t.note ? categoryName(t.category_id) : null,
+    relativeDay(t.occurred_on, today),
+    transfer ? 'Transfer' : t.account.name,
+    !transfer && t.note ? categoryName(t.category_id) : null,
   ]
     .filter(Boolean)
     .join(' · ');
   const sign = t.type === 'income' ? '+' : t.type === 'expense' ? '−' : '';
+  const icon: IconName = t.type === 'income' ? 'arrow-down-left' : t.type === 'expense' ? 'arrow-up-right' : 'shuffle';
 
   return (
     <View>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityHint="Shows the delete option"
+      <Row
+        leading={<Icon name={icon} color={t.type === 'income' ? 'stampGreen' : transfer ? 'stampBlue' : 'textSecondary'} />}
+        title={title}
+        subtitle={subtitle}
+        trailing={
+          <ThemedText type="defaultBold" numeric themeColor={t.type === 'income' ? 'stampGreen' : 'text'}>
+            {sign}
+            {formatMoney(t.amount_minor, t.account.currency)}
+          </ThemedText>
+        }
         onPress={() => setOpen((o) => !o)}
-        style={styles.row}>
-        <View style={styles.shrink}>
-          <ThemedText numberOfLines={1}>{title}</ThemedText>
-          <ThemedText type="small" themeColor="textSecondary" numberOfLines={1}>
-            {subtitle}
-          </ThemedText>
-        </View>
-        <ThemedText type="smallBold">
-          {sign}
-          {formatMoney(t.amount_minor, t.account.currency)}
-        </ThemedText>
-      </Pressable>
+        accessibilityHint="Shows the delete option"
+      />
       {open ? (
-        <Pressable
-          accessibilityRole="button"
-          onPress={() => remove.mutate(t.id)}
-          disabled={remove.isPending}
-          style={styles.delete}>
-          <ThemedText type="small" style={{ color: theme.danger }}>
-            {remove.isPending ? 'Deleting…' : 'Delete transaction'}
-          </ThemedText>
-        </Pressable>
+        <View style={styles.rowActions}>
+          <Button
+            label="Delete transaction"
+            variant="danger"
+            compact
+            icon="trash-2"
+            onPress={() => remove.mutate(t.id)}
+            loading={remove.isPending}
+          />
+        </View>
       ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  missing: { marginTop: Spacing.two },
   actions: { flexDirection: 'row', gap: Spacing.two },
   grow: { flexGrow: 1 },
-  stats: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.three },
-  stat: { flexGrow: 1, flexBasis: 150, gap: Spacing.half },
-  statValue: { fontSize: 18, lineHeight: 26 },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    gap: Spacing.two,
-    paddingVertical: Spacing.one,
-  },
-  shrink: { flexShrink: 1 },
-  totalRow: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#8888', paddingTop: Spacing.two },
-  delete: { alignSelf: 'flex-end', paddingVertical: Spacing.one },
+  rowActions: { flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: Spacing.three, paddingBottom: Spacing.three },
 });

@@ -14,9 +14,10 @@ Agenda + asset and finance tracker. One TypeScript codebase for web, iOS and And
 ## Layout
 
 ```
-src/app/            Screens (Expo Router). (tabs)/ holds Today, Calendar, Money, Assets, Settings
-src/core/           Pure TypeScript: currencies, FX conversion, net worth, recurrence (unit-tested)
-src/lib/            Supabase client, auth provider, data hooks
+src/app/            Screens (Expo Router). (tabs)/ holds Today, Calendar, Money, Assets (/wealth),
+                    Settings; new*.tsx are the entry forms
+src/core/           Pure TypeScript: currencies, FX, net worth, recurrence, calendar days, bills (unit-tested)
+src/lib/            Data layer: repo.ts (interface), repo-supabase.ts, repo-demo.ts (sample data), hooks
 src/components/     Shared UI
 supabase/migrations SQL schema, RLS policies, new-user bootstrap
 ```
@@ -29,12 +30,12 @@ cp .env.example .env.local   # then fill in your Supabase URL and anon key
 npm run web                  # or: npm run ios / npm run android (Expo Go)
 ```
 
-Without a `.env.local`, the app still starts and tells you Supabase isn't configured.
+Without a `.env.local`, the app still starts, explains that Supabase isn't configured, and offers **Explore with sample data**: an in-memory sample workspace (invented tasks, events, bills, accounts and assets) for trying every screen. Nothing is saved, and sample mode is also available in development builds.
 
 ### Supabase setup (one time)
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. Apply the schema. Either paste `supabase/migrations/20261016000000_init.sql` into **SQL Editor** and run it, or use the CLI: `npx supabase link --project-ref <ref>` then `npx supabase db push`.
+2. Apply the schema: every file in `supabase/migrations/`, in name order (`20261016000000_init.sql`, then `20261017000000_agenda_and_bills.sql`). Either paste each into **SQL Editor** and run it, or use the CLI: `npx supabase link --project-ref <ref>` then `npx supabase db push`.
 3. **Authentication → Email Templates → Magic Link**: include the one-time code so it can be typed into the app on any device, for example `Your Lifeboat code is {{ .Token }}`.
 4. Copy the project URL and anon key from **Project Settings → API** into `.env.local`.
 

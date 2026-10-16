@@ -1,196 +1,143 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { Currency, FxRate } from '@/core';
+import { Currency } from '@/core';
 
-import { requireSupabase } from './supabase';
+import type { BillPayment, Repo, Task } from './repo';
+import { repo } from './repo-active';
 
-export type Workspace = { id: string; name: string; base_currency: Currency };
+export type * from './repo';
 
-export type AccountBalance = {
-  account_id: string;
-  name: string;
-  type: string;
-  currency: Currency;
-  balance_minor: number;
-};
+/** Query keys, grouped so a mutation can refresh everything it affects. */
+const MONEY = ['account_balances', 'transactions', 'bills'];
+const WEALTH = ['assets', 'liabilities'];
+
+function useRefresh() {
+  const queryClient = useQueryClient();
+  return (keys: string[]) => Promise.all(keys.map((key) => queryClient.invalidateQueries({ queryKey: [key] })));
+}
+
+/** A mutation that calls one repo method and refreshes the given queries. */
+function useRepoMutation<T>(run: (r: Repo, input: T) => Promise<void>, refresh: string[]) {
+  const invalidate = useRefresh();
+  return useMutation({
+    mutationFn: (input: T) => run(repo(), input),
+    onSuccess: () => invalidate(refresh),
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Workspace and money
+// ---------------------------------------------------------------------------
 
 /** The user's personal workspace (exactly one in v1). */
-export function useWorkspace() {
-  return useQuery({
-    queryKey: ['workspace'],
-    queryFn: async () => {
-      const { data, error } = await requireSupabase()
-        .from('workspaces')
-        .select('id, name, base_currency')
-        .order('created_at')
-        .limit(1)
-        .single();
-      if (error) throw error;
-      return data as Workspace;
-    },
-  });
-}
+export const useWorkspace = () => useQuery({ queryKey: ['workspace'], queryFn: () => repo().workspace() });
 
 export function useSetBaseCurrency() {
-  const queryClient = useQueryClient();
+  const invalidate = useRefresh();
   return useMutation({
-    mutationFn: async ({ workspaceId, currency }: { workspaceId: string; currency: Currency }) => {
-      const { error } = await requireSupabase()
-        .from('workspaces')
-        .update({ base_currency: currency })
-        .eq('id', workspaceId);
-      if (error) throw error;
-    },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['workspace'] }),
+    mutationFn: ({ workspaceId, currency }: { workspaceId: string; currency: Currency }) =>
+      repo().setBaseCurrency(workspaceId, currency),
+    onSuccess: () => invalidate(['workspace']),
   });
 }
 
-export function useAccountBalances() {
-  return useQuery({
-    queryKey: ['account_balances'],
-    queryFn: async () => {
-      const { data, error } = await requireSupabase()
-        .from('account_balances')
-        .select('account_id, name, type, currency, balance_minor')
-        .eq('archived', false)
-        .order('name');
-      if (error) throw error;
-      // bigint columns arrive as numbers or strings depending on size.
-      return (data ?? []).map((a) => ({ ...a, balance_minor: Number(a.balance_minor) })) as AccountBalance[];
-    },
-  });
-}
+export const useAccountBalances = () =>
+  useQuery({ queryKey: ['account_balances'], queryFn: () => repo().accountBalances() });
 
-export type Category = { id: string; name: string; kind: 'income' | 'expense' };
-
-export function useCategories() {
-  return useQuery({
-    queryKey: ['categories'],
-    queryFn: async () => {
-      const { data, error } = await requireSupabase()
-        .from('categories')
-        .select('id, name, kind')
-        .is('deleted_at', null)
-        .order('name');
-      if (error) throw error;
-      return data as Category[];
-    },
-  });
-}
-
-export type Transaction = {
-  id: string;
-  type: 'income' | 'expense' | 'transfer';
-  amount_minor: number;
-  occurred_on: string;
-  note: string | null;
-  category_id: string | null;
-  account: { id: string; name: string; currency: Currency };
-  transfer_account: { id: string; name: string; currency: Currency } | null;
-  transfer_amount_minor: number | null;
-};
+export const useCategories = () => useQuery({ queryKey: ['categories'], queryFn: () => repo().categories() });
 
 /** Transactions with occurred_on in [start, end], newest first. */
-export function useTransactions(start: string, end: string) {
-  return useQuery({
-    queryKey: ['transactions', start, end],
-    queryFn: async () => {
-      const { data, error } = await requireSupabase()
-        .from('transactions')
-        .select(
-          'id, type, amount_minor, occurred_on, note, category_id, transfer_amount_minor, ' +
-            'account:accounts!transactions_account_id_fkey(id, name, currency), ' +
-            'transfer_account:accounts!transactions_transfer_account_id_fkey(id, name, currency)',
-        )
-        .is('deleted_at', null)
-        .gte('occurred_on', start)
-        .lte('occurred_on', end)
-        .order('occurred_on', { ascending: false })
-        .order('created_at', { ascending: false });
-      if (error) throw error;
-      return ((data ?? []) as unknown as Transaction[]).map((t) => ({
-        ...t,
-        amount_minor: Number(t.amount_minor),
-        transfer_amount_minor: t.transfer_amount_minor === null ? null : Number(t.transfer_amount_minor),
-      }));
-    },
-  });
-}
+export const useTransactions = (start: string, end: string) =>
+  useQuery({ queryKey: ['transactions', start, end], queryFn: () => repo().transactions(start, end) });
 
 /** The most recent rate for each currency pair. */
-export function useFxRates() {
-  return useQuery({
-    queryKey: ['fx_rates'],
-    queryFn: async () => {
-      const { data, error } = await requireSupabase()
-        .from('fx_rates')
-        .select('base, quote, rate, as_of')
-        .order('as_of', { ascending: false })
-        .limit(200);
-      if (error) throw error;
-      const latest = new Map<string, FxRate>();
-      for (const r of data ?? []) {
-        const key = `${r.base}/${r.quote}`;
-        if (!latest.has(key)) latest.set(key, { base: r.base, quote: r.quote, rate: Number(r.rate) });
-      }
-      return [...latest.values()];
-    },
-    staleTime: 60 * 60 * 1000,
-  });
-}
+export const useFxRates = () =>
+  useQuery({ queryKey: ['fx_rates'], queryFn: () => repo().fxRates(), staleTime: 60 * 60 * 1000 });
 
-export type NewAccount = {
-  workspace_id: string;
-  name: string;
-  type: 'cash' | 'bank' | 'ewallet' | 'credit' | 'savings';
-  currency: Currency;
-  opening_balance_minor: number;
-};
-
-export type NewTransaction = {
-  workspace_id: string;
-  account_id: string;
-  type: 'income' | 'expense' | 'transfer';
-  amount_minor: number;
-  category_id: string | null;
-  occurred_on: string;
-  note: string | null;
-  transfer_account_id: string | null;
-  transfer_amount_minor: number | null;
-};
-
-function useInsert<T extends object>(table: string, invalidate: string[]) {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (row: T) => {
-      const { error } = await requireSupabase().from(table).insert(row);
-      if (error) throw error;
-    },
-    onSuccess: () =>
-      Promise.all(invalidate.map((key) => queryClient.invalidateQueries({ queryKey: [key] }))),
-  });
-}
-
-export const useCreateAccount = () => useInsert<NewAccount>('accounts', ['account_balances']);
+export const useCreateAccount = () => useRepoMutation((r, row: Parameters<Repo['createAccount']>[0]) => r.createAccount(row), MONEY);
 
 export const useCreateTransaction = () =>
-  useInsert<NewTransaction>('transactions', ['transactions', 'account_balances']);
+  useRepoMutation((r, row: Parameters<Repo['createTransaction']>[0]) => r.createTransaction(row), MONEY);
 
-export function useDeleteTransaction() {
+export const useDeleteTransaction = () => useRepoMutation((r, id: string) => r.deleteTransaction(id), MONEY);
+
+// ---------------------------------------------------------------------------
+// Agenda
+// ---------------------------------------------------------------------------
+
+export const useTasks = () => useQuery({ queryKey: ['tasks'], queryFn: () => repo().tasks() });
+
+export const useCreateTask = () => useRepoMutation((r, row: Parameters<Repo['createTask']>[0]) => r.createTask(row), ['tasks']);
+
+/** Checks a task off (or back on) immediately, then confirms with the server. */
+export function useToggleTask() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await requireSupabase()
-        .from('transactions')
-        .update({ deleted_at: new Date().toISOString() })
-        .eq('id', id);
-      if (error) throw error;
+    mutationFn: ({ id, completedAt }: { id: string; completedAt: string | null }) =>
+      repo().setTaskCompleted(id, completedAt),
+    onMutate: async ({ id, completedAt }) => {
+      await queryClient.cancelQueries({ queryKey: ['tasks'] });
+      const previous = queryClient.getQueryData<Task[]>(['tasks']);
+      queryClient.setQueryData<Task[]>(['tasks'], (tasks) =>
+        tasks?.map((t) => (t.id === id ? { ...t, completed_at: completedAt } : t)),
+      );
+      return { previous };
     },
-    onSuccess: () =>
-      Promise.all(
-        ['transactions', 'account_balances'].map((key) =>
-          queryClient.invalidateQueries({ queryKey: [key] }),
-        ),
-      ),
+    onError: (_error, _vars, context) => queryClient.setQueryData(['tasks'], context?.previous),
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ['tasks'] }),
   });
 }
+
+export const useDeleteTask = () => useRepoMutation((r, id: string) => r.deleteTask(id), ['tasks']);
+
+/** Events overlapping [fromIso, toIso). */
+export const useEvents = (fromIso: string, toIso: string) =>
+  useQuery({ queryKey: ['events', fromIso, toIso], queryFn: () => repo().events(fromIso, toIso) });
+
+export const useCreateEvent = () =>
+  useRepoMutation((r, row: Parameters<Repo['createEvent']>[0]) => r.createEvent(row), ['events']);
+
+export const useDeleteEvent = () => useRepoMutation((r, id: string) => r.deleteEvent(id), ['events']);
+
+// ---------------------------------------------------------------------------
+// Bills
+// ---------------------------------------------------------------------------
+
+export const useBills = () => useQuery({ queryKey: ['bills'], queryFn: () => repo().bills() });
+
+export const useCreateBill = () => useRepoMutation((r, row: Parameters<Repo['createBill']>[0]) => r.createBill(row), ['bills']);
+
+export const usePayBill = () => useRepoMutation((r, payment: BillPayment) => r.payBill(payment), MONEY);
+
+export const useDeleteBill = () => useRepoMutation((r, id: string) => r.deleteBill(id), ['bills']);
+
+// ---------------------------------------------------------------------------
+// Assets and debts
+// ---------------------------------------------------------------------------
+
+export const useAssets = () => useQuery({ queryKey: ['assets'], queryFn: () => repo().assets() });
+
+export const useCreateAsset = () => useRepoMutation((r, row: Parameters<Repo['createAsset']>[0]) => r.createAsset(row), WEALTH);
+
+export const useAddValuation = () =>
+  useRepoMutation(
+    (r, v: { workspaceId: string; assetId: string; valueMinor: number; valuedOn: string }) =>
+      r.addValuation(v.workspaceId, v.assetId, v.valueMinor, v.valuedOn),
+    WEALTH,
+  );
+
+export const useDeleteAsset = () => useRepoMutation((r, id: string) => r.deleteAsset(id), WEALTH);
+
+export const useLiabilities = () => useQuery({ queryKey: ['liabilities'], queryFn: () => repo().liabilities() });
+
+export const useCreateLiability = () =>
+  useRepoMutation((r, row: Parameters<Repo['createLiability']>[0]) => r.createLiability(row), WEALTH);
+
+export const useAddLiabilityBalance = () =>
+  useRepoMutation(
+    (r, v: { workspaceId: string; liabilityId: string; balanceMinor: number; asOf: string }) =>
+      r.addLiabilityBalance(v.workspaceId, v.liabilityId, v.balanceMinor, v.asOf),
+    WEALTH,
+  );
+
+export const useDeleteLiability = () => useRepoMutation((r, id: string) => r.deleteLiability(id), WEALTH);

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { netWorth } from './networth';
+import { netWorth, netWorthPartial } from './networth';
 
 describe('netWorth', () => {
   it('sums accounts and assets, subtracts liabilities, in the base currency', () => {
@@ -18,5 +18,26 @@ describe('netWorth', () => {
     );
     expect(result.accounts).toBe(1_170_000_000);
     expect(result.total).toBe(1_170_000_000 + 50_000_000_000 - 20_000_000_000);
+  });
+});
+
+describe('netWorthPartial', () => {
+  it('leaves out holdings without a rate and lists their currency', () => {
+    const result = netWorthPartial(
+      {
+        accounts: [
+          { amountMinor: 1_000_000_00, currency: 'IDR' },
+          { amountMinor: 100_00, currency: 'PLN' },
+        ],
+        assets: [{ amountMinor: 50_00, currency: 'EUR' }],
+        liabilities: [{ amountMinor: 200_000_00, currency: 'IDR' }],
+      },
+      'IDR',
+      [{ base: 'EUR', quote: 'IDR', rate: 17_000 }],
+    );
+    expect(result.missing).toEqual(['PLN']);
+    expect(result.accounts).toBe(1_000_000_00);
+    expect(result.assets).toBe(850_000_00);
+    expect(result.total).toBe(1_000_000_00 + 850_000_00 - 200_000_00);
   });
 });

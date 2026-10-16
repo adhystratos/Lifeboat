@@ -1,3 +1,4 @@
+export * from './agenda';
 export * from './currency';
 export * from './fx';
 export * from './networth';

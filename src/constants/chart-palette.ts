@@ -4,10 +4,10 @@
  * Follows the dataviz method: categorical slots are assigned in this fixed
  * order (never cycled, never by rank), dark mode uses its own validated steps,
  * and status colors are reserved for state and always paired with an icon and
- * label. Validated with the dataviz `validate_palette.js` against the card
- * surfaces (#F0F0F3 light, #212225 dark): all hard gates pass. In light mode
- * slots 2-5 sit below 3:1 on the card, so charts using them must show direct
- * labels or offer a table view.
+ * label. Validated with the dataviz `validate_palette.js` against the sheet
+ * surfaces (#FFFFFF light, #14231F dark, 17 Oct 2026): all hard gates pass. In
+ * light mode slots 3-5 sit below 3:1 on the sheet, so charts using them must
+ * show direct labels or a table view.
  *
  * Scatter-style charts (all pairs visible at once) are capped at the first
  * three slots; fold the rest into "Other".

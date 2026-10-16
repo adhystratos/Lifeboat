@@ -28,3 +28,36 @@ export function netWorth(input: NetWorthInput, base: Currency, rates: FxRate[]):
   const liabilities = sumIn(input.liabilities, base, rates);
   return { currency: base, accounts, assets, liabilities, total: accounts + assets - liabilities };
 }
+
+export type PartialNetWorth = NetWorth & {
+  /** Currencies left out of the totals because no rate to `base` exists yet. */
+  missing: Currency[];
+};
+
+/**
+ * Like `netWorth`, but holdings without an exchange rate are left out and
+ * listed in `missing` instead of failing the whole calculation.
+ */
+export function netWorthPartial(input: NetWorthInput, base: Currency, rates: FxRate[]): PartialNetWorth {
+  const missing = new Set<Currency>();
+  const sum = (items: Holding[]) =>
+    items.reduce((total, h) => {
+      try {
+        return total + convertMinor(h.amountMinor, h.currency, base, rates);
+      } catch {
+        missing.add(h.currency);
+        return total;
+      }
+    }, 0);
+  const accounts = sum(input.accounts);
+  const assets = sum(input.assets);
+  const liabilities = sum(input.liabilities);
+  return {
+    currency: base,
+    accounts,
+    assets,
+    liabilities,
+    total: accounts + assets - liabilities,
+    missing: [...missing],
+  };
+}
