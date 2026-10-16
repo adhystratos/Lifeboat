@@ -9,7 +9,7 @@ import { Icon, IconName } from '@/components/icon';
 import { SampleNotice } from '@/components/sample-notice';
 import { CoverFigure, EmptyState, Row, Screen, Section } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
-import { Spacing } from '@/constants/theme';
+import { DATE_LOCALE, Spacing } from '@/constants/theme';
 import { convertMinor, Currency, describeRule, formatMoney, localToday, monthBounds, summarize } from '@/core';
 import { accountTypeLabel } from '@/lib/labels';
 import {
@@ -28,7 +28,7 @@ import {
 
 const RECENT_LIMIT = 20;
 
-const monthOnly = new Intl.DateTimeFormat(undefined, { month: 'long' });
+const monthOnly = new Intl.DateTimeFormat(DATE_LOCALE, { month: 'long' });
 
 const ACCOUNT_ICON: Record<AccountType, IconName> = {
   cash: 'dollar-sign',
@@ -88,18 +88,14 @@ export default function MoneyScreen() {
             {formatMoney(Math.abs(summary.netMinor), base)}
           </ThemedText>
           {summary.missingRates.length ? (
-            <ThemedText type="small" themeColor="gold" style={styles.missing}>
+            <ThemedText type="small" themeColor="coverTextSecondary" style={styles.missing}>
+              <Icon name="info" size={13} color="coverTextSecondary" />{' '}
               Not yet included: amounts in {summary.missingRates.join(', ')}. No exchange rate to {base} is available yet.
             </ThemedText>
           ) : null}
         </CoverFigure>
       }>
       <SampleNotice />
-
-      <View style={styles.actions}>
-        <Button label="Add transaction" icon="plus" onPress={() => router.push('/new-transaction')} style={styles.grow} />
-        <Button label="Add account" variant="plain" onPress={() => router.push('/new-account')} />
-      </View>
 
       <Section title={`Spending in ${month}`} padded={summary.expenseByCategory.length > 0}>
         {summary.expenseByCategory.length ? (
@@ -255,7 +251,5 @@ function TransactionRow({
 
 const styles = StyleSheet.create({
   missing: { marginTop: Spacing.two },
-  actions: { flexDirection: 'row', gap: Spacing.two },
-  grow: { flexGrow: 1 },
   rowActions: { flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: Spacing.three, paddingBottom: Spacing.three },
 });

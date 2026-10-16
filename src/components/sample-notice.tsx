@@ -1,3 +1,5 @@
+import { Pressable } from 'react-native';
+
 import { useAuth } from '@/lib/auth';
 
 import { Icon } from './icon';
@@ -11,12 +13,18 @@ export function SampleNotice() {
   return (
     <Section>
       <Row
-        leading={<Icon name="info" color="stampViolet" />}
+        leading={<Icon name="info" color="textSecondary" />}
         title="You're looking at sample data"
         subtitle="Invented entries. Changes last until you reload the app."
-        trailing={<ThemedText type="link">Leave</ThemedText>}
-        onPress={leaveDemo}
-        accessibilityHint="Leaves sample mode and returns to sign in"
+        trailing={
+          <Pressable
+            accessibilityRole="button"
+            accessibilityHint="Leaves sample mode and returns to sign in"
+            onPress={leaveDemo}
+            hitSlop={12}>
+            <ThemedText type="link">Leave</ThemedText>
+          </Pressable>
+        }
       />
     </Section>
   );

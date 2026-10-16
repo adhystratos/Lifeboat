@@ -5,12 +5,13 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { Button, IconButton } from '@/components/button';
 import { CompositionBar, Part } from '@/components/composition-bar';
 import { AmountField } from '@/components/form';
+import { Icon } from '@/components/icon';
 import { SampleNotice } from '@/components/sample-notice';
 import { CoverFigure, EmptyState, Row, Screen, Section } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
-import { Spacing } from '@/constants/theme';
+import { DATE_LOCALE, Spacing } from '@/constants/theme';
 import { convertMinor, Currency, formatMoney, FxRate, localToday, netWorthPartial, parseAmount, toMajor } from '@/core';
-import { ASSET_TYPES, LIABILITY_TYPES } from '@/lib/labels';
+import { ASSET_GROUPS, ASSET_TYPES, LIABILITY_TYPES } from '@/lib/labels';
 import {
   Asset,
   Liability,
@@ -25,7 +26,7 @@ import {
   useWorkspace,
 } from '@/lib/queries';
 
-const shortDate = new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+const shortDate = new Intl.DateTimeFormat(DATE_LOCALE, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 const dateLabel = (day: string) => shortDate.format(new Date(`${day}T00:00:00Z`));
 
 /** Values older than this are flagged so they get refreshed. */
@@ -70,12 +71,12 @@ export default function AssetsScreen() {
   const accountsInBase = accounts.reduce((sum, a) => sum + (tryConvert(a.balance_minor, a.currency, base, rates) ?? 0), 0);
   const parts: Part[] = [
     { key: 'accounts', label: 'Cash and accounts', amountMinor: Math.max(accountsInBase, 0), slot: 0 },
-    ...ASSET_TYPES.map((t) => ({
-      key: t.value,
-      label: t.label,
-      slot: t.slot,
+    ...ASSET_GROUPS.map((g) => ({
+      key: g.key,
+      label: g.label,
+      slot: g.slot,
       amountMinor: assetList
-        .filter((a) => a.type === t.value && a.value_minor !== null)
+        .filter((a) => g.types.includes(a.type) && a.value_minor !== null)
         .reduce((sum, a) => sum + (tryConvert(a.value_minor!, a.currency, base, rates) ?? 0), 0),
     })),
   ];
@@ -87,13 +88,14 @@ export default function AssetsScreen() {
       title="Net worth"
       actions={<IconButton icon="plus" label="Add an asset" onCover onPress={() => router.push('/new-asset')} />}
       cover={
-        <CoverFigure value={loading ? '…' : formatMoney(worth.total, base)}>
+        <CoverFigure value={loading ? '…' : formatMoney(worth.total, base)} caption="Net worth">
           <ThemedText type="default" themeColor="coverTextSecondary" numeric>
             Accounts {formatMoney(worth.accounts, base)} · Assets {formatMoney(worth.assets, base)} · Debts{' '}
             {formatMoney(worth.liabilities, base)}
           </ThemedText>
           {worth.missing.length ? (
-            <ThemedText type="small" themeColor="gold" style={styles.missing}>
+            <ThemedText type="small" themeColor="coverTextSecondary" style={styles.missing}>
+              <Icon name="info" size={13} color="coverTextSecondary" />{' '}
               Not yet included: amounts in {worth.missing.join(', ')}. No exchange rate to {base} is available yet.
             </ThemedText>
           ) : null}

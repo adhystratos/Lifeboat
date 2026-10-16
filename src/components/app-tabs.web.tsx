@@ -75,7 +75,7 @@ function RailItem({ children, isFocused, icon, ...props }: ItemProps) {
         styles.railItem,
         (isFocused || hovered) && { backgroundColor: theme.coverRaised },
       ]}>
-      <Icon name={icon} size={18} color={isFocused ? 'gold' : 'coverTextSecondary'} />
+      <Icon name={icon} size={18} color={isFocused ? 'coverText' : 'coverTextSecondary'} />
       <ThemedText type="defaultBold" themeColor={isFocused ? 'coverText' : 'coverTextSecondary'}>
         {children}
       </ThemedText>

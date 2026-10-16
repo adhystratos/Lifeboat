@@ -1,0 +1,903 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-16T21:00:13.260Z",
+  "title": "Design System: Lifeboat",
+  "extensions": {
+    "colorMeta": {
+      "cover-bottle-green": {
+        "role": "secondary",
+        "displayName": "Bottle-Green Cover",
+        "canonical": "#17352E",
+        "tonalRamp": [
+          "#00100B",
+          "#0D2B24",
+          "#2B4941",
+          "#4A6960",
+          "#6A8A82",
+          "#8CADA4",
+          "#B0D2C8",
+          "#D5F8EE"
+        ]
+      },
+      "cover-raised": {
+        "role": "secondary",
+        "displayName": "Cover Raised",
+        "canonical": "#21443B",
+        "tonalRamp": [
+          "#00110A",
+          "#072C24",
+          "#274A41",
+          "#466A60",
+          "#678B81",
+          "#89AFA3",
+          "#ACD3C7",
+          "#D1F9ED"
+        ]
+      },
+      "cover-text": {
+        "role": "secondary",
+        "displayName": "Cover Text",
+        "canonical": "#F1F5F2",
+        "tonalRamp": [
+          "#090C0A",
+          "#232624",
+          "#404341",
+          "#5F6260",
+          "#808381",
+          "#A2A6A3",
+          "#C6CAC7",
+          "#ECF0ED"
+        ]
+      },
+      "cover-text-secondary": {
+        "role": "secondary",
+        "displayName": "Cover Text Secondary",
+        "canonical": "#A9C2B8",
+        "tonalRamp": [
+          "#000F09",
+          "#152A23",
+          "#32473F",
+          "#50675E",
+          "#71897F",
+          "#93ACA2",
+          "#B7D0C6",
+          "#DCF6EB"
+        ]
+      },
+      "cover-alert-coral": {
+        "role": "secondary",
+        "displayName": "Cover Alert Coral",
+        "canonical": "#F07167",
+        "tonalRamp": [
+          "#2A0000",
+          "#520000",
+          "#7D0E12",
+          "#A92F2C",
+          "#D0544D",
+          "#F9796E",
+          "#FFA398",
+          "#FFCEC2"
+        ]
+      },
+      "foil-gold": {
+        "role": "tertiary",
+        "displayName": "Foil Gold",
+        "canonical": "#D2AA55",
+        "tonalRamp": [
+          "#1A0500",
+          "#3A1E00",
+          "#5C3B00",
+          "#7F5A00",
+          "#A27C20",
+          "#C69F49",
+          "#EAC475",
+          "#FFEAA5"
+        ]
+      },
+      "accent-deep-pine": {
+        "role": "primary",
+        "displayName": "Deep Pine Accent",
+        "canonical": "#1E5244",
+        "tonalRamp": [
+          "#001209",
+          "#002E22",
+          "#174C3F",
+          "#3A6D5E",
+          "#5B8E7F",
+          "#7EB2A1",
+          "#A1D7C5",
+          "#C7FCEA"
+        ]
+      },
+      "on-accent": {
+        "role": "primary",
+        "displayName": "On Accent",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#A5A5A5",
+          "#C9C9C9",
+          "#EEEEEE"
+        ]
+      },
+      "page-mint": {
+        "role": "neutral",
+        "displayName": "Mint Page",
+        "canonical": "#EAF0EC",
+        "tonalRamp": [
+          "#080C0A",
+          "#222623",
+          "#3F4340",
+          "#5E635F",
+          "#7E8480",
+          "#A1A7A3",
+          "#C5CBC7",
+          "#EAF0EC"
+        ]
+      },
+      "sheet-white": {
+        "role": "neutral",
+        "displayName": "Sheet White",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#A5A5A5",
+          "#C9C9C9",
+          "#EEEEEE"
+        ]
+      },
+      "selected-sage": {
+        "role": "neutral",
+        "displayName": "Selected Sage",
+        "canonical": "#DCE6E0",
+        "tonalRamp": [
+          "#070D09",
+          "#202723",
+          "#3C443F",
+          "#5B645F",
+          "#7C857F",
+          "#9EA8A2",
+          "#C2CCC6",
+          "#E7F1EB"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#13201C",
+        "tonalRamp": [
+          "#030E0A",
+          "#1B2824",
+          "#374641",
+          "#566560",
+          "#778681",
+          "#99A9A4",
+          "#BDCEC8",
+          "#E2F3ED"
+        ]
+      },
+      "ink-secondary": {
+        "role": "neutral",
+        "displayName": "Ink Secondary",
+        "canonical": "#52615B",
+        "tonalRamp": [
+          "#030E0A",
+          "#1B2823",
+          "#374640",
+          "#56655F",
+          "#778780",
+          "#99A9A3",
+          "#BDCEC7",
+          "#E2F3EC"
+        ]
+      },
+      "rule-hairline": {
+        "role": "neutral",
+        "displayName": "Hairline Rule",
+        "canonical": "#D3DDD7",
+        "tonalRamp": [
+          "#070D09",
+          "#202723",
+          "#3C443F",
+          "#5B645F",
+          "#7C857F",
+          "#9EA8A2",
+          "#C2CCC6",
+          "#E7F1EB"
+        ]
+      },
+      "danger": {
+        "role": "neutral",
+        "displayName": "Danger",
+        "canonical": "#B8322B",
+        "tonalRamp": [
+          "#2C0000",
+          "#550000",
+          "#800106",
+          "#AE2722",
+          "#D64F44",
+          "#FE7466",
+          "#FFA091",
+          "#FFCCBD"
+        ]
+      },
+      "stamp-green": {
+        "role": "tertiary",
+        "displayName": "Stamp Green (done, paid)",
+        "canonical": "#1E7A4C",
+        "tonalRamp": [
+          "#001300",
+          "#00310F",
+          "#005229",
+          "#147346",
+          "#409666",
+          "#65BA88",
+          "#8EDEAD",
+          "#BBFFD5"
+        ]
+      },
+      "stamp-red": {
+        "role": "tertiary",
+        "displayName": "Stamp Red (overdue)",
+        "canonical": "#B8322B",
+        "tonalRamp": [
+          "#2C0000",
+          "#550000",
+          "#800106",
+          "#AE2722",
+          "#D64F44",
+          "#FE7466",
+          "#FFA091",
+          "#FFCCBD"
+        ]
+      },
+      "stamp-violet": {
+        "role": "tertiary",
+        "displayName": "Stamp Violet (due, scheduled)",
+        "canonical": "#5B3FA8",
+        "tonalRamp": [
+          "#100034",
+          "#290D5C",
+          "#462B87",
+          "#644AB4",
+          "#856DDA",
+          "#A790FF",
+          "#CAB8FF",
+          "#EEE0FF"
+        ]
+      },
+      "stamp-blue": {
+        "role": "tertiary",
+        "displayName": "Stamp Blue (transfer)",
+        "canonical": "#2453A6",
+        "tonalRamp": [
+          "#000234",
+          "#001F5C",
+          "#133D86",
+          "#2E5DB1",
+          "#4E80D7",
+          "#70A4FE",
+          "#98C9FF",
+          "#C3F0FF"
+        ]
+      },
+      "chart-harbour-cyan": {
+        "role": "tertiary",
+        "displayName": "Chart Harbour Cyan (slot 1)",
+        "canonical": "#0E8FA6",
+        "tonalRamp": [
+          "#00101F",
+          "#002E3F",
+          "#004E63",
+          "#006F85",
+          "#1592A9",
+          "#49B5CD",
+          "#76DAF1",
+          "#A8FEFF"
+        ]
+      },
+      "chart-bronze": {
+        "role": "tertiary",
+        "displayName": "Chart Bronze (slot 2)",
+        "canonical": "#B5702A",
+        "tonalRamp": [
+          "#210000",
+          "#451300",
+          "#6A2F00",
+          "#904E00",
+          "#B5702A",
+          "#DB9350",
+          "#FEB97B",
+          "#FFE0AA"
+        ]
+      },
+      "chart-rose": {
+        "role": "tertiary",
+        "displayName": "Chart Rose (slot 3)",
+        "canonical": "#B4477C",
+        "tonalRamp": [
+          "#25000F",
+          "#4B002A",
+          "#741348",
+          "#9E3269",
+          "#C4568A",
+          "#EC79AD",
+          "#FFA3D1",
+          "#FFCDF6"
+        ]
+      },
+      "chart-olive": {
+        "role": "tertiary",
+        "displayName": "Chart Olive (slot 4)",
+        "canonical": "#6E8A1E",
+        "tonalRamp": [
+          "#050F00",
+          "#1B2C00",
+          "#354B00",
+          "#526C00",
+          "#738F25",
+          "#94B34D",
+          "#B9D77B",
+          "#E0FBAB"
+        ]
+      },
+      "chart-stone": {
+        "role": "neutral",
+        "displayName": "Chart Stone (Other)",
+        "canonical": "#8C9792",
+        "tonalRamp": [
+          "#060D0A",
+          "#1E2723",
+          "#3B4540",
+          "#5A645F",
+          "#7A8580",
+          "#9DA8A3",
+          "#C1CCC7",
+          "#E6F2EC"
+        ]
+      },
+      "dark-page": {
+        "role": "neutral",
+        "displayName": "Dark mode: Mint Page",
+        "canonical": "#0C1613",
+        "tonalRamp": [
+          "#050D0B",
+          "#1D2824",
+          "#3A4541",
+          "#586460",
+          "#798681",
+          "#9BA8A4",
+          "#BFCDC8",
+          "#E4F2ED"
+        ]
+      },
+      "dark-sheet": {
+        "role": "neutral",
+        "displayName": "Dark mode: Sheet White",
+        "canonical": "#14231F",
+        "tonalRamp": [
+          "#020E0B",
+          "#192925",
+          "#364641",
+          "#556661",
+          "#758782",
+          "#97AAA4",
+          "#BBCEC8",
+          "#E0F4EE"
+        ]
+      },
+      "dark-selected": {
+        "role": "neutral",
+        "displayName": "Dark mode: Selected Sage",
+        "canonical": "#1E332D",
+        "tonalRamp": [
+          "#000F0A",
+          "#152A24",
+          "#324741",
+          "#506760",
+          "#718881",
+          "#93ABA4",
+          "#B7D0C8",
+          "#DBF5ED"
+        ]
+      },
+      "dark-ink": {
+        "role": "neutral",
+        "displayName": "Dark mode: Ink",
+        "canonical": "#E6EEEA",
+        "tonalRamp": [
+          "#070D0A",
+          "#212724",
+          "#3D4441",
+          "#5C6360",
+          "#7D8481",
+          "#A0A7A3",
+          "#C3CBC7",
+          "#E9F1ED"
+        ]
+      },
+      "dark-ink-secondary": {
+        "role": "neutral",
+        "displayName": "Dark mode: Ink Secondary",
+        "canonical": "#9EB2AA",
+        "tonalRamp": [
+          "#020E09",
+          "#192923",
+          "#354640",
+          "#54665F",
+          "#748780",
+          "#97AAA2",
+          "#BACFC6",
+          "#DFF4EC"
+        ]
+      },
+      "dark-rule": {
+        "role": "neutral",
+        "displayName": "Dark mode: Hairline Rule",
+        "canonical": "#25392F",
+        "tonalRamp": [
+          "#000F07",
+          "#162A20",
+          "#33473D",
+          "#52675C",
+          "#72897D",
+          "#94AC9F",
+          "#B8D0C3",
+          "#DDF6E8"
+        ]
+      },
+      "dark-accent": {
+        "role": "primary",
+        "displayName": "Dark mode: Deep Pine Accent",
+        "canonical": "#93D3B6",
+        "tonalRamp": [
+          "#001205",
+          "#002F1C",
+          "#064F37",
+          "#306F56",
+          "#539176",
+          "#76B599",
+          "#99DABC",
+          "#C3FEE3"
+        ]
+      },
+      "dark-cover": {
+        "role": "secondary",
+        "displayName": "Dark mode: Bottle-Green Cover",
+        "canonical": "#153029",
+        "tonalRamp": [
+          "#00100A",
+          "#102B24",
+          "#2D4841",
+          "#4C6860",
+          "#6C8A81",
+          "#8FADA4",
+          "#B2D1C8",
+          "#D7F7ED"
+        ]
+      },
+      "dark-cover-raised": {
+        "role": "secondary",
+        "displayName": "Dark mode: Cover Raised",
+        "canonical": "#1E3E35",
+        "tonalRamp": [
+          "#00100A",
+          "#0A2C23",
+          "#294940",
+          "#48695F",
+          "#698B80",
+          "#8BAEA3",
+          "#AED2C7",
+          "#D3F8EC"
+        ]
+      },
+      "dark-foil-gold": {
+        "role": "tertiary",
+        "displayName": "Dark mode: Foil Gold",
+        "canonical": "#D9B462",
+        "tonalRamp": [
+          "#1A0500",
+          "#391F00",
+          "#5B3B00",
+          "#7D5B00",
+          "#A07D26",
+          "#C4A04D",
+          "#E8C478",
+          "#FFEBA7"
+        ]
+      },
+      "dark-danger": {
+        "role": "neutral",
+        "displayName": "Dark mode: Danger",
+        "canonical": "#F07167",
+        "tonalRamp": [
+          "#2A0000",
+          "#520000",
+          "#7D0E12",
+          "#A92F2C",
+          "#D0544D",
+          "#F9796E",
+          "#FFA398",
+          "#FFCEC2"
+        ]
+      },
+      "dark-stamp-green": {
+        "role": "tertiary",
+        "displayName": "Dark mode: Stamp Green (done, paid)",
+        "canonical": "#55C48D",
+        "tonalRamp": [
+          "#001400",
+          "#00330F",
+          "#005429",
+          "#007645",
+          "#1F9965",
+          "#4EBE87",
+          "#7FE1AD",
+          "#B0FFD5"
+        ]
+      },
+      "dark-stamp-red": {
+        "role": "tertiary",
+        "displayName": "Dark mode: Stamp Red (overdue)",
+        "canonical": "#F07167",
+        "tonalRamp": [
+          "#2A0000",
+          "#520000",
+          "#7D0E12",
+          "#A92F2C",
+          "#D0544D",
+          "#F9796E",
+          "#FFA398",
+          "#FFCEC2"
+        ]
+      },
+      "dark-stamp-violet": {
+        "role": "tertiary",
+        "displayName": "Dark mode: Stamp Violet (due, scheduled)",
+        "canonical": "#AB97F2",
+        "tonalRamp": [
+          "#10002D",
+          "#291453",
+          "#46317B",
+          "#6550A4",
+          "#8671C9",
+          "#A894EF",
+          "#CCBAFF",
+          "#F1E2FF"
+        ]
+      },
+      "dark-stamp-blue": {
+        "role": "tertiary",
+        "displayName": "Dark mode: Stamp Blue (transfer)",
+        "canonical": "#7FA9F2",
+        "tonalRamp": [
+          "#00052D",
+          "#062153",
+          "#1D3F7C",
+          "#3A5FA2",
+          "#5A82C8",
+          "#7BA5EE",
+          "#A1CAFF",
+          "#CBF0FF"
+        ]
+      },
+      "dark-chart-harbour-cyan": {
+        "role": "tertiary",
+        "displayName": "Dark mode: Chart Harbour Cyan (slot 1)",
+        "canonical": "#1FA0B8",
+        "tonalRamp": [
+          "#00111F",
+          "#002E40",
+          "#004E64",
+          "#007087",
+          "#0092AA",
+          "#40B6CF",
+          "#71DBF2",
+          "#A5FFFF"
+        ]
+      },
+      "dark-chart-bronze": {
+        "role": "tertiary",
+        "displayName": "Dark mode: Chart Bronze (slot 2)",
+        "canonical": "#B97834",
+        "tonalRamp": [
+          "#200000",
+          "#431500",
+          "#693100",
+          "#8E5000",
+          "#B2722D",
+          "#D89452",
+          "#FBBA7C",
+          "#FFE1AB"
+        ]
+      },
+      "dark-chart-rose": {
+        "role": "tertiary",
+        "displayName": "Dark mode: Chart Rose (slot 3)",
+        "canonical": "#CF5F96",
+        "tonalRamp": [
+          "#250010",
+          "#4B002B",
+          "#74134A",
+          "#9E326B",
+          "#C4558C",
+          "#EC79B0",
+          "#FFA2D3",
+          "#FFCDF7"
+        ]
+      },
+      "dark-chart-olive": {
+        "role": "tertiary",
+        "displayName": "Dark mode: Chart Olive (slot 4)",
+        "canonical": "#7F9C2A",
+        "tonalRamp": [
+          "#050F00",
+          "#1C2C00",
+          "#364B00",
+          "#536D00",
+          "#738F17",
+          "#95B345",
+          "#BAD776",
+          "#E0FBA7"
+        ]
+      },
+      "dark-chart-stone": {
+        "role": "neutral",
+        "displayName": "Dark mode: Chart Stone (Other)",
+        "canonical": "#6F7C76",
+        "tonalRamp": [
+          "#050E09",
+          "#1D2823",
+          "#394540",
+          "#58655F",
+          "#798680",
+          "#9BA9A2",
+          "#BFCDC6",
+          "#E4F3EC"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Cover figures: Today weekday, Money and Net worth totals. Scales to fit one line."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Form page titles, large wordmark."
+      },
+      "subtitle": {
+        "displayName": "Subtitle",
+        "purpose": "Rail wordmark, secondary cover lines."
+      },
+      "heading": {
+        "displayName": "Heading",
+        "purpose": "Section headings above sheets; long date on the Today cover; currency codes in amount fields."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Row titles, inputs, cover captions."
+      },
+      "body-bold": {
+        "displayName": "Body Bold",
+        "purpose": "Rail items, emphasised body text, the bold coral overdue count on the cover."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Row subtitles, notes, empty states."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Button, chip and field labels."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Tab bar labels, field hints, calendar weekdays and legend."
+      },
+      "amount-entry": {
+        "displayName": "Amount Entry",
+        "purpose": "The large number in amount fields."
+      },
+      "stamp": {
+        "displayName": "Stamp",
+        "purpose": "Stamp text only, uppercase."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "stamp-press",
+        "value": "260ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "A fresh stamp presses in: scale 1.5 to 1 with a fade to 0.92 opacity (Reanimated Easing.out(Easing.exp)). Skipped under reduced motion."
+      },
+      {
+        "name": "press-feedback",
+        "value": "opacity 0.75, scale 0.98",
+        "purpose": "Button press state. Checks scale to 0.9; chips and links drop to 0.6 or 0.7 opacity."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "rail",
+        "value": "900px"
+      }
+    ],
+    "layout": {
+      "maxContentWidth": "760px",
+      "formWidth": "600px",
+      "railWidth": "240px",
+      "dateLocale": "en-GB"
+    },
+    "focus": {
+      "web": "outline: 2px solid accent; outline-offset: 2px; border-radius: 8px"
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Filled deep pine accent; the main action on a page or form (Save, Mark paid).",
+      "html": "<button class=\"ds-btn-primary\">Save</button>",
+      "css": ".ds-btn-primary{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 24px;border:1px solid transparent;border-radius:12px;background:#1E5244;color:#FFFFFF;font-size:14px;line-height:20px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .15s}.ds-btn-primary:hover{opacity:.9}.ds-btn-primary:active{opacity:.75;transform:scale(.98)}.ds-btn-primary:focus-visible{outline:2px solid #1E5244;outline-offset:2px}.ds-btn-primary:disabled{opacity:.45}"
+    },
+    {
+      "name": "Plain Button",
+      "kind": "button",
+      "refersTo": "button-plain",
+      "description": "Quiet sage fill for secondary actions on the page.",
+      "html": "<button class=\"ds-btn-plain\">Cancel</button>",
+      "css": ".ds-btn-plain{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 24px;border:1px solid transparent;border-radius:12px;background:#DCE6E0;color:#13201C;font-size:14px;line-height:20px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .15s}.ds-btn-plain:hover{opacity:.9}.ds-btn-plain:active{opacity:.75;transform:scale(.98)}.ds-btn-plain:focus-visible{outline:2px solid #1E5244;outline-offset:2px}.ds-btn-plain:disabled{opacity:.45}"
+    },
+    {
+      "name": "Cover Button",
+      "kind": "button",
+      "refersTo": "button-cover",
+      "description": "Cover-raised fill for actions on the green band and rail, such as New entry.",
+      "html": "<div class=\"ds-cover-wrap\"><button class=\"ds-btn-cover\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><line x1=\"12\" y1=\"5\" x2=\"12\" y2=\"19\"/><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/></svg>New entry</button></div>",
+      "css": ".ds-cover-wrap{background:#17352E;padding:24px}.ds-btn-cover{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 24px;border:1px solid transparent;border-radius:12px;background:#21443B;color:#F1F5F2;font-size:14px;line-height:20px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .15s}.ds-btn-cover:hover{opacity:.9}.ds-btn-cover:active{opacity:.75;transform:scale(.98)}.ds-btn-cover:focus-visible{outline:2px solid #93D3B6;outline-offset:2px}.ds-btn-cover:disabled{opacity:.45}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "text-field",
+      "description": "Mint-filled field inside a white sheet; the 2px border turns accent on focus.",
+      "html": "<div class=\"ds-sheet-pad\"><label class=\"ds-field\"><span class=\"ds-field-label\">Title</span><input class=\"ds-input\" placeholder=\"Pay electricity\"></label></div>",
+      "css": ".ds-sheet-pad{background:#FFFFFF;border-radius:16px;padding:16px}.ds-field{display:flex;flex-direction:column;gap:8px;font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;}.ds-field-label{font-size:14px;line-height:20px;font-weight:700;color:#52615B}.ds-input{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;min-height:48px;padding:0 16px;border:2px solid transparent;border-radius:12px;background:#EAF0EC;color:#13201C;font-size:16px;font-weight:500;caret-color:#1E5244;outline:none}.ds-input::placeholder{color:#52615B}.ds-input:focus{border-color:#1E5244}"
+    },
+    {
+      "name": "Chip Group",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Single-choice pills; selected fills with the accent.",
+      "html": "<div class=\"ds-chips\" role=\"radiogroup\"><button class=\"ds-chip\" role=\"radio\" aria-checked=\"true\">Today</button><button class=\"ds-chip\" role=\"radio\" aria-checked=\"false\">Tomorrow</button><button class=\"ds-chip\" role=\"radio\" aria-checked=\"false\">In a week</button></div>",
+      "css": ".ds-chips{display:flex;flex-wrap:wrap;gap:8px;background:#FFFFFF;padding:16px;border-radius:16px}.ds-chip{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;min-height:36px;padding:8px 14px;border:0;border-radius:999px;background:#EAF0EC;color:#13201C;font-size:14px;line-height:20px;font-weight:700;cursor:pointer}.ds-chip[aria-checked=\"true\"]{background:#1E5244;color:#FFFFFF}.ds-chip:active{opacity:.7}.ds-chip:focus-visible{outline:2px solid #1E5244;outline-offset:2px}"
+    },
+    {
+      "name": "Section with Sheet and Rows",
+      "kind": "card",
+      "refersTo": "sheet",
+      "description": "Heading row above a white sheet; rows separated by inset hairlines; hover fills sage.",
+      "html": "<section class=\"ds-section\"><div class=\"ds-section-head\"><h3>Bills due</h3><a href=\"#\">See all</a></div><div class=\"ds-sheet\"><div class=\"ds-row\"><span class=\"ds-row-lead\"></span><span class=\"ds-row-text\"><span class=\"ds-row-title\">Electricity</span><span class=\"ds-row-sub\">Due 20 Oct</span></span><span class=\"ds-row-amt\">IDR 850,000</span></div><div class=\"ds-row\"><span class=\"ds-row-lead\"></span><span class=\"ds-row-text\"><span class=\"ds-row-title\">Phone plan</span><span class=\"ds-row-sub\">Due 24 Oct</span></span><span class=\"ds-row-amt\">EUR 15.00</span></div></div></section>",
+      "css": ".ds-section{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;background:#EAF0EC;padding:24px 16px;display:flex;flex-direction:column;gap:8px}.ds-section-head{display:flex;justify-content:space-between;align-items:baseline;padding:0 4px}.ds-section-head h3{margin:0;font-size:17px;line-height:24px;font-weight:700;letter-spacing:-0.1px;color:#13201C}.ds-section-head a{font-size:14px;font-weight:600;color:#1E5244;text-decoration:none}.ds-section-head a:hover{opacity:.7}.ds-sheet{background:#FFFFFF;border-radius:16px;overflow:hidden}.ds-row{display:flex;align-items:center;gap:16px;min-height:56px;padding:12px 16px;position:relative;cursor:pointer}.ds-row+.ds-row::before{content:\"\";position:absolute;top:0;left:16px;right:0;border-top:1px solid #D3DDD7}.ds-row:hover{background:#DCE6E0}.ds-row-lead{width:28px}.ds-row-text{flex:1;display:flex;flex-direction:column;gap:2px}.ds-row-title{font-size:16px;line-height:22px;font-weight:500;color:#13201C}.ds-row-sub{font-size:14px;line-height:20px;font-weight:500;color:#52615B}.ds-row-amt{font-size:16px;font-weight:600;color:#13201C;font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Cover Band",
+      "kind": "custom",
+      "refersTo": "cover-band",
+      "description": "Flat bottle-green band carrying the screen headline figure at display size; overdue count in bold coral. No kicker above the figure.",
+      "html": "<header class=\"ds-cover\"><div class=\"ds-cover-display\">Friday</div><div class=\"ds-cover-date\">17 October 2026</div><div class=\"ds-cover-sum\"><span>3 tasks, 2 events, 1 bill due</span> <strong>1 overdue</strong></div></header>",
+      "css": ".ds-cover{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;background:#17352E;color:#F1F5F2;padding:24px 16px 32px;font-variant-numeric:tabular-nums}.ds-cover-display{font-size:44px;line-height:48px;font-weight:800;letter-spacing:-1.3px}.ds-cover-date{font-size:17px;line-height:24px;font-weight:700;margin-top:4px}.ds-cover-sum{margin-top:8px;font-size:16px;line-height:22px;font-weight:500;color:#A9C2B8}.ds-cover-sum strong{color:#F07167;font-weight:600}"
+    },
+    {
+      "name": "Stamp",
+      "kind": "custom",
+      "refersTo": "stamp",
+      "description": "The signature: rotated, double-ruled ink stamp recording state, pressed in once when fresh (260ms, exponential ease-out).",
+      "html": "<div class=\"ds-stamps\"><span class=\"ds-stamp ds-stamp-green ds-stamp-fresh\"><span>DONE 17 OCT</span></span><span class=\"ds-stamp ds-stamp-red\"><span>OVERDUE</span></span><span class=\"ds-stamp ds-stamp-violet\"><span>DUE 20 OCT</span></span><span class=\"ds-stamp ds-stamp-blue\"><span>TRANSFER</span></span></div>",
+      "css": ".ds-stamps{display:flex;gap:20px;flex-wrap:wrap;padding:24px;background:#FFFFFF}.ds-stamp{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;display:inline-block;border:2px solid currentColor;border-radius:6px;padding:2px;opacity:.92;transform:rotate(-6deg)}.ds-stamp>span{display:block;border:1px solid currentColor;border-radius:3px;padding:1px 6px;font-size:11px;line-height:15px;font-weight:800;letter-spacing:1.1px;white-space:nowrap}.ds-stamp-green{color:#1E7A4C}.ds-stamp-red{color:#B8322B}.ds-stamp-violet{color:#5B3FA8}.ds-stamp-blue{color:#2453A6}.ds-stamp-fresh{animation:ds-press 260ms cubic-bezier(0.16,1,0.3,1) both}.ds-stamps:hover .ds-stamp-fresh{animation:ds-press 260ms cubic-bezier(0.16,1,0.3,1) both}@keyframes ds-press{from{opacity:0;transform:rotate(-6deg) scale(1.5)}to{opacity:.92;transform:rotate(-6deg) scale(1)}}@media (prefers-reduced-motion:reduce){.ds-stamp-fresh{animation:none}}"
+    },
+    {
+      "name": "Side Rail",
+      "kind": "nav",
+      "refersTo": "rail",
+      "description": "Wide-web navigation (900px and up): bottle-green rail with the gold-foil wordmark and navigation items.",
+      "html": "<nav class=\"ds-rail\"><div class=\"ds-wordmark\"><span class=\"ds-seal\"><span></span></span>Lifeboat</div><a class=\"ds-rail-item\" aria-current=\"page\" href=\"#\">Today</a><a class=\"ds-rail-item\" href=\"#\">Calendar</a><a class=\"ds-rail-item\" href=\"#\">Money</a><a class=\"ds-rail-item\" href=\"#\">Net worth</a><a class=\"ds-rail-item\" href=\"#\">Settings</a></nav>",
+      "css": ".ds-rail{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;width:240px;background:#17352E;padding:24px 16px;display:flex;flex-direction:column;gap:4px}.ds-wordmark{display:flex;align-items:center;gap:10px;color:#D2AA55;font-size:22px;line-height:28px;font-weight:700;letter-spacing:-0.3px;padding:0 8px 24px}.ds-seal{width:22px;height:22px;border:2px solid #D2AA55;border-radius:50%;padding:3px;box-sizing:border-box;display:inline-flex}.ds-seal span{flex:1;border:1px solid #D2AA55;border-radius:50%}.ds-rail-item{display:flex;align-items:center;min-height:44px;padding:0 16px;border-radius:12px;color:#A9C2B8;font-size:16px;font-weight:600;text-decoration:none}.ds-rail-item:hover,.ds-rail-item[aria-current=\"page\"]{background:#21443B;color:#F1F5F2}.ds-rail-item:focus-visible{outline:2px solid #93D3B6;outline-offset:2px}"
+    },
+    {
+      "name": "Task Check",
+      "kind": "custom",
+      "refersTo": "check",
+      "description": "24px round checkbox; filled stamp green with a white tick when done.",
+      "html": "<div class=\"ds-checks\"><button class=\"ds-check\" role=\"checkbox\" aria-checked=\"false\" aria-label=\"Mark done\"></button><button class=\"ds-check\" role=\"checkbox\" aria-checked=\"true\" aria-label=\"Done\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><polyline points=\"20 6 9 17 4 12\"/></svg></button></div>",
+      "css": ".ds-checks{display:flex;gap:16px;padding:16px;background:#FFFFFF}.ds-check{width:24px;height:24px;border-radius:50%;border:2px solid #52615B;background:transparent;color:#FFFFFF;display:inline-flex;align-items:center;justify-content:center;padding:0;cursor:pointer}.ds-check[aria-checked=\"true\"]{background:#1E7A4C;border-color:#1E7A4C}.ds-check:active{transform:scale(.9)}.ds-check:focus-visible{outline:2px solid #1E5244;outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Passport",
+    "overview": "Lifeboat reads like a personal passport for time and money. A flat bottle-green cover field owns the top of every screen and, on wide web, the side rail. Below it sits a cool mint page ground carrying white sheets, ruled by hairlines like the pages of a document. When an entry is resolved it is stamped, never erased: a rotated, double-ruled ink stamp records the state and the day.\n\nThe system is flat and type-led. The one number or date that matters for a screen sits directly on the cover band at display size, with no boxed stat cards around it. One grotesk family (Hanken Grotesk) carries everything, with tabular figures so amounts and dates line up. Colour is spent with intent: gold is foil, stamp inks are state, chart hues are data, and the deep pine accent is action. Density is calm: generous rows (56px minimum), one column up to 760px, and sections spaced 32px apart.\n\nIt deliberately refuses the category default of a grey dashboard of same-size cards with a blue accent and a donut chart.",
+    "keyCharacteristics": [
+      "One unmodulated bottle-green cover band per screen; no gradients anywhere.",
+      "White sheets on a mint page, rows separated by hairline rules.",
+      "State shown as stamp ink (green, red, violet, blue), pressed in with a short motion.",
+      "Gold foil only on the wordmark and the today marker.",
+      "One type family, weight carries hierarchy, tabular figures for every amount.",
+      "Flat surfaces with no shadows; depth comes from tone."
+    ],
+    "rules": [
+      {
+        "name": "The Foil Rule",
+        "body": "Gold is foil. It appears on the wordmark and the today marker and nowhere else: not on buttons, not in charts, not as a highlight.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ink Is State Rule",
+        "body": "Stamp green, red, violet and blue mean done or paid, overdue, due or scheduled, and transfer. They are never decoration, never chart colours, never brand accents.",
+        "section": "colors"
+      },
+      {
+        "name": "The Cover Coral Rule",
+        "body": "On the cover band, overdue is shown in cover-alert-coral at bold weight. Stamp red does not go on the cover.",
+        "section": "colors"
+      },
+      {
+        "name": "The Separate Palettes Rule",
+        "body": "Chart hues stay clear of the four stamp inks and of gold. A chart with one series uses the accent, not a chart slot.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Hanken Grotesk only. Weight is chosen by font file (one family per weight) so Android renders it correctly.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Money Rule",
+        "body": "Every amount and every date that sits in a column uses tabular figures.",
+        "section": "typography"
+      },
+      {
+        "name": "The Fixed Date Rule",
+        "body": "Dates and times always format with the en-GB locale: day before month, 24-hour clock, on every device, so they match the English copy and the stamps.",
+        "section": "typography"
+      },
+      {
+        "name": "The Uppercase Belongs To Stamps Rule",
+        "body": "Uppercase with letter spacing is the stamp's voice. No other text is set in tracked capitals.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Field Rule",
+        "body": "The cover band is one unmodulated colour. No gradients, no shadows, no glows; layering is shown by tone.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do put the screen's one headline figure directly on the cover band in the display style (800, 44px), with no box around it.",
+      "Do show every resolved entry with a stamp in its state ink, and press it in only when it is fresh.",
+      "Do keep gold to the wordmark and today's calendar marker.",
+      "Do show overdue counts on the cover in bold cover-alert-coral.",
+      "Do use tabular figures for amounts and dates, and format dates with en-GB (day before month, 24-hour).",
+      "Do assign chart colours in the fixed slot order (harbour cyan, bronze, rose, olive, then stone for Other), and use the accent for single-series charts.",
+      "Do group content in white sheets with hairline-ruled rows, sections 32px apart, inside a column no wider than 760px."
+    ],
+    "donts": [
+      "Don't use gradients or shadows anywhere, least of all on the cover band.",
+      "Don't use stamp green, red, violet or blue for decoration, branding or chart series.",
+      "Don't use gold on buttons, links, charts or highlights.",
+      "Don't put a small label, kicker or eyebrow above a cover figure; the screen title is for screen readers only.",
+      "Don't use cover-alert-coral at regular weight or off the cover band.",
+      "Don't wrap headline numbers in stat cards or build the screen as a grid of same-size cards.",
+      "Don't add a second type family or set any text other than stamps in tracked uppercase.",
+      "Don't rename the /wealth route back to /assets."
+    ]
+  }
+}

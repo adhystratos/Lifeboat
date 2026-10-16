@@ -7,7 +7,7 @@ import { Button, IconButton } from '@/components/button';
 import { SampleNotice } from '@/components/sample-notice';
 import { EmptyState, Screen, Section, Sheet } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
-import { FontFiles, Spacing } from '@/constants/theme';
+import { DATE_LOCALE, FontFiles, Spacing } from '@/constants/theme';
 import {
   addDays,
   addMonths,
@@ -22,10 +22,10 @@ import {
 import { useTheme } from '@/hooks/use-theme';
 import { Bill, CalendarEvent, Task, useBills, useEvents, useTasks } from '@/lib/queries';
 
-const monthName = new Intl.DateTimeFormat(undefined, { month: 'long', timeZone: 'UTC' });
-const fullDay = new Intl.DateTimeFormat(undefined, { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
-const narrowWeekday = new Intl.DateTimeFormat(undefined, { weekday: 'short', timeZone: 'UTC' });
-const accessibleDay = new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'long', timeZone: 'UTC' });
+const monthName = new Intl.DateTimeFormat(DATE_LOCALE, { month: 'long', timeZone: 'UTC' });
+const fullDay = new Intl.DateTimeFormat(DATE_LOCALE, { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
+const narrowWeekday = new Intl.DateTimeFormat(DATE_LOCALE, { weekday: 'short', timeZone: 'UTC' });
+const accessibleDay = new Intl.DateTimeFormat(DATE_LOCALE, { day: 'numeric', month: 'long', timeZone: 'UTC' });
 
 const utc = (day: string) => new Date(`${day}T00:00:00Z`);
 
@@ -153,7 +153,7 @@ export default function CalendarScreen() {
                   style={({ hovered }) => [
                     styles.cell,
                     hovered && !isSelected && { backgroundColor: theme.background },
-                    isSelected && { borderColor: theme.accent, backgroundColor: theme.background },
+                    isSelected && !isToday && { borderColor: theme.accent, backgroundColor: theme.background },
                   ]}>
                   <View style={[styles.numeral, isToday && { backgroundColor: theme.cover }]}>
                     <ThemedText

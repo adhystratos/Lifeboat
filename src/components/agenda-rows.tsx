@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { Spacing } from '@/constants/theme';
+import { DATE_LOCALE, Spacing } from '@/constants/theme';
 import { useNow } from '@/hooks/use-now';
 import { useTheme } from '@/hooks/use-theme';
 import { addDays, BillOccurrence, dayOf, describeRule, formatMoney, localToday, nextDueAfter } from '@/core';
@@ -13,8 +13,8 @@ import { Row } from './screen';
 import { Stamp } from './stamp';
 import { ThemedText } from './themed-text';
 
-const time = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', hour12: false });
-const weekdayShort = new Intl.DateTimeFormat(undefined, { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
+const time = new Intl.DateTimeFormat(DATE_LOCALE, { hour: '2-digit', minute: '2-digit', hour12: false });
+const weekdayShort = new Intl.DateTimeFormat(DATE_LOCALE, { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
 
 export function timeOf(iso: string): string {
   return time.format(new Date(iso));
@@ -152,7 +152,7 @@ export function BillRow({
   const payable = occurrence.status !== 'paid' && occurrence.day === bill.next_due_on;
   const stamp =
     occurrence.status === 'paid' ? (
-      <Stamp kind="paid" label={income ? 'Received' : 'Paid'} fresh={fresh} />
+      <Stamp kind="paid" label={income ? 'Received' : 'Paid'} day={fresh ? today : undefined} fresh={fresh} />
     ) : occurrence.status === 'overdue' ? (
       <Stamp kind="overdue" day={occurrence.day} />
     ) : occurrence.status === 'due' ? (

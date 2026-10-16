@@ -8,7 +8,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { FontFiles } from '@/constants/theme';
+import { DATE_LOCALE, FontFiles } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
 export type StampKind = 'done' | 'paid' | 'overdue' | 'due' | 'scheduled' | 'transfer';
@@ -31,7 +31,7 @@ const DEFAULT_LABEL: Record<StampKind, string> = {
   transfer: 'Transfer',
 };
 
-const shortDay = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+const shortDay = new Intl.DateTimeFormat(DATE_LOCALE, { day: 'numeric', month: 'short', timeZone: 'UTC' });
 
 /** "17 OCT" from a "YYYY-MM-DD" day. */
 export function stampDate(day: string): string {

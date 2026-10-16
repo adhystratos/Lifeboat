@@ -1,13 +1,20 @@
 import type { AccountType, AssetType, LiabilityType } from './repo';
 
-/** Asset groups in their fixed chart slot order; cash and accounts take slot 0. */
-export const ASSET_TYPES: { value: AssetType; label: string; slot: number }[] = [
-  { value: 'property', label: 'Property', slot: 1 },
-  { value: 'investment', label: 'Investments', slot: 2 },
-  { value: 'gold', label: 'Gold', slot: 3 },
-  { value: 'vehicle', label: 'Vehicles', slot: 4 },
-  { value: 'receivable', label: 'Money owed to you', slot: 5 },
-  { value: 'other', label: 'Other', slot: 6 },
+export const ASSET_TYPES: { value: AssetType; label: string }[] = [
+  { value: 'property', label: 'Property' },
+  { value: 'investment', label: 'Investments' },
+  { value: 'gold', label: 'Gold' },
+  { value: 'vehicle', label: 'Vehicles' },
+  { value: 'receivable', label: 'Money owed to you' },
+  { value: 'other', label: 'Other' },
+];
+
+/** Net worth chart groups in their fixed palette slots; cash and accounts take slot 0. */
+export const ASSET_GROUPS: { key: string; label: string; slot: number | 'other'; types: AssetType[] }[] = [
+  { key: 'gold', label: 'Gold', slot: 1, types: ['gold'] },
+  { key: 'property', label: 'Property', slot: 2, types: ['property'] },
+  { key: 'investment', label: 'Investments', slot: 3, types: ['investment'] },
+  { key: 'other', label: 'Vehicles, money owed to you, other', slot: 'other', types: ['vehicle', 'receivable', 'other'] },
 ];
 
 export const LIABILITY_TYPES: { value: LiabilityType; label: string }[] = [

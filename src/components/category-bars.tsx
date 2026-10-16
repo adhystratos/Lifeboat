@@ -1,8 +1,8 @@
-import { StyleSheet, useColorScheme, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { ChartColors } from '@/constants/chart-palette';
 import { Spacing } from '@/constants/theme';
 import { CategoryTotal, Currency, formatMoney } from '@/core';
+import { useTheme } from '@/hooks/use-theme';
 
 import { ThemedText } from './themed-text';
 
@@ -10,7 +10,7 @@ const MAX_ROWS = 6;
 
 /**
  * Spending by category as a ranked horizontal bar list. One series, so one
- * hue (categorical slot 1) and no legend; each bar is direct-labelled with
+ * hue (the theme accent) and no legend; each bar is direct-labelled with
  * its name and value in text ink, and the list doubles as the table view.
  */
 export function CategoryBars({
@@ -22,8 +22,7 @@ export function CategoryBars({
   currency: Currency;
   nameOf: (categoryId: string | null) => string;
 }) {
-  const scheme = useColorScheme() === 'dark' ? 'dark' : 'light';
-  const color = ChartColors[scheme].categorical[0];
+  const color = useTheme().accent;
 
   const rows = totals.slice(0, MAX_ROWS).map((t) => ({
     key: t.categoryId ?? 'none',

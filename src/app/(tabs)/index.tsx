@@ -8,13 +8,13 @@ import { TextField } from '@/components/form';
 import { SampleNotice } from '@/components/sample-notice';
 import { EmptyState, Row, Screen, Section } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
-import { Spacing } from '@/constants/theme';
+import { DATE_LOCALE, Spacing } from '@/constants/theme';
 import { addDays, billOccurrences, dayOf, dayRange, localDateTime, localToday } from '@/core';
 import { useTheme } from '@/hooks/use-theme';
 import { Bill, useBills, useCreateTask, useEvents, useTasks, useWorkspace } from '@/lib/queries';
 
-const weekday = new Intl.DateTimeFormat(undefined, { weekday: 'long' });
-const longDate = new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
+const weekday = new Intl.DateTimeFormat(DATE_LOCALE, { weekday: 'long' });
+const longDate = new Intl.DateTimeFormat(DATE_LOCALE, { day: 'numeric', month: 'long', year: 'numeric' });
 
 /** Bills are listed from overdue up to this many days ahead. */
 const BILL_HORIZON = 7;
@@ -104,7 +104,7 @@ export default function TodayScreen() {
               {summary}
             </ThemedText>
             {overdueCount ? (
-              <ThemedText type="defaultBold" themeColor="gold">
+              <ThemedText type="defaultBold" themeColor="coverAlert">
                 {overdueCount} overdue
               </ThemedText>
             ) : null}

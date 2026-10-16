@@ -29,6 +29,8 @@ export const Colors = {
     coverRaised: '#21443B',
     coverText: '#F1F5F2',
     coverTextSecondary: '#A9C2B8',
+    /** Overdue counts on the cover band (bold only; about 4.4:1 on the cover). */
+    coverAlert: '#F07167',
     /** Gold foil: the wordmark and today's marker only. */
     gold: '#D2AA55',
     stampGreen: '#1E7A4C',
@@ -50,6 +52,7 @@ export const Colors = {
     coverRaised: '#1E3E35',
     coverText: '#F1F5F2',
     coverTextSecondary: '#A9C2B8',
+    coverAlert: '#F07167',
     gold: '#D9B462',
     stampGreen: '#55C48D',
     stampRed: '#F07167',
@@ -70,12 +73,6 @@ export const FontFiles = {
 } as const;
 
 export type FontWeightName = keyof typeof FontFiles;
-
-export const Fonts = Platform.select({
-  ios: { sans: 'system-ui', mono: 'ui-monospace' },
-  default: { sans: 'normal', mono: 'monospace' },
-  web: { sans: 'var(--font-display)', mono: 'var(--font-mono)' },
-});
 
 export const Spacing = {
   half: 2,
@@ -99,3 +96,9 @@ export const MaxContentWidth = 760;
 /** At or above this web width the side rail replaces the bottom tab bar. */
 export const RailBreakpoint = 900;
 export const RailWidth = 240;
+
+/**
+ * Dates and times use one fixed English locale (day before month, 24-hour
+ * clock) so they match the English copy and the stamps on every device.
+ */
+export const DATE_LOCALE = 'en-GB';

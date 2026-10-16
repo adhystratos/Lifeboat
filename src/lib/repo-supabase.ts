@@ -105,7 +105,7 @@ export const supabaseRepo: Repo = {
         .from('tasks')
         .select('id, title, notes, due_at, priority, completed_at')
         .is('deleted_at', null)
-        .or(`completed_at.is.null,completed_at.gte.${since}`)
+        .or(`completed_at.is.null,completed_at.gte."${since}"`)
         .order('due_at', { ascending: true, nullsFirst: false })
         .order('created_at'),
     ) as Task[];

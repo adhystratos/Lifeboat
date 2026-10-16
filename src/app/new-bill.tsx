@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { ThemedText } from '@/components/themed-text';
 import { AmountField, ChipGroup, closeForm, DayField, Field, FormScreen, isDay, TextField } from '@/components/form';
+import { DATE_LOCALE } from '@/constants/theme';
 import { describeRule, firstDueDay, localToday, parseAmount, Repeat, ruleFor } from '@/core';
 import { useAccountBalances, useCategories, useCreateBill, useWorkspace } from '@/lib/queries';
 
@@ -12,7 +13,7 @@ const REPEATS: { value: Repeat; label: string }[] = [
   { value: 'YEARLY', label: 'Yearly' },
 ];
 
-const longDay = new Intl.DateTimeFormat(undefined, { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
+const longDay = new Intl.DateTimeFormat(DATE_LOCALE, { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
 
 /** A bill (or a regular income) that repeats; it appears on Today when due. */
 export default function NewBillScreen() {

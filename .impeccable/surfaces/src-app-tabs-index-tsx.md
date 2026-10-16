@@ -7,7 +7,7 @@ related_targets: ["src/app/(tabs)/calendar.tsx","src/app/(tabs)/money.tsx","src/
 
 ## Scope
 
-The signed-in app shell and its five sections (Today, Calendar, Money, Assets, Settings) plus the entry forms. Mode: Operate. Audience and job: see PRODUCT.md. Code-led build (no image generation available).
+The signed-in app shell and its five sections (Today, Calendar, Money, Net worth at /wealth, Settings) plus the entry forms. Mode: Operate. Audience and job: see PRODUCT.md. Code-led build (no image generation available).
 
 ## Direction contract
 

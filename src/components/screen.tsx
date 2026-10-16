@@ -29,12 +29,11 @@ export function Screen({
         keyboardShouldPersistTaps="handled">
         <View style={[styles.band, { backgroundColor: theme.cover, paddingTop: insets.top + Spacing.four }]}>
           <View style={styles.column}>
-            <View style={styles.bandTop}>
-              <ThemedText type="heading" themeColor="coverTextSecondary" accessibilityRole="header">
-                {title}
-              </ThemedText>
-              {actions ? <View style={styles.bandActions}>{actions}</View> : null}
-            </View>
+            {/* The rail and tab bar already name the screen; the title stays for screen readers only. */}
+            <ThemedText accessibilityRole="header" style={styles.srOnly}>
+              {title}
+            </ThemedText>
+            {actions ? <View style={styles.bandTop}>{actions}</View> : null}
             {cover}
           </View>
         </View>
@@ -108,9 +107,6 @@ export function Section({
     </View>
   );
 }
-
-/** @deprecated Use Section. Kept so older screens keep compiling. */
-export const Card = Section;
 
 /** White sheet; direct children are separated by hairline rules. */
 export function Sheet({ children, padded }: PropsWithChildren<{ padded?: boolean }>) {
@@ -237,11 +233,11 @@ const styles = StyleSheet.create({
   bandTop: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: Spacing.three,
+    justifyContent: 'flex-end',
+    gap: Spacing.two,
     minHeight: 36,
   },
-  bandActions: { flexDirection: 'row', alignItems: 'center', gap: Spacing.two },
+  srOnly: { position: 'absolute', width: 1, height: 1, overflow: 'hidden', opacity: 0 },
   figure: { gap: Spacing.one, marginTop: Spacing.three },
   page: { paddingHorizontal: Spacing.three, paddingTop: Spacing.four, alignItems: 'center' },
   column: { width: '100%', maxWidth: MaxContentWidth },

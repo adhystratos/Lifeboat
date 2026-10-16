@@ -12,8 +12,8 @@ export type Part = {
   key: string;
   label: string;
   amountMinor: number;
-  /** Fixed categorical slot (0-based), so a group keeps its colour when others are empty. */
-  slot: number;
+  /** Fixed categorical slot (0-based) or the neutral "other", so a group keeps its colour when others are empty. */
+  slot: number | 'other';
 };
 
 /**
@@ -34,6 +34,7 @@ export function CompositionBar({
   const theme = useTheme();
   const scheme = useColorScheme() === 'dark' ? 'dark' : 'light';
   const palette = ChartColors[scheme];
+  const colorOf = (p: Part) => (p.slot === 'other' ? palette.other : palette.categorical[p.slot]);
   const [active, setActive] = useState<string | null>(null);
 
   const shown = parts.filter((p) => p.amountMinor > 0);
@@ -66,7 +67,7 @@ export function CompositionBar({
               styles.segment,
               {
                 flexGrow: p.amountMinor,
-                backgroundColor: palette.categorical[p.slot],
+                backgroundColor: colorOf(p),
                 opacity: active && active !== p.key ? 0.35 : 1,
               },
             ]}
@@ -77,7 +78,7 @@ export function CompositionBar({
       {debtsMinor > 0 ? (
         <View style={styles.debtRow}>
           <View
-            style={[styles.debt, { width: `${(debtsMinor / scale) * 100}%`, backgroundColor: palette.diverging.negative }]}
+            style={[styles.debt, { width: `${(debtsMinor / scale) * 100}%`, backgroundColor: theme.danger }]}
             accessibilityLabel={`Debts, ${formatMoney(debtsMinor, currency)}`}
           />
           <ThemedText type="caption" themeColor="textSecondary" numeric style={styles.debtLabel}>
@@ -92,7 +93,7 @@ export function CompositionBar({
             key={p.key}
             onPress={() => setActive((a) => (a === p.key ? null : p.key))}
             style={[styles.legendRow, active === p.key && { backgroundColor: theme.background }]}>
-            <View style={[styles.swatch, { backgroundColor: palette.categorical[p.slot] }]} />
+            <View style={[styles.swatch, { backgroundColor: colorOf(p) }]} />
             <ThemedText type="small" style={styles.legendLabel}>
               {p.label}
             </ThemedText>
