@@ -11,6 +11,11 @@ export function addDays(day: string, n: number): string {
   return new Date(Date.UTC(y, m - 1, d + n)).toISOString().slice(0, 10);
 }
 
+/** True for a real calendar day as "YYYY-MM-DD"; 2026-02-31 is not one. */
+export function isDay(value: string): boolean {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value) && addDays(value, 0) === value;
+}
+
 /** First day of the month `n` months away from the month containing `day`. */
 export function addMonths(day: string, n: number): string {
   const [y, m] = day.split('-').map(Number);
@@ -69,6 +74,21 @@ export function dayRange(day: string): { from: string; to: string } {
   };
 }
 
+/**
+ * The last local day an event covers. Its end is exclusive, so an event that
+ * ends at midnight (like an all-day event) stays on the day before.
+ */
+export function eventLastDay(startsAt: string, endsAt: string): string {
+  const start = new Date(startsAt).getTime();
+  const end = new Date(endsAt).getTime();
+  return localToday(new Date(Math.max(start, end - 1)));
+}
+
+/** True when an event covers part of the local `day`. */
+export function eventOnDay(startsAt: string, endsAt: string, day: string): boolean {
+  return dayOf(startsAt) <= day && day <= eventLastDay(startsAt, endsAt);
+}
+
 /** A local day plus "HH:MM" as an ISO timestamp, or null if the time is invalid. */
 export function localDateTime(day: string, time: string): string | null {
   const match = time.trim().match(/^(\d{1,2})[:.](\d{2})$/);
@@ -116,6 +136,14 @@ export function billOccurrences(
             ? 'due'
             : 'upcoming',
   }));
+}
+
+/**
+ * Where to start listing a bill: `since`, or its oldest unpaid occurrence when
+ * that is earlier, so a long-overdue bill still shows and can be paid.
+ */
+export function billListStart(bill: BillSchedule, since: string): string {
+  return bill.next_due_on !== null && bill.next_due_on < since ? bill.next_due_on : since;
 }
 
 /** The first due day for a new bill: its next occurrence on or after today. */

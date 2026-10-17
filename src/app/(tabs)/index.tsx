@@ -9,7 +9,7 @@ import { SampleNotice } from '@/components/sample-notice';
 import { EmptyState, Row, Screen, Section } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
 import { DATE_LOCALE, Spacing } from '@/constants/theme';
-import { addDays, billOccurrences, dayOf, dayRange, localDateTime, localToday } from '@/core';
+import { addDays, billListStart, billOccurrences, dayOf, dayRange, eventOnDay, localDateTime, localToday } from '@/core';
 import { useTheme } from '@/hooks/use-theme';
 import { Bill, useBills, useCreateTask, useEvents, useTasks, useWorkspace } from '@/lib/queries';
 
@@ -54,7 +54,8 @@ export default function TodayScreen() {
   const billItems = (() => {
     const items: { bill: Bill; occurrence: ReturnType<typeof billOccurrences>[number] }[] = [];
     for (const bill of bills.data ?? []) {
-      for (const occurrence of billOccurrences(bill, addDays(today, -90), addDays(today, BILL_HORIZON), today)) {
+      const from = billListStart(bill, addDays(today, -90));
+      for (const occurrence of billOccurrences(bill, from, addDays(today, BILL_HORIZON), today)) {
         const key = `${bill.id}:${occurrence.day}`;
         const recentlyPaid = occurrence.status === 'paid' && (fresh.has(key) || occurrence.day >= today);
         if (occurrence.status !== 'paid' || recentlyPaid) items.push({ bill, occurrence });
@@ -67,7 +68,8 @@ export default function TodayScreen() {
   const doneToday = groups.dueToday.length - openToday;
   const billsDue = billItems.filter((b) => b.occurrence.status === 'due' || b.occurrence.status === 'overdue').length;
   const overdueCount = groups.overdue.length + billItems.filter((b) => b.occurrence.status === 'overdue').length;
-  const eventList = events.data ?? [];
+  // The query also returns events that end exactly at midnight, such as yesterday's all-day events.
+  const eventList = (events.data ?? []).filter((e) => eventOnDay(e.starts_at, e.ends_at, today));
 
   const summary = [
     `${openToday} ${openToday === 1 ? 'task' : 'tasks'} left`,

@@ -2,9 +2,9 @@ import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { ChipGroup, closeForm, DayField, Field, FormScreen, isDay, TextField } from '@/components/form';
+import { ChipGroup, closeForm, DayField, Field, FormScreen, TextField } from '@/components/form';
 import { Spacing } from '@/constants/theme';
-import { addDays, dayRange, localDateTime, localToday } from '@/core';
+import { addDays, dayRange, isDay, localDateTime, localToday } from '@/core';
 import { useCreateEvent, useWorkspace } from '@/lib/queries';
 
 export default function NewEventScreen() {

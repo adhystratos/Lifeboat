@@ -295,7 +295,12 @@ export const demoRepo: Repo = {
   },
 
   async tasks() {
-    return s().tasks.map((t) => ({ ...t }));
+    // Same as Supabase: open tasks plus those done in the last 30 days, by due time, undated last.
+    const since = new Date(Date.now() - 30 * 86_400_000).toISOString();
+    return s()
+      .tasks.filter((t) => !t.completed_at || t.completed_at >= since)
+      .sort((a, b) => Number(a.due_at === null) - Number(b.due_at === null) || (a.due_at ?? '').localeCompare(b.due_at ?? ''))
+      .map((t) => ({ ...t }));
   },
   async createTask(row) {
     s().tasks.push({ id: id('task'), title: row.title, notes: row.notes ?? null, due_at: row.due_at, priority: 0, completed_at: null });
@@ -322,7 +327,14 @@ export const demoRepo: Repo = {
   },
 
   async bills() {
-    return s().bills.map(({ account_id, ...b }) => ({ ...b, account: ref(account_id) }));
+    // Same order as Supabase: next due first, ended schedules last.
+    return [...s().bills]
+      .sort(
+        (a, b) =>
+          Number(a.next_due_on === null) - Number(b.next_due_on === null) ||
+          (a.next_due_on ?? '').localeCompare(b.next_due_on ?? ''),
+      )
+      .map(({ account_id, ...b }) => ({ ...b, account: ref(account_id) }));
   },
   async createBill({ workspace_id: _ws, ...row }) {
     s().bills.push({ id: id('bill'), ...row });

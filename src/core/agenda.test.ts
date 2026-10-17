@@ -3,9 +3,14 @@ import { describe, expect, it } from 'vitest';
 import {
   addDays,
   addMonths,
+  billListStart,
   billOccurrences,
+  dayRange,
   describeRule,
+  eventLastDay,
+  eventOnDay,
   firstDueDay,
+  isDay,
   latestPerKey,
   localDateTime,
   magnitude,
@@ -48,6 +53,25 @@ describe('calendar days', () => {
     expect(localDateTime('2026-10-17', '24:00')).toBeNull();
     expect(localDateTime('2026-10-17', 'noon')).toBeNull();
   });
+
+  it('accepts only real calendar days', () => {
+    expect(isDay('2026-10-17')).toBe(true);
+    expect(isDay('2028-02-29')).toBe(true);
+    expect(['2026-02-29', '2026-02-31', '2026-13-01', '2026-1-5', ''].some(isDay)).toBe(false);
+  });
+
+  it('keeps an event that ends at midnight on its own day', () => {
+    const allDay = dayRange('2026-10-26');
+    expect(eventLastDay(allDay.from, allDay.to)).toBe('2026-10-26');
+    expect(eventOnDay(allDay.from, allDay.to, '2026-10-26')).toBe(true);
+    expect(eventOnDay(allDay.from, allDay.to, '2026-10-27')).toBe(false);
+    expect(eventLastDay(allDay.from, allDay.from)).toBe('2026-10-26');
+
+    const late = localDateTime('2026-10-26', '22:00')!;
+    const early = localDateTime('2026-10-27', '01:00')!;
+    expect(eventOnDay(late, early, '2026-10-27')).toBe(true);
+    expect(eventOnDay(late, early, '2026-10-25')).toBe(false);
+  });
 });
 
 describe('bills', () => {
@@ -71,6 +95,17 @@ describe('bills', () => {
     expect(nextDueAfter(rent, '2026-09-05')).toBe('2026-10-05');
     const short = { ...rent, recurrence_rule: 'FREQ=MONTHLY;COUNT=2', next_due_on: '2026-02-05' };
     expect(nextDueAfter(short, '2026-02-05')).toBeNull();
+  });
+
+  it('lists a long-overdue bill from its oldest unpaid occurrence', () => {
+    const yearly = { starts_on: '2025-06-01', recurrence_rule: 'FREQ=YEARLY', next_due_on: '2026-06-01' };
+    const since = addDays('2026-10-17', -90);
+    expect(billListStart(yearly, since)).toBe('2026-06-01');
+    expect(billOccurrences(yearly, billListStart(yearly, since), '2026-10-24', '2026-10-17')).toEqual([
+      { day: '2026-06-01', status: 'overdue' },
+    ]);
+    expect(billListStart(rent, '2026-08-01')).toBe('2026-08-01');
+    expect(billListStart({ ...rent, next_due_on: null }, '2026-08-01')).toBe('2026-08-01');
   });
 
   it('starts new bills at their next occurrence, not in the past', () => {

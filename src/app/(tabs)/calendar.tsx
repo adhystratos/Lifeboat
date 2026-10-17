@@ -15,6 +15,7 @@ import {
   BillOccurrence,
   dayOf,
   dayRange,
+  eventLastDay,
   localToday,
   magnitude,
   monthGrid,
@@ -61,8 +62,9 @@ export default function CalendarScreen() {
     };
     for (const ev of events.data ?? []) {
       // Multi-day events appear on every day they cover within the grid.
-      for (let d = dayOf(ev.starts_at); d <= dayOf(ev.ends_at) && d <= last; d = addDays(d, 1)) {
-        if (d >= first && !(ev.all_day && d === dayOf(ev.ends_at) && d !== dayOf(ev.starts_at))) entry(d).events.push(ev);
+      const lastDay = eventLastDay(ev.starts_at, ev.ends_at);
+      for (let d = dayOf(ev.starts_at); d <= lastDay && d <= last; d = addDays(d, 1)) {
+        if (d >= first) entry(d).events.push(ev);
       }
     }
     for (const t of tasks.data ?? []) {

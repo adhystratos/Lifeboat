@@ -46,11 +46,11 @@ function tryConvert(minor: number, from: Currency, to: Currency, rates: FxRate[]
 
 export default function AssetsScreen() {
   const today = localToday();
-  const { data: workspace } = useWorkspace();
-  const { data: accounts = [] } = useAccountBalances();
+  const { data: workspace, isLoading: workspaceLoading } = useWorkspace();
+  const { data: accounts = [], isLoading: accountsLoading, error: accountsError } = useAccountBalances();
   const assets = useAssets();
   const liabilities = useLiabilities();
-  const { data: rates = [] } = useFxRates();
+  const { data: rates = [], isLoading: ratesLoading, error: ratesError } = useFxRates();
   const base: Currency = workspace?.base_currency ?? 'IDR';
 
   const assetList = assets.data ?? [];
@@ -82,28 +82,40 @@ export default function AssetsScreen() {
   ];
 
   const loading = assets.isLoading || liabilities.isLoading;
+  // The totals need every input: one still loading, or failed, would make them wrong.
+  const totalsError = accountsError ?? ratesError ?? assets.error ?? liabilities.error;
+  const totalsReady = !loading && !workspaceLoading && !accountsLoading && !ratesLoading && !totalsError;
 
   return (
     <Screen
       title="Net worth"
       actions={<IconButton icon="plus" label="Add an asset" onCover onPress={() => router.push('/new-asset')} />}
       cover={
-        <CoverFigure value={loading ? '…' : formatMoney(worth.total, base)} caption="Net worth">
-          <ThemedText type="default" themeColor="coverTextSecondary" numeric>
-            Accounts {formatMoney(worth.accounts, base)} · Assets {formatMoney(worth.assets, base)} · Debts{' '}
-            {formatMoney(worth.liabilities, base)}
-          </ThemedText>
-          {worth.missing.length ? (
+        <CoverFigure value={totalsReady ? formatMoney(worth.total, base) : '…'} caption="Net worth">
+          {totalsError ? (
             <ThemedText type="small" themeColor="coverTextSecondary" style={styles.missing}>
               <Icon name="info" size={13} color="coverTextSecondary" />{' '}
-              Not yet included: amounts in {worth.missing.join(', ')}. No exchange rate to {base} is available yet.
+              Couldn&apos;t load everything the total needs: {totalsError.message}
             </ThemedText>
+          ) : totalsReady ? (
+            <>
+              <ThemedText type="default" themeColor="coverTextSecondary" numeric>
+                Accounts {formatMoney(worth.accounts, base)} · Assets {formatMoney(worth.assets, base)} · Debts{' '}
+                {formatMoney(worth.liabilities, base)}
+              </ThemedText>
+              {worth.missing.length ? (
+                <ThemedText type="small" themeColor="coverTextSecondary" style={styles.missing}>
+                  <Icon name="info" size={13} color="coverTextSecondary" />{' '}
+                  Not yet included: amounts in {worth.missing.join(', ')}. No exchange rate to {base} is available yet.
+                </ThemedText>
+              ) : null}
+            </>
           ) : null}
         </CoverFigure>
       }>
       <SampleNotice />
 
-      {parts.some((p) => p.amountMinor > 0) ? (
+      {totalsReady && parts.some((p) => p.amountMinor > 0) ? (
         <Section title="What it's made of" padded>
           <CompositionBar parts={parts} debtsMinor={worth.liabilities} currency={base} />
         </Section>
@@ -140,7 +152,7 @@ export default function AssetsScreen() {
           subtitle={`${accounts.length} ${accounts.length === 1 ? 'account' : 'accounts'}, balances from your transactions`}
           trailing={
             <ThemedText type="defaultBold" numeric>
-              {formatMoney(worth.accounts, base)}
+              {totalsReady ? formatMoney(worth.accounts, base) : '…'}
             </ThemedText>
           }
         />

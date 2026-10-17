@@ -134,12 +134,6 @@ export function AmountField({
   );
 }
 
-const DAY = /^\d{4}-\d{2}-\d{2}$/;
-
-export function isDay(value: string): boolean {
-  return DAY.test(value) && !Number.isNaN(Date.parse(`${value}T00:00:00Z`));
-}
-
 /** A date as YYYY-MM-DD with quick picks for the common choices. */
 export function DayField({ value, onChange, picks = 'forward' }: { value: string; onChange: (day: string) => void; picks?: 'forward' | 'back' }) {
   const today = localToday();
