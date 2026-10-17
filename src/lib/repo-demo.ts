@@ -83,10 +83,10 @@ function seed() {
     valuations: [] as Valuation[],
     liabilities: [] as StoredLiability[],
     balances: [] as Balance[],
-    // Sample rates. No PLN rate on purpose, to show how missing rates appear.
+    // ECB reference rates of 16 Oct 2026. No PLN rate on purpose, to show how missing rates appear.
     rates: [
-      { base: 'EUR', quote: 'IDR', rate: 18_200 },
-      { base: 'EUR', quote: 'USD', rate: 1.09 },
+      { base: 'EUR', quote: 'IDR', rate: 20_290 },
+      { base: 'EUR', quote: 'USD', rate: 1.1253 },
     ] as FxRate[],
   };
 
