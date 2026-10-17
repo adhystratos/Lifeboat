@@ -3,11 +3,11 @@ import { useMemo, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { relativeDay } from '@/components/agenda-rows';
-import { Button, IconButton } from '@/components/button';
+import { ConfirmDelete } from '@/components/button';
 import { CategoryBars } from '@/components/category-bars';
 import { Icon, IconName } from '@/components/icon';
 import { SampleNotice } from '@/components/sample-notice';
-import { CoverFigure, EmptyState, Row, Screen, Section } from '@/components/screen';
+import { EmptyState, Row, Screen, Section, TileFigure } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
 import { DATE_LOCALE, Spacing } from '@/constants/theme';
 import { convertMinor, Currency, describeRule, formatMoney, localToday, monthBounds, summarize } from '@/core';
@@ -80,20 +80,21 @@ export default function MoneyScreen() {
   return (
     <Screen
       title="Money"
-      actions={<IconButton icon="plus" label="New transaction" onCover onPress={() => router.push('/new-transaction')} />}
-      cover={
-        <CoverFigure value={formatMoney(summary.expenseMinor, base)} caption={`Spent in ${month}`}>
-          <ThemedText type="default" themeColor="coverTextSecondary" numeric>
-            Income {formatMoney(summary.incomeMinor, base)} · Net {summary.netMinor >= 0 ? '+' : '−'}
-            {formatMoney(Math.abs(summary.netMinor), base)}
-          </ThemedText>
-          {summary.missingRates.length ? (
-            <ThemedText type="small" themeColor="coverTextSecondary" style={styles.missing}>
-              <Icon name="info" size={13} color="coverTextSecondary" />{' '}
-              Not yet included: amounts in {summary.missingRates.join(', ')}. No exchange rate to {base} is available yet.
-            </ThemedText>
-          ) : null}
-        </CoverFigure>
+      subtitle={month}
+      tone="money"
+      tile={
+        <TileFigure
+          value={formatMoney(summary.expenseMinor, base)}
+          label="Spent"
+          info={[
+            `Income ${formatMoney(summary.incomeMinor, base)}, net ${summary.netMinor >= 0 ? '+' : '−'}${formatMoney(Math.abs(summary.netMinor), base)} this month.`,
+            summary.missingRates.length
+              ? `Not yet included: amounts in ${summary.missingRates.join(', ')}. No exchange rate to ${base} is available yet.`
+              : null,
+          ]
+            .filter(Boolean)
+            .join(' ')}
+        />
       }>
       <SampleNotice />
 
@@ -177,7 +178,7 @@ function BillSummaryRow({ bill, today }: { bill: Bill; today: string }) {
           bill.next_due_on ? `next ${relativeDay(bill.next_due_on, today).toLowerCase()}` : 'ended'
         }`}
         trailing={
-          <ThemedText type="defaultBold" numeric themeColor={income ? 'stampGreen' : 'text'}>
+          <ThemedText type="defaultBold" numeric themeColor={income ? 'positive' : 'text'}>
             {income ? '+' : '−'}
             {formatMoney(bill.amount_minor, bill.account.currency)}
           </ThemedText>
@@ -187,7 +188,7 @@ function BillSummaryRow({ bill, today }: { bill: Bill; today: string }) {
       />
       {open ? (
         <View style={styles.rowActions}>
-          <Button label="Delete bill" variant="danger" compact icon="trash-2" onPress={() => remove.mutate(bill.id)} loading={remove.isPending} />
+          <ConfirmDelete label="Delete bill" onConfirm={() => remove.mutate(bill.id)} loading={remove.isPending} />
         </View>
       ) : null}
     </View>
@@ -221,11 +222,11 @@ function TransactionRow({
   return (
     <View>
       <Row
-        leading={<Icon name={icon} color={t.type === 'income' ? 'stampGreen' : transfer ? 'stampBlue' : 'textSecondary'} />}
+        leading={<Icon name={icon} color={t.type === 'income' ? 'positive' : 'textSecondary'} />}
         title={title}
         subtitle={subtitle}
         trailing={
-          <ThemedText type="defaultBold" numeric themeColor={t.type === 'income' ? 'stampGreen' : 'text'}>
+          <ThemedText type="defaultBold" numeric themeColor={t.type === 'income' ? 'positive' : 'text'}>
             {sign}
             {formatMoney(t.amount_minor, t.account.currency)}
           </ThemedText>
@@ -235,14 +236,7 @@ function TransactionRow({
       />
       {open ? (
         <View style={styles.rowActions}>
-          <Button
-            label="Delete transaction"
-            variant="danger"
-            compact
-            icon="trash-2"
-            onPress={() => remove.mutate(t.id)}
-            loading={remove.isPending}
-          />
+          <ConfirmDelete label="Delete transaction" onConfirm={() => remove.mutate(t.id)} loading={remove.isPending} />
         </View>
       ) : null}
     </View>
@@ -250,6 +244,5 @@ function TransactionRow({
 }
 
 const styles = StyleSheet.create({
-  missing: { marginTop: Spacing.two },
   rowActions: { flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: Spacing.three, paddingBottom: Spacing.three },
 });

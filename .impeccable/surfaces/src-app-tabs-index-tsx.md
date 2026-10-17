@@ -2,7 +2,7 @@
 version: 1
 slug: "src-app-tabs-index-tsx"
 primary_target: "src/app/(tabs)/index.tsx"
-related_targets: ["src/app/(tabs)/calendar.tsx","src/app/(tabs)/money.tsx","src/app/(tabs)/assets.tsx","src/app/(tabs)/settings.tsx"]
+related_targets: ["src/app/(tabs)/calendar.tsx","src/app/(tabs)/money.tsx","src/app/(tabs)/wealth.tsx","src/app/(tabs)/settings.tsx"]
 ---
 
 ## Scope
@@ -11,22 +11,23 @@ The signed-in app shell and its five sections (Today, Calendar, Money, Net worth
 
 ## Direction contract
 
-THESIS: Lifeboat is a personal passport for time and money: every obligation gets an entry, and every resolved entry gets stamped, never erased. It refuses the category default of a grey dashboard of same-size cards with a blue accent and a donut chart.
+THESIS: Agenda and money printed in two spot inks: turmeric for what is happening, sea teal for what you own, and the green they make where they overprint marks a bill, which is both. It refuses the two AI-default money looks: a grey card dashboard with one blue accent, and near-black with a neon accent.
 
-OWN-WORLD: A flat bottle-green cover field owns the top band of every screen (and the side rail on wide web), with gold-foil detail reserved for the wordmark and the today marker. Below it, a cool mint-tinted page ground with white entry sheets ruled by hairlines. State is ink: green stamp for done and paid, red for overdue, violet for scheduled or due, blue for transfers. One grotesk (Hanken Grotesk) with tabular figures for every amount.
+OWN-WORLD: Clean paper ground (#F6F6F3), white sheets, near-black ink for type and action. Title tiles printed in the screen's ink: turmeric with ink type on agenda screens, teal with white type on money screens, stone on Settings. Flat state pills (inked in, outlined, red). Bricolage Grotesque, heavy for titles, tabular for numbers. Dark mode: warm graphite, every tile the same quiet panel, colour only for meaning.
 
-STORY: The visitor opens the app, reads today's obligations and the one number that matters per section on the cover band, acts in a tap (check off, mark paid, add), and watches the entry stamp itself.
+STORY: The visitor opens a screen, reads its name and one key figure on the tile, acts in a tap (check off, mark paid with Undo, add from the floating New button), and sees the entry's pill change.
 
-FIRST VIEWPORT: Today. Cover band full width: weekday at display size, date beneath, one summary line of counts (tasks, events, bills due, overdue). Directly under the band: an inline "Add a task" field. Then the Overdue sheet (only when present), Tasks sheet with check circles, Schedule sheet as a time column, Bills due sheet with Mark paid. Wide web: green side rail on the left with wordmark, navigation and a New entry button; the same column centred on the right. Narrow: bottom tab bar.
+FIRST VIEWPORT: Today. Turmeric tile: "Today" at display size, the date as subtitle, count pills (to do, events, bills due, red overdue). Under it the quick-add field, then Overdue, Tasks, Schedule and Bills sheets, each shown only when it has entries. Floating ink New button bottom right on phones; white side rail with wordmark and New entry on wide web.
 
-FORM: Passport (candidate 4 of 7 on my ordered list). Signature move: the ink stamp. Completing a task or paying a bill presses a rotated, double-ruled stamp (DONE 17 OCT, PAID 17 OCT) onto the entry with a short press-in motion; overdue entries carry a red OVERDUE stamp. Seed key 4465db58.
-Raise from metro tiles (declined): type is the interface. Headline figures sit directly on the cover band at display scale with no boxed stat cards.
-Raise from star atlas (declined): magnitude as dot diameter. Calendar days carry a dot on a fixed three-step ramp sized by how many entries fall on that day.
-Raise from zoo guide map (declined): flat colour at region scale. The cover band is one unmodulated field; no gradients anywhere.
-Competitive alternate kept on file: jet-age ticket wallet (same audience pull, weaker fit for a dashboard topology).
+FORM: Overprint (risograph two-ink zine), candidate 3 of 7 on my ordered list; seed key 2cf7206e; chosen by the owner on the decision page, then tuned with him (palette moved off pink and blue, dark mode made monochrome, titles shortened to menu names).
+Raise from pixel type specimen (declined): type does the hierarchy at poster scale.
+Raise from streaming wall (declined): the focused category bar stays, the rest dim.
+Raise from mixtape cover (declined): amounts sit in one tight right-hand column.
+Raise from botanical folio (declined): charts keep one fixed scale and slot order.
+Competitive alternates kept on file: midnight transit map, departure board.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
 ## Unresolved
 
-- Owner has not confirmed the direction; he asked the build to proceed on its own interpretation.
+- The undo for "Mark paid" needs the migration supabase/migrations/20261017120000_undo_bill_payment.sql applied before it works with a real database.

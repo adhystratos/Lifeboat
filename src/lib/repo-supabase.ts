@@ -151,7 +151,7 @@ export const supabaseRepo: Repo = {
   createBill: insert('recurring_items'),
 
   async payBill({ bill, due_on, paid_on, next_due }) {
-    check(
+    const txId = check(
       await db().rpc('pay_recurring_item', {
         item_id: bill.id,
         due_on,
@@ -159,6 +159,11 @@ export const supabaseRepo: Repo = {
         next_due,
       }),
     );
+    return String(txId);
+  },
+
+  async undoBillPayment({ transaction_id, due_on, next_due }) {
+    check(await db().rpc('unpay_recurring_item', { tx_id: transaction_id, due_on, next_due }));
   },
 
   deleteBill: softDelete('recurring_items'),

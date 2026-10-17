@@ -13,8 +13,8 @@ import { ThemedText } from './themed-text';
 import { Wordmark } from './wordmark';
 
 /**
- * Web navigation. Wide screens get a green side rail (the passport cover);
- * narrow screens get a bottom tab bar on the sheet colour.
+ * Web navigation. Wide screens get a side rail on the sheet colour with the
+ * wordmark and a New entry button; narrow screens get a bottom tab bar.
  */
 export default function AppTabs() {
   const wide = useWindowDimensions().width >= RailBreakpoint;
@@ -51,13 +51,13 @@ export default function AppTabs() {
 function Rail({ children, ...props }: TabListProps) {
   const theme = useTheme();
   return (
-    <View {...props} style={[styles.rail, { backgroundColor: theme.cover }]} accessibilityRole="navigation">
+    <View {...props} style={[styles.rail, { backgroundColor: theme.backgroundElement, borderRightColor: theme.rule }]} accessibilityRole="navigation">
       <View style={styles.brand}>
         <Wordmark />
       </View>
       <View style={styles.railItems}>{children}</View>
       <View style={styles.railFoot}>
-        <Button label="New entry" icon="plus" variant="cover" onPress={() => router.push('/new')} />
+        <Button label="New entry" icon="plus" onPress={() => router.push('/new')} />
       </View>
     </View>
   );
@@ -73,10 +73,10 @@ function RailItem({ children, isFocused, icon, ...props }: ItemProps) {
       {...(props as PressableProps)}
       style={({ hovered }) => [
         styles.railItem,
-        (isFocused || hovered) && { backgroundColor: theme.coverRaised },
+        (isFocused || hovered) && { backgroundColor: theme.backgroundSelected },
       ]}>
-      <Icon name={icon} size={18} color={isFocused ? 'coverText' : 'coverTextSecondary'} />
-      <ThemedText type="defaultBold" themeColor={isFocused ? 'coverText' : 'coverTextSecondary'}>
+      <Icon name={icon} size={18} color={isFocused ? 'text' : 'textSecondary'} />
+      <ThemedText type="defaultBold" themeColor={isFocused ? 'text' : 'textSecondary'}>
         {children}
       </ThemedText>
     </Pressable>
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.four,
     paddingBottom: Spacing.four,
     gap: Spacing.four,
+    borderRightWidth: StyleSheet.hairlineWidth,
   },
   brand: { paddingHorizontal: Spacing.two, paddingBottom: Spacing.two },
   railItems: { gap: Spacing.one, flex: 1 },

@@ -4,7 +4,7 @@ import { useTheme } from '@/hooks/use-theme';
 
 import { Icon } from './icon';
 
-/** Round checkbox for tasks. Filled with stamp green once done. */
+/** Round checkbox for tasks. Inked in once done. */
 export function Check({
   checked,
   onToggle,
@@ -28,11 +28,11 @@ export function Check({
       style={({ pressed }) => [
         styles.box,
         checked
-          ? { backgroundColor: theme.stampGreen, borderColor: theme.stampGreen }
+          ? { backgroundColor: theme.statusDone, borderColor: theme.statusDone }
           : { borderColor: theme.textSecondary },
         pressed && styles.pressed,
       ]}>
-      {checked ? <Icon name="check" size={15} color="onAccent" /> : null}
+      {checked ? <Icon name="check" size={15} color="onStatusDone" /> : null}
     </Pressable>
   );
 }

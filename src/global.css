@@ -1,20 +1,20 @@
 :root {
-  --font-display: HankenGrotesk_500Medium, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji,
+  --font-display: BricolageGrotesque_500Medium, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji,
     Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   --font-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-  --page: #eaf0ec;
-  --ink: #13201c;
-  --accent: #1e5244;
-  --selection: #c9e3d6;
+  --page: #f6f6f3;
+  --ink: #17171c;
+  --accent: #17171c;
+  --selection: #ffe2a3;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --page: #0c1613;
-    --ink: #e6eeea;
-    --accent: #93d3b6;
-    --selection: #2b5a4b;
+    --page: #131312;
+    --ink: #e7e5df;
+    --accent: #e7e5df;
+    --selection: #3a3833;
   }
 }
 

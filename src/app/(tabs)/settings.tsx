@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/button';
 import { ChipGroup } from '@/components/form';
@@ -17,13 +17,7 @@ export default function SettingsScreen() {
   const setBaseCurrency = useSetBaseCurrency();
 
   return (
-    <Screen
-      title="Settings"
-      cover={
-        <ThemedText type="title" themeColor="coverText" style={styles.cover} numberOfLines={1}>
-          {demo ? 'Sample workspace' : (session?.user.email ?? 'Your workspace')}
-        </ThemedText>
-      }>
+    <Screen title="Settings" subtitle={demo ? 'Sample workspace' : (session?.user.email ?? 'Your workspace')}>
       <SampleNotice />
       <Section
         title="Main currency"
@@ -37,20 +31,22 @@ export default function SettingsScreen() {
           onChange={(currency) => workspace && setBaseCurrency.mutate({ workspaceId: workspace.id, currency })}
         />
       </Section>
-      <Section title="Account" padded>
+
+      {/* Leaving the workspace sits apart from everything else, so it is never tapped by mistake. */}
+      <View style={styles.leave}>
         <ThemedText type="small" themeColor="textSecondary">
           {demo ? 'You are exploring with sample data. Nothing is saved.' : `Signed in as ${session?.user.email ?? ''}`}
         </ThemedText>
         {demo ? (
-          <Button label="Leave sample data" variant="plain" onPress={leaveDemo} />
+          <Button label="Leave sample data" variant="danger" icon="log-out" onPress={leaveDemo} />
         ) : (
-          <Button label="Sign out" variant="plain" onPress={() => requireSupabase().auth.signOut()} />
+          <Button label="Sign out" variant="danger" icon="log-out" onPress={() => requireSupabase().auth.signOut()} />
         )}
-      </Section>
+      </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  cover: { marginTop: Spacing.three },
+  leave: { marginTop: Spacing.six, gap: Spacing.three, paddingHorizontal: Spacing.one },
 });

@@ -5,6 +5,7 @@ import { useTheme } from '@/hooks/use-theme';
 
 export type TextType =
   | 'display'
+  | 'figure'
   | 'title'
   | 'subtitle'
   | 'heading'
@@ -28,7 +29,7 @@ export function ThemedText({ style, type = 'default', themeColor, numeric, ...re
   return (
     <Text
       style={[{ color }, styles[type], numeric && styles.numeric, style]}
-      maxFontSizeMultiplier={type === 'display' ? 1.3 : 1.6}
+      maxFontSizeMultiplier={type === 'display' || type === 'figure' ? 1.3 : 1.6}
       {...rest}
     />
   );
@@ -39,15 +40,16 @@ export function ThemedText({ style, type = 'default', themeColor, numeric, ...re
  * is chosen through the family name rather than fontWeight.
  */
 const styles = StyleSheet.create({
-  display: { fontFamily: FontFiles.extrabold, fontSize: 44, lineHeight: 48, letterSpacing: -1.3 },
-  title: { fontFamily: FontFiles.bold, fontSize: 28, lineHeight: 34, letterSpacing: -0.6 },
-  subtitle: { fontFamily: FontFiles.bold, fontSize: 22, lineHeight: 28, letterSpacing: -0.3 },
-  heading: { fontFamily: FontFiles.bold, fontSize: 17, lineHeight: 24, letterSpacing: -0.1 },
-  default: { fontFamily: FontFiles.medium, fontSize: 16, lineHeight: 22 },
+  display: { fontFamily: FontFiles.extrabold, fontSize: 44, lineHeight: 48, letterSpacing: -1.5 },
+  figure: { fontFamily: FontFiles.extrabold, fontSize: 34, lineHeight: 40, letterSpacing: -1 },
+  title: { fontFamily: FontFiles.extrabold, fontSize: 28, lineHeight: 34, letterSpacing: -0.8 },
+  subtitle: { fontFamily: FontFiles.bold, fontSize: 20, lineHeight: 26, letterSpacing: -0.3 },
+  heading: { fontFamily: FontFiles.extrabold, fontSize: 17, lineHeight: 24, letterSpacing: -0.2 },
+  default: { fontFamily: FontFiles.medium, fontSize: 16, lineHeight: 23 },
   defaultBold: { fontFamily: FontFiles.semibold, fontSize: 16, lineHeight: 22 },
   small: { fontFamily: FontFiles.medium, fontSize: 14, lineHeight: 20 },
   smallBold: { fontFamily: FontFiles.bold, fontSize: 14, lineHeight: 20 },
   caption: { fontFamily: FontFiles.semibold, fontSize: 12, lineHeight: 16, letterSpacing: 0.2 },
-  link: { fontFamily: FontFiles.semibold, fontSize: 14, lineHeight: 20 },
+  link: { fontFamily: FontFiles.bold, fontSize: 14, lineHeight: 20, textDecorationLine: 'underline' },
   numeric: { fontVariant: ['tabular-nums'] },
 });

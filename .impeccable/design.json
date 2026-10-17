@@ -1,142 +1,52 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-16T21:00:13.260Z",
+  "generatedAt": "2026-10-17T06:39:01.439Z",
   "title": "Design System: Lifeboat",
   "extensions": {
     "colorMeta": {
-      "cover-bottle-green": {
-        "role": "secondary",
-        "displayName": "Bottle-Green Cover",
-        "canonical": "#17352E",
-        "tonalRamp": [
-          "#00100B",
-          "#0D2B24",
-          "#2B4941",
-          "#4A6960",
-          "#6A8A82",
-          "#8CADA4",
-          "#B0D2C8",
-          "#D5F8EE"
-        ]
-      },
-      "cover-raised": {
-        "role": "secondary",
-        "displayName": "Cover Raised",
-        "canonical": "#21443B",
-        "tonalRamp": [
-          "#00110A",
-          "#072C24",
-          "#274A41",
-          "#466A60",
-          "#678B81",
-          "#89AFA3",
-          "#ACD3C7",
-          "#D1F9ED"
-        ]
-      },
-      "cover-text": {
-        "role": "secondary",
-        "displayName": "Cover Text",
-        "canonical": "#F1F5F2",
-        "tonalRamp": [
-          "#090C0A",
-          "#232624",
-          "#404341",
-          "#5F6260",
-          "#808381",
-          "#A2A6A3",
-          "#C6CAC7",
-          "#ECF0ED"
-        ]
-      },
-      "cover-text-secondary": {
-        "role": "secondary",
-        "displayName": "Cover Text Secondary",
-        "canonical": "#A9C2B8",
-        "tonalRamp": [
-          "#000F09",
-          "#152A23",
-          "#32473F",
-          "#50675E",
-          "#71897F",
-          "#93ACA2",
-          "#B7D0C6",
-          "#DCF6EB"
-        ]
-      },
-      "cover-alert-coral": {
-        "role": "secondary",
-        "displayName": "Cover Alert Coral",
-        "canonical": "#F07167",
-        "tonalRamp": [
-          "#2A0000",
-          "#520000",
-          "#7D0E12",
-          "#A92F2C",
-          "#D0544D",
-          "#F9796E",
-          "#FFA398",
-          "#FFCEC2"
-        ]
-      },
-      "foil-gold": {
-        "role": "tertiary",
-        "displayName": "Foil Gold",
-        "canonical": "#D2AA55",
-        "tonalRamp": [
-          "#1A0500",
-          "#3A1E00",
-          "#5C3B00",
-          "#7F5A00",
-          "#A27C20",
-          "#C69F49",
-          "#EAC475",
-          "#FFEAA5"
-        ]
-      },
-      "accent-deep-pine": {
-        "role": "primary",
-        "displayName": "Deep Pine Accent",
-        "canonical": "#1E5244",
-        "tonalRamp": [
-          "#001209",
-          "#002E22",
-          "#174C3F",
-          "#3A6D5E",
-          "#5B8E7F",
-          "#7EB2A1",
-          "#A1D7C5",
-          "#C7FCEA"
-        ]
-      },
-      "on-accent": {
-        "role": "primary",
-        "displayName": "On Accent",
-        "canonical": "#FFFFFF",
-        "tonalRamp": [
-          "#0B0B0B",
-          "#252525",
-          "#424242",
-          "#616161",
-          "#828282",
-          "#A5A5A5",
-          "#C9C9C9",
-          "#EEEEEE"
-        ]
-      },
-      "page-mint": {
+      "ink": {
         "role": "neutral",
-        "displayName": "Mint Page",
-        "canonical": "#EAF0EC",
+        "displayName": "Ink",
+        "canonical": "#17171C",
         "tonalRamp": [
-          "#080C0A",
-          "#222623",
-          "#3F4340",
-          "#5E635F",
-          "#7E8480",
-          "#A1A7A3",
-          "#C5CBC7",
-          "#EAF0EC"
+          "#060607",
+          "#1F1F22",
+          "#3D3D41",
+          "#5D5D63",
+          "#7F7F86",
+          "#A4A4A9",
+          "#CACACE",
+          "#EEEEF1"
+        ]
+      },
+      "ink-secondary": {
+        "role": "neutral",
+        "displayName": "Ink Secondary",
+        "canonical": "#5C5C63",
+        "tonalRamp": [
+          "#060607",
+          "#1F1F22",
+          "#3D3D41",
+          "#5D5D63",
+          "#7F7F86",
+          "#A4A4AA",
+          "#CACACF",
+          "#EEEEF2"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#F6F6F3",
+        "tonalRamp": [
+          "#060605",
+          "#1F1F1E",
+          "#3D3D3B",
+          "#5E5E5B",
+          "#80807E",
+          "#A5A5A2",
+          "#CACAC9",
+          "#EEEEED"
         ]
       },
       "sheet-white": {
@@ -144,600 +54,736 @@
         "displayName": "Sheet White",
         "canonical": "#FFFFFF",
         "tonalRamp": [
-          "#0B0B0B",
-          "#252525",
-          "#424242",
-          "#616161",
-          "#828282",
-          "#A5A5A5",
-          "#C9C9C9",
+          "#060606",
+          "#1F1F1F",
+          "#3D3D3D",
+          "#5D5D5D",
+          "#808080",
+          "#A4A4A4",
+          "#CACACA",
           "#EEEEEE"
         ]
       },
-      "selected-sage": {
+      "selected-stone": {
         "role": "neutral",
-        "displayName": "Selected Sage",
-        "canonical": "#DCE6E0",
+        "displayName": "Selected Stone",
+        "canonical": "#ECECE7",
         "tonalRamp": [
-          "#070D09",
-          "#202723",
-          "#3C443F",
-          "#5B645F",
-          "#7C857F",
-          "#9EA8A2",
-          "#C2CCC6",
-          "#E7F1EB"
-        ]
-      },
-      "ink": {
-        "role": "neutral",
-        "displayName": "Ink",
-        "canonical": "#13201C",
-        "tonalRamp": [
-          "#030E0A",
-          "#1B2824",
-          "#374641",
-          "#566560",
-          "#778681",
-          "#99A9A4",
-          "#BDCEC8",
-          "#E2F3ED"
-        ]
-      },
-      "ink-secondary": {
-        "role": "neutral",
-        "displayName": "Ink Secondary",
-        "canonical": "#52615B",
-        "tonalRamp": [
-          "#030E0A",
-          "#1B2823",
-          "#374640",
-          "#56655F",
-          "#778780",
-          "#99A9A3",
-          "#BDCEC7",
-          "#E2F3EC"
+          "#060605",
+          "#1F1F1D",
+          "#3D3D3A",
+          "#5E5E5A",
+          "#80807C",
+          "#A5A5A1",
+          "#CBCBC8",
+          "#EEEEEC"
         ]
       },
       "rule-hairline": {
         "role": "neutral",
-        "displayName": "Hairline Rule",
-        "canonical": "#D3DDD7",
+        "displayName": "Rule Hairline",
+        "canonical": "#E4E4DE",
         "tonalRamp": [
-          "#070D09",
-          "#202723",
-          "#3C443F",
-          "#5B645F",
-          "#7C857F",
-          "#9EA8A2",
-          "#C2CCC6",
-          "#E7F1EB"
+          "#060605",
+          "#1F1F1D",
+          "#3D3D3A",
+          "#5E5E59",
+          "#81807B",
+          "#A5A5A0",
+          "#CBCBC7",
+          "#EFEFEC"
+        ]
+      },
+      "accent-ink": {
+        "role": "primary",
+        "displayName": "Accent Ink",
+        "canonical": "#17171C",
+        "tonalRamp": [
+          "#060607",
+          "#1F1F22",
+          "#3D3D41",
+          "#5D5D63",
+          "#7F7F86",
+          "#A4A4A9",
+          "#CACACE",
+          "#EEEEF1"
+        ]
+      },
+      "on-accent": {
+        "role": "primary",
+        "displayName": "On Accent",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#060606",
+          "#1F1F1F",
+          "#3D3D3D",
+          "#5D5D5D",
+          "#808080",
+          "#A4A4A4",
+          "#CACACA",
+          "#EEEEEE"
         ]
       },
       "danger": {
-        "role": "neutral",
+        "role": "tertiary",
         "displayName": "Danger",
-        "canonical": "#B8322B",
+        "canonical": "#C42034",
         "tonalRamp": [
-          "#2C0000",
-          "#550000",
-          "#800106",
-          "#AE2722",
-          "#D64F44",
-          "#FE7466",
-          "#FFA091",
-          "#FFCCBD"
+          "#1B0000",
+          "#460004",
+          "#770117",
+          "#AB1B2C",
+          "#D7454C",
+          "#F47A7A",
+          "#FFACA8",
+          "#FFD8D5"
         ]
       },
-      "stamp-green": {
+      "positive": {
         "role": "tertiary",
-        "displayName": "Stamp Green (done, paid)",
-        "canonical": "#1E7A4C",
+        "displayName": "Positive",
+        "canonical": "#1E7A45",
         "tonalRamp": [
-          "#001300",
-          "#00310F",
-          "#005229",
-          "#147346",
-          "#409666",
-          "#65BA88",
-          "#8EDEAD",
-          "#BBFFD5"
+          "#000A01",
+          "#00280F",
+          "#094A26",
+          "#1F6E40",
+          "#459360",
+          "#77B58A",
+          "#A8D8B5",
+          "#D5F9DE"
         ]
       },
-      "stamp-red": {
-        "role": "tertiary",
-        "displayName": "Stamp Red (overdue)",
-        "canonical": "#B8322B",
+      "turmeric": {
+        "role": "secondary",
+        "displayName": "Turmeric",
+        "canonical": "#FFB511",
         "tonalRamp": [
-          "#2C0000",
-          "#550000",
-          "#800106",
-          "#AE2722",
-          "#D64F44",
-          "#FE7466",
-          "#FFA091",
-          "#FFCCBD"
+          "#120100",
+          "#361500",
+          "#5F3000",
+          "#8A4E00",
+          "#B27100",
+          "#D09A38",
+          "#EEC37E",
+          "#FFE9B7"
         ]
       },
-      "stamp-violet": {
-        "role": "tertiary",
-        "displayName": "Stamp Violet (due, scheduled)",
-        "canonical": "#5B3FA8",
+      "turmeric-text-secondary": {
+        "role": "secondary",
+        "displayName": "Turmeric Text Secondary",
+        "canonical": "#4A3A0E",
         "tonalRamp": [
-          "#100034",
-          "#290D5C",
-          "#462B87",
-          "#644AB4",
-          "#856DDA",
-          "#A790FF",
-          "#CAB8FF",
-          "#EEE0FF"
+          "#090500",
+          "#261E0A",
+          "#473C1F",
+          "#6B5C37",
+          "#8F7F57",
+          "#B1A382",
+          "#D5CAAF",
+          "#F6EEDA"
         ]
       },
-      "stamp-blue": {
-        "role": "tertiary",
-        "displayName": "Stamp Blue (transfer)",
-        "canonical": "#2453A6",
+      "sea-teal": {
+        "role": "secondary",
+        "displayName": "Sea Teal",
+        "canonical": "#007780",
         "tonalRamp": [
-          "#000234",
-          "#001F5C",
-          "#133D86",
-          "#2E5DB1",
-          "#4E80D7",
-          "#70A4FE",
-          "#98C9FF",
-          "#C3F0FF"
+          "#00090B",
+          "#00262A",
+          "#00474D",
+          "#086A72",
+          "#388E97",
+          "#70B1B8",
+          "#A3D5DA",
+          "#D1F7FB"
         ]
       },
-      "chart-harbour-cyan": {
-        "role": "tertiary",
-        "displayName": "Chart Harbour Cyan (slot 1)",
-        "canonical": "#0E8FA6",
+      "sea-teal-deep": {
+        "role": "secondary",
+        "displayName": "Sea Teal Deep",
+        "canonical": "#005A61",
         "tonalRamp": [
-          "#00101F",
-          "#002E3F",
-          "#004E63",
-          "#006F85",
-          "#1592A9",
-          "#49B5CD",
-          "#76DAF1",
-          "#A8FEFF"
+          "#00080A",
+          "#002528",
+          "#11454A",
+          "#27686F",
+          "#4B8C93",
+          "#7BAFB5",
+          "#ABD3D7",
+          "#D7F5F8"
         ]
       },
-      "chart-bronze": {
-        "role": "tertiary",
-        "displayName": "Chart Bronze (slot 2)",
-        "canonical": "#B5702A",
+      "sea-teal-text-secondary": {
+        "role": "secondary",
+        "displayName": "Sea Teal Text Secondary",
+        "canonical": "#E3F2F2",
         "tonalRamp": [
-          "#210000",
-          "#451300",
-          "#6A2F00",
-          "#904E00",
-          "#B5702A",
-          "#DB9350",
-          "#FEB97B",
-          "#FFE0AA"
+          "#040606",
+          "#1A2121",
+          "#363F3F",
+          "#556060",
+          "#778383",
+          "#9CA7A7",
+          "#C4CCCC",
+          "#E9F0F0"
         ]
       },
-      "chart-rose": {
-        "role": "tertiary",
-        "displayName": "Chart Rose (slot 3)",
-        "canonical": "#B4477C",
+      "overprint-green": {
+        "role": "secondary",
+        "displayName": "Overprint Green",
+        "canonical": "#005409",
         "tonalRamp": [
-          "#25000F",
-          "#4B002A",
-          "#741348",
-          "#9E3269",
-          "#C4568A",
-          "#EC79AD",
-          "#FFA3D1",
-          "#FFCDF6"
+          "#000900",
+          "#042705",
+          "#184919",
+          "#2F6E2F",
+          "#519250",
+          "#7FB57D",
+          "#AED8AC",
+          "#D9F9D7"
+        ]
+      },
+      "today-pink": {
+        "role": "tertiary",
+        "displayName": "Today Pink",
+        "canonical": "#E8329A",
+        "tonalRamp": [
+          "#1A0009",
+          "#460026",
+          "#760047",
+          "#AA006B",
+          "#D7318F",
+          "#F46FB1",
+          "#FFA4D5",
+          "#FFD3F7"
+        ]
+      },
+      "status-done": {
+        "role": "tertiary",
+        "displayName": "Status Done",
+        "canonical": "#17171C",
+        "tonalRamp": [
+          "#060607",
+          "#1F1F22",
+          "#3D3D41",
+          "#5D5D63",
+          "#7F7F86",
+          "#A4A4A9",
+          "#CACACE",
+          "#EEEEF1"
+        ]
+      },
+      "status-overdue": {
+        "role": "tertiary",
+        "displayName": "Status Overdue",
+        "canonical": "#D7263D",
+        "tonalRamp": [
+          "#1C0000",
+          "#480003",
+          "#7A0015",
+          "#AF0B2A",
+          "#DC3E4A",
+          "#F87778",
+          "#FFA9A7",
+          "#FFD7D4"
+        ]
+      },
+      "chart-periwinkle": {
+        "role": "tertiary",
+        "displayName": "Chart Periwinkle",
+        "canonical": "#5470D6",
+        "tonalRamp": [
+          "#01021E",
+          "#0F1949",
+          "#253679",
+          "#3E55AD",
+          "#5D79D8",
+          "#86A0F1",
+          "#B2C8FF",
+          "#DBEDFF"
+        ]
+      },
+      "chart-tangerine": {
+        "role": "tertiary",
+        "displayName": "Chart Tangerine",
+        "canonical": "#D9722E",
+        "tonalRamp": [
+          "#150000",
+          "#3D0D00",
+          "#682600",
+          "#974000",
+          "#C06324",
+          "#DE8E60",
+          "#FBBA96",
+          "#FFE3C7"
+        ]
+      },
+      "chart-orchid": {
+        "role": "tertiary",
+        "displayName": "Chart Orchid",
+        "canonical": "#B84C8F",
+        "tonalRamp": [
+          "#14000B",
+          "#3A0629",
+          "#651C4B",
+          "#923470",
+          "#BB5794",
+          "#DA85B6",
+          "#F8B2D9",
+          "#FFDCF9"
         ]
       },
       "chart-olive": {
         "role": "tertiary",
-        "displayName": "Chart Olive (slot 4)",
-        "canonical": "#6E8A1E",
+        "displayName": "Chart Olive",
+        "canonical": "#8A8F1E",
         "tonalRamp": [
-          "#050F00",
-          "#1B2C00",
-          "#354B00",
-          "#526C00",
-          "#738F25",
-          "#94B34D",
-          "#B9D77B",
-          "#E0FBAB"
+          "#070700",
+          "#212200",
+          "#3F4100",
+          "#606300",
+          "#828722",
+          "#A6AB60",
+          "#CBD096",
+          "#EFF3C8"
         ]
       },
       "chart-stone": {
-        "role": "neutral",
-        "displayName": "Chart Stone (Other)",
-        "canonical": "#8C9792",
+        "role": "tertiary",
+        "displayName": "Chart Stone",
+        "canonical": "#8C8C86",
         "tonalRamp": [
-          "#060D0A",
-          "#1E2723",
-          "#3B4540",
-          "#5A645F",
-          "#7A8580",
-          "#9DA8A3",
-          "#C1CCC7",
-          "#E6F2EC"
+          "#060605",
+          "#1F1F1D",
+          "#3D3D3A",
+          "#5E5E59",
+          "#81817B",
+          "#A5A5A0",
+          "#CBCBC7",
+          "#EFEFEC"
         ]
       },
       "dark-page": {
         "role": "neutral",
-        "displayName": "Dark mode: Mint Page",
-        "canonical": "#0C1613",
+        "displayName": "Dark Page",
+        "canonical": "#131312",
         "tonalRamp": [
-          "#050D0B",
-          "#1D2824",
-          "#3A4541",
-          "#586460",
-          "#798681",
-          "#9BA8A4",
-          "#BFCDC8",
-          "#E4F2ED"
+          "#060605",
+          "#1F1F1F",
+          "#3D3D3C",
+          "#5E5E5C",
+          "#80807F",
+          "#A4A5A3",
+          "#CACACA",
+          "#EEEEEE"
         ]
       },
       "dark-sheet": {
         "role": "neutral",
-        "displayName": "Dark mode: Sheet White",
-        "canonical": "#14231F",
+        "displayName": "Dark Sheet",
+        "canonical": "#1B1B1A",
         "tonalRamp": [
-          "#020E0B",
-          "#192925",
-          "#364641",
-          "#556661",
-          "#758782",
-          "#97AAA4",
-          "#BBCEC8",
-          "#E0F4EE"
+          "#060605",
+          "#1F1F1F",
+          "#3D3D3C",
+          "#5E5E5C",
+          "#80807F",
+          "#A4A4A3",
+          "#CACACA",
+          "#EEEEEE"
         ]
       },
       "dark-selected": {
         "role": "neutral",
-        "displayName": "Dark mode: Selected Sage",
-        "canonical": "#1E332D",
+        "displayName": "Dark Selected",
+        "canonical": "#262523",
         "tonalRamp": [
-          "#000F0A",
-          "#152A24",
-          "#324741",
-          "#506760",
-          "#718881",
-          "#93ABA4",
-          "#B7D0C8",
-          "#DBF5ED"
+          "#060605",
+          "#201F1E",
+          "#3E3D3B",
+          "#5E5D5B",
+          "#81807E",
+          "#A5A4A2",
+          "#CBCAC9",
+          "#EFEEED"
+        ]
+      },
+      "dark-tile": {
+        "role": "neutral",
+        "displayName": "Dark Tile",
+        "canonical": "#252421",
+        "tonalRamp": [
+          "#060605",
+          "#201F1E",
+          "#3E3D3B",
+          "#5F5D5A",
+          "#81807D",
+          "#A5A4A1",
+          "#CBCAC8",
+          "#EFEEEC"
+        ]
+      },
+      "dark-tile-raised": {
+        "role": "neutral",
+        "displayName": "Dark Tile Raised",
+        "canonical": "#33322F",
+        "tonalRamp": [
+          "#060605",
+          "#201F1E",
+          "#3E3D3B",
+          "#5E5D5A",
+          "#81807D",
+          "#A5A4A2",
+          "#CBCAC8",
+          "#EFEEED"
         ]
       },
       "dark-ink": {
         "role": "neutral",
-        "displayName": "Dark mode: Ink",
-        "canonical": "#E6EEEA",
+        "displayName": "Dark Ink",
+        "canonical": "#E7E5DF",
         "tonalRamp": [
-          "#070D0A",
-          "#212724",
-          "#3D4441",
-          "#5C6360",
-          "#7D8481",
-          "#A0A7A3",
-          "#C3CBC7",
-          "#E9F1ED"
+          "#060605",
+          "#201F1D",
+          "#3E3D3A",
+          "#5F5D59",
+          "#82807B",
+          "#A6A4A0",
+          "#CCCAC7",
+          "#EFEEEC"
         ]
       },
       "dark-ink-secondary": {
         "role": "neutral",
-        "displayName": "Dark mode: Ink Secondary",
-        "canonical": "#9EB2AA",
+        "displayName": "Dark Ink Secondary",
+        "canonical": "#A39F97",
         "tonalRamp": [
-          "#020E09",
-          "#192923",
-          "#354640",
-          "#54665F",
-          "#748780",
-          "#97AAA2",
-          "#BACFC6",
-          "#DFF4EC"
+          "#060604",
+          "#211F1C",
+          "#3F3D38",
+          "#605D57",
+          "#838079",
+          "#A7A49E",
+          "#CDCAC5",
+          "#F0EEEA"
         ]
       },
       "dark-rule": {
         "role": "neutral",
-        "displayName": "Dark mode: Hairline Rule",
-        "canonical": "#25392F",
+        "displayName": "Dark Rule",
+        "canonical": "#2C2B29",
         "tonalRamp": [
-          "#000F07",
-          "#162A20",
-          "#33473D",
-          "#52675C",
-          "#72897D",
-          "#94AC9F",
-          "#B8D0C3",
-          "#DDF6E8"
-        ]
-      },
-      "dark-accent": {
-        "role": "primary",
-        "displayName": "Dark mode: Deep Pine Accent",
-        "canonical": "#93D3B6",
-        "tonalRamp": [
-          "#001205",
-          "#002F1C",
-          "#064F37",
-          "#306F56",
-          "#539176",
-          "#76B599",
-          "#99DABC",
-          "#C3FEE3"
-        ]
-      },
-      "dark-cover": {
-        "role": "secondary",
-        "displayName": "Dark mode: Bottle-Green Cover",
-        "canonical": "#153029",
-        "tonalRamp": [
-          "#00100A",
-          "#102B24",
-          "#2D4841",
-          "#4C6860",
-          "#6C8A81",
-          "#8FADA4",
-          "#B2D1C8",
-          "#D7F7ED"
-        ]
-      },
-      "dark-cover-raised": {
-        "role": "secondary",
-        "displayName": "Dark mode: Cover Raised",
-        "canonical": "#1E3E35",
-        "tonalRamp": [
-          "#00100A",
-          "#0A2C23",
-          "#294940",
-          "#48695F",
-          "#698B80",
-          "#8BAEA3",
-          "#AED2C7",
-          "#D3F8EC"
-        ]
-      },
-      "dark-foil-gold": {
-        "role": "tertiary",
-        "displayName": "Dark mode: Foil Gold",
-        "canonical": "#D9B462",
-        "tonalRamp": [
-          "#1A0500",
-          "#391F00",
-          "#5B3B00",
-          "#7D5B00",
-          "#A07D26",
-          "#C4A04D",
-          "#E8C478",
-          "#FFEBA7"
+          "#060605",
+          "#201F1E",
+          "#3E3D3B",
+          "#5E5D5B",
+          "#81807E",
+          "#A5A4A2",
+          "#CBCAC9",
+          "#EFEEED"
         ]
       },
       "dark-danger": {
+        "role": "tertiary",
+        "displayName": "Dark Danger",
+        "canonical": "#E39A94",
+        "tonalRamp": [
+          "#100202",
+          "#331513",
+          "#5B2E2C",
+          "#854B47",
+          "#AC6C68",
+          "#CC9490",
+          "#EBBEBA",
+          "#FFE5E2"
+        ]
+      },
+      "dark-positive": {
+        "role": "tertiary",
+        "displayName": "Dark Positive",
+        "canonical": "#9DC4A5",
+        "tonalRamp": [
+          "#010803",
+          "#132417",
+          "#2B4431",
+          "#47674E",
+          "#688A6F",
+          "#90AD96",
+          "#BAD2BF",
+          "#E2F4E6"
+        ]
+      },
+      "dark-agenda-dot": {
         "role": "neutral",
-        "displayName": "Dark mode: Danger",
-        "canonical": "#F07167",
+        "displayName": "Dark Agenda Dot",
+        "canonical": "#8F8A7E",
         "tonalRamp": [
-          "#2A0000",
-          "#520000",
-          "#7D0E12",
-          "#A92F2C",
-          "#D0544D",
-          "#F9796E",
-          "#FFA398",
-          "#FFCEC2"
+          "#070604",
+          "#211F1A",
+          "#403D35",
+          "#615D53",
+          "#848075",
+          "#A8A49B",
+          "#CDCAC3",
+          "#F1EEE8"
         ]
       },
-      "dark-stamp-green": {
-        "role": "tertiary",
-        "displayName": "Dark mode: Stamp Green (done, paid)",
-        "canonical": "#55C48D",
+      "dark-money-dot": {
+        "role": "neutral",
+        "displayName": "Dark Money Dot",
+        "canonical": "#5F5D58",
         "tonalRamp": [
-          "#001400",
-          "#00330F",
-          "#005429",
-          "#007645",
-          "#1F9965",
-          "#4EBE87",
-          "#7FE1AD",
-          "#B0FFD5"
+          "#060605",
+          "#201F1D",
+          "#3E3D3A",
+          "#5F5D59",
+          "#82807B",
+          "#A6A4A0",
+          "#CCCAC7",
+          "#EFEEEC"
         ]
       },
-      "dark-stamp-red": {
+      "dark-chart-single": {
         "role": "tertiary",
-        "displayName": "Dark mode: Stamp Red (overdue)",
-        "canonical": "#F07167",
+        "displayName": "Dark Chart Single",
+        "canonical": "#7EA8A5",
         "tonalRamp": [
-          "#2A0000",
-          "#520000",
-          "#7D0E12",
-          "#A92F2C",
-          "#D0544D",
-          "#F9796E",
-          "#FFA398",
-          "#FFCEC2"
+          "#010707",
+          "#102322",
+          "#284341",
+          "#426563",
+          "#638986",
+          "#8CACAA",
+          "#B7D1CE",
+          "#E0F3F1"
         ]
       },
-      "dark-stamp-violet": {
+      "dark-status-done": {
         "role": "tertiary",
-        "displayName": "Dark mode: Stamp Violet (due, scheduled)",
-        "canonical": "#AB97F2",
+        "displayName": "Dark Status Done",
+        "canonical": "#2C2B29",
         "tonalRamp": [
-          "#10002D",
-          "#291453",
-          "#46317B",
-          "#6550A4",
-          "#8671C9",
-          "#A894EF",
-          "#CCBAFF",
-          "#F1E2FF"
+          "#060605",
+          "#201F1E",
+          "#3E3D3B",
+          "#5E5D5B",
+          "#81807E",
+          "#A5A4A2",
+          "#CBCAC9",
+          "#EFEEED"
         ]
       },
-      "dark-stamp-blue": {
+      "dark-status-due-line": {
         "role": "tertiary",
-        "displayName": "Dark mode: Stamp Blue (transfer)",
-        "canonical": "#7FA9F2",
+        "displayName": "Dark Status Due Line",
+        "canonical": "#6A6862",
         "tonalRamp": [
-          "#00052D",
-          "#062153",
-          "#1D3F7C",
-          "#3A5FA2",
-          "#5A82C8",
-          "#7BA5EE",
-          "#A1CAFF",
-          "#CBF0FF"
+          "#060605",
+          "#201F1C",
+          "#3E3D39",
+          "#5F5D58",
+          "#82807A",
+          "#A6A49F",
+          "#CCCAC6",
+          "#EFEEEB"
         ]
       },
-      "dark-chart-harbour-cyan": {
+      "dark-status-overdue": {
         "role": "tertiary",
-        "displayName": "Dark mode: Chart Harbour Cyan (slot 1)",
-        "canonical": "#1FA0B8",
+        "displayName": "Dark Status Overdue",
+        "canonical": "#3A2422",
         "tonalRamp": [
-          "#00111F",
-          "#002E40",
-          "#004E64",
-          "#007087",
-          "#0092AA",
-          "#40B6CF",
-          "#71DBF2",
-          "#A5FFFF"
+          "#0A0404",
+          "#281C1B",
+          "#4A3836",
+          "#6E5755",
+          "#927977",
+          "#B59F9C",
+          "#D8C6C4",
+          "#F9EBE9"
         ]
       },
-      "dark-chart-bronze": {
+      "dark-status-overdue-text": {
         "role": "tertiary",
-        "displayName": "Dark mode: Chart Bronze (slot 2)",
-        "canonical": "#B97834",
+        "displayName": "Dark Status Overdue Text",
+        "canonical": "#E3A39D",
         "tonalRamp": [
-          "#200000",
-          "#431500",
-          "#693100",
-          "#8E5000",
-          "#B2722D",
-          "#D89452",
-          "#FBBA7C",
-          "#FFE1AB"
+          "#0F0202",
+          "#311615",
+          "#57312E",
+          "#804E4A",
+          "#A76F6B",
+          "#C79792",
+          "#E7C0BC",
+          "#FFE6E3"
         ]
       },
-      "dark-chart-rose": {
+      "dark-chart-periwinkle": {
         "role": "tertiary",
-        "displayName": "Dark mode: Chart Rose (slot 3)",
-        "canonical": "#CF5F96",
+        "displayName": "Dark Chart Periwinkle",
+        "canonical": "#6F87D0",
         "tonalRamp": [
-          "#250010",
-          "#4B002B",
-          "#74134A",
-          "#9E326B",
-          "#C4558C",
-          "#EC79B0",
-          "#FFA2D3",
-          "#FFCDF7"
+          "#020417",
+          "#131C3D",
+          "#2B3A69",
+          "#465A97",
+          "#677DC0",
+          "#8EA3DC",
+          "#B9C9F8",
+          "#E1EEFF"
+        ]
+      },
+      "dark-chart-tangerine": {
+        "role": "tertiary",
+        "displayName": "Dark Chart Tangerine",
+        "canonical": "#C4804A",
+        "tonalRamp": [
+          "#110200",
+          "#341600",
+          "#5C3107",
+          "#864E1C",
+          "#AE703E",
+          "#CD9870",
+          "#ECC1A1",
+          "#FFE7D0"
+        ]
+      },
+      "dark-chart-orchid": {
+        "role": "tertiary",
+        "displayName": "Dark Chart Orchid",
+        "canonical": "#BC649C",
+        "tonalRamp": [
+          "#11000A",
+          "#360D28",
+          "#5E254A",
+          "#893F6F",
+          "#B16094",
+          "#D18BB5",
+          "#F0B7D8",
+          "#FFE0F9"
         ]
       },
       "dark-chart-olive": {
         "role": "tertiary",
-        "displayName": "Dark mode: Chart Olive (slot 4)",
-        "canonical": "#7F9C2A",
+        "displayName": "Dark Chart Olive",
+        "canonical": "#8F9636",
         "tonalRamp": [
-          "#050F00",
-          "#1C2C00",
-          "#364B00",
-          "#536D00",
-          "#738F17",
-          "#95B345",
-          "#BAD776",
-          "#E0FBA7"
+          "#060700",
+          "#202200",
+          "#3E4100",
+          "#5E6300",
+          "#81872F",
+          "#A4AB67",
+          "#CAD09B",
+          "#EEF3CB"
         ]
       },
       "dark-chart-stone": {
-        "role": "neutral",
-        "displayName": "Dark mode: Chart Stone (Other)",
-        "canonical": "#6F7C76",
+        "role": "tertiary",
+        "displayName": "Dark Chart Stone",
+        "canonical": "#5E5D59",
         "tonalRamp": [
-          "#050E09",
-          "#1D2823",
-          "#394540",
-          "#58655F",
-          "#798680",
-          "#9BA9A2",
-          "#BFCDC6",
-          "#E4F3EC"
+          "#060605",
+          "#201F1D",
+          "#3E3D3A",
+          "#5E5E5A",
+          "#81807C",
+          "#A5A4A1",
+          "#CBCAC8",
+          "#EFEEEC"
         ]
       }
     },
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Cover figures: Today weekday, Money and Net worth totals. Scales to fit one line."
+        "purpose": "Tile titles: the menu name on every screen."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "The key amount on a money tile; tabular, shrinks to one line."
       },
       "title": {
         "displayName": "Title",
-        "purpose": "Form page titles, large wordmark."
+        "purpose": "Sign-in tagline and the large wordmark."
       },
       "subtitle": {
         "displayName": "Subtitle",
-        "purpose": "Rail wordmark, secondary cover lines."
+        "purpose": "The wordmark in the side rail."
       },
       "heading": {
         "displayName": "Heading",
-        "purpose": "Section headings above sheets; long date on the Today cover; currency codes in amount fields."
+        "purpose": "Section headings; tile subtitles in 600."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Row titles, inputs, cover captions."
+        "purpose": "Row titles, field values, prose."
       },
       "body-bold": {
         "displayName": "Body Bold",
-        "purpose": "Rail items, emphasised body text, the bold coral overdue count on the cover."
+        "purpose": "Amounts in rows."
       },
       "small": {
         "displayName": "Small",
-        "purpose": "Row subtitles, notes, empty states."
+        "purpose": "Row subtitles, notes, helper text."
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Button, chip and field labels."
+        "purpose": "Buttons and figure labels."
+      },
+      "link": {
+        "displayName": "Link",
+        "purpose": "Underlined section and inline actions."
       },
       "caption": {
         "displayName": "Caption",
-        "purpose": "Tab bar labels, field hints, calendar weekdays and legend."
+        "purpose": "Weekday headers and tab bar labels."
       },
-      "amount-entry": {
-        "displayName": "Amount Entry",
-        "purpose": "The large number in amount fields."
-      },
-      "stamp": {
-        "displayName": "Stamp",
-        "purpose": "Stamp text only, uppercase."
+      "status": {
+        "displayName": "Status",
+        "purpose": "State pills and tile chips."
       }
     },
-    "shadows": [],
+    "shadows": [
+      {
+        "name": "new-button",
+        "value": "0 4px 12px rgba(0,0,0,0.18)",
+        "purpose": "Only the floating New button; it floats over scrolling content."
+      }
+    ],
     "motion": [
       {
-        "name": "stamp-press",
-        "value": "260ms cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "A fresh stamp presses in: scale 1.5 to 1 with a fade to 0.92 opacity (Reanimated Easing.out(Easing.exp)). Skipped under reduced motion."
+        "name": "status-pop",
+        "value": "240ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "A status pill that just changed scales 1.25 to 1 once; off under reduced motion."
       },
       {
-        "name": "press-feedback",
-        "value": "opacity 0.75, scale 0.98",
-        "purpose": "Button press state. Checks scale to 0.9; chips and links drop to 0.6 or 0.7 opacity."
+        "name": "press",
+        "value": "150ms ease-out",
+        "purpose": "Buttons scale to 0.97 while pressed."
+      },
+      {
+        "name": "toast-in",
+        "value": "200ms fade in from below (native only)",
+        "purpose": "Toast entrance; skipped on web and under reduced motion."
       }
     ],
     "breakpoints": [
       {
         "name": "rail",
-        "value": "900px"
+        "value": "900px",
+        "purpose": "At or above this web width the side rail replaces the bottom tab bar and the floating New button."
       }
     ],
     "layout": {
       "maxContentWidth": "760px",
-      "formWidth": "600px",
+      "formWidth": "560px",
       "railWidth": "240px",
       "dateLocale": "en-GB"
     },
     "focus": {
-      "web": "outline: 2px solid accent; outline-offset: 2px; border-radius: 8px"
+      "web": "2px solid ink outline, 2px offset"
     }
   },
   "components": [
@@ -745,159 +791,117 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Filled deep pine accent; the main action on a page or form (Save, Mark paid).",
-      "html": "<button class=\"ds-btn-primary\">Save</button>",
-      "css": ".ds-btn-primary{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 24px;border:1px solid transparent;border-radius:12px;background:#1E5244;color:#FFFFFF;font-size:14px;line-height:20px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .15s}.ds-btn-primary:hover{opacity:.9}.ds-btn-primary:active{opacity:.75;transform:scale(.98)}.ds-btn-primary:focus-visible{outline:2px solid #1E5244;outline-offset:2px}.ds-btn-primary:disabled{opacity:.45}"
+      "description": "Ink pill; the main action on a form (Save, Sign in).",
+      "html": "<button class=\"ds-btn\">Save</button>",
+      "css": ".ds-btn{font-family:'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;min-height:48px;padding:0 24px;border:0;border-radius:999px;background:#17171C;color:#FFFFFF;font-size:14px;line-height:20px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .15s}.ds-btn:active{opacity:.8;transform:scale(.97)}.ds-btn:focus-visible{outline:2px solid #17171C;outline-offset:2px}"
     },
     {
       "name": "Plain Button",
       "kind": "button",
       "refersTo": "button-plain",
-      "description": "Quiet sage fill for secondary actions on the page.",
-      "html": "<button class=\"ds-btn-plain\">Cancel</button>",
-      "css": ".ds-btn-plain{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 24px;border:1px solid transparent;border-radius:12px;background:#DCE6E0;color:#13201C;font-size:14px;line-height:20px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .15s}.ds-btn-plain:hover{opacity:.9}.ds-btn-plain:active{opacity:.75;transform:scale(.98)}.ds-btn-plain:focus-visible{outline:2px solid #1E5244;outline-offset:2px}.ds-btn-plain:disabled{opacity:.45}"
+      "description": "Quiet stone pill (Mark paid, Cancel).",
+      "html": "<button class=\"ds-plain\">Mark paid</button>",
+      "css": ".ds-plain{font-family:'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;min-height:40px;padding:0 16px;border:0;border-radius:999px;background:#ECECE7;color:#17171C;font-size:14px;font-weight:700}"
     },
     {
-      "name": "Cover Button",
+      "name": "Danger Button",
       "kind": "button",
-      "refersTo": "button-cover",
-      "description": "Cover-raised fill for actions on the green band and rail, such as New entry.",
-      "html": "<div class=\"ds-cover-wrap\"><button class=\"ds-btn-cover\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><line x1=\"12\" y1=\"5\" x2=\"12\" y2=\"19\"/><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/></svg>New entry</button></div>",
-      "css": ".ds-cover-wrap{background:#17352E;padding:24px}.ds-btn-cover{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 24px;border:1px solid transparent;border-radius:12px;background:#21443B;color:#F1F5F2;font-size:14px;line-height:20px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .15s}.ds-btn-cover:hover{opacity:.9}.ds-btn-cover:active{opacity:.75;transform:scale(.98)}.ds-btn-cover:focus-visible{outline:2px solid #93D3B6;outline-offset:2px}.ds-btn-cover:disabled{opacity:.45}"
+      "refersTo": "button-danger",
+      "description": "Stone pill with red text; first step of a delete.",
+      "html": "<button class=\"ds-danger\">Delete task</button>",
+      "css": ".ds-danger{font-family:'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;min-height:40px;padding:0 16px;border:0;border-radius:999px;background:#ECECE7;color:#C42034;font-size:14px;font-weight:700}"
     },
     {
-      "name": "Text Field",
-      "kind": "input",
-      "refersTo": "text-field",
-      "description": "Mint-filled field inside a white sheet; the 2px border turns accent on focus.",
-      "html": "<div class=\"ds-sheet-pad\"><label class=\"ds-field\"><span class=\"ds-field-label\">Title</span><input class=\"ds-input\" placeholder=\"Pay electricity\"></label></div>",
-      "css": ".ds-sheet-pad{background:#FFFFFF;border-radius:16px;padding:16px}.ds-field{display:flex;flex-direction:column;gap:8px;font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;}.ds-field-label{font-size:14px;line-height:20px;font-weight:700;color:#52615B}.ds-input{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;min-height:48px;padding:0 16px;border:2px solid transparent;border-radius:12px;background:#EAF0EC;color:#13201C;font-size:16px;font-weight:500;caret-color:#1E5244;outline:none}.ds-input::placeholder{color:#52615B}.ds-input:focus{border-color:#1E5244}"
-    },
-    {
-      "name": "Chip Group",
-      "kind": "chip",
-      "refersTo": "chip",
-      "description": "Single-choice pills; selected fills with the accent.",
-      "html": "<div class=\"ds-chips\" role=\"radiogroup\"><button class=\"ds-chip\" role=\"radio\" aria-checked=\"true\">Today</button><button class=\"ds-chip\" role=\"radio\" aria-checked=\"false\">Tomorrow</button><button class=\"ds-chip\" role=\"radio\" aria-checked=\"false\">In a week</button></div>",
-      "css": ".ds-chips{display:flex;flex-wrap:wrap;gap:8px;background:#FFFFFF;padding:16px;border-radius:16px}.ds-chip{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;min-height:36px;padding:8px 14px;border:0;border-radius:999px;background:#EAF0EC;color:#13201C;font-size:14px;line-height:20px;font-weight:700;cursor:pointer}.ds-chip[aria-checked=\"true\"]{background:#1E5244;color:#FFFFFF}.ds-chip:active{opacity:.7}.ds-chip:focus-visible{outline:2px solid #1E5244;outline-offset:2px}"
-    },
-    {
-      "name": "Section with Sheet and Rows",
+      "name": "Agenda Title Tile",
       "kind": "card",
-      "refersTo": "sheet",
-      "description": "Heading row above a white sheet; rows separated by inset hairlines; hover fills sage.",
-      "html": "<section class=\"ds-section\"><div class=\"ds-section-head\"><h3>Bills due</h3><a href=\"#\">See all</a></div><div class=\"ds-sheet\"><div class=\"ds-row\"><span class=\"ds-row-lead\"></span><span class=\"ds-row-text\"><span class=\"ds-row-title\">Electricity</span><span class=\"ds-row-sub\">Due 20 Oct</span></span><span class=\"ds-row-amt\">IDR 850,000</span></div><div class=\"ds-row\"><span class=\"ds-row-lead\"></span><span class=\"ds-row-text\"><span class=\"ds-row-title\">Phone plan</span><span class=\"ds-row-sub\">Due 24 Oct</span></span><span class=\"ds-row-amt\">EUR 15.00</span></div></div></section>",
-      "css": ".ds-section{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;background:#EAF0EC;padding:24px 16px;display:flex;flex-direction:column;gap:8px}.ds-section-head{display:flex;justify-content:space-between;align-items:baseline;padding:0 4px}.ds-section-head h3{margin:0;font-size:17px;line-height:24px;font-weight:700;letter-spacing:-0.1px;color:#13201C}.ds-section-head a{font-size:14px;font-weight:600;color:#1E5244;text-decoration:none}.ds-section-head a:hover{opacity:.7}.ds-sheet{background:#FFFFFF;border-radius:16px;overflow:hidden}.ds-row{display:flex;align-items:center;gap:16px;min-height:56px;padding:12px 16px;position:relative;cursor:pointer}.ds-row+.ds-row::before{content:\"\";position:absolute;top:0;left:16px;right:0;border-top:1px solid #D3DDD7}.ds-row:hover{background:#DCE6E0}.ds-row-lead{width:28px}.ds-row-text{flex:1;display:flex;flex-direction:column;gap:2px}.ds-row-title{font-size:16px;line-height:22px;font-weight:500;color:#13201C}.ds-row-sub{font-size:14px;line-height:20px;font-weight:500;color:#52615B}.ds-row-amt{font-size:16px;font-weight:600;color:#13201C;font-variant-numeric:tabular-nums}"
+      "refersTo": "tile-agenda",
+      "description": "Turmeric tile with the menu name, a subtitle and count chips.",
+      "html": "<section class=\"ds-tile\"><h1>Today</h1><p>Saturday 17 October</p><span class=\"chip\">2 to do</span><span class=\"chip alert\">1 overdue</span></section>",
+      "css": ".ds-tile{font-family:'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;background:#FFB511;color:#17171C;border-radius:24px;padding:24px 20px 28px}.ds-tile h1{margin:0;font-size:44px;line-height:48px;font-weight:800;letter-spacing:-1.5px}.ds-tile p{margin:8px 0 24px;color:#4A3A0E;font-size:17px;font-weight:600}.ds-tile .chip{display:inline-block;margin-right:8px;padding:5px 12px;border-radius:999px;background:#17171C;color:#FFB511;font-size:12px;font-weight:800}.ds-tile .alert{background:#D7263D;color:#fff}"
     },
     {
-      "name": "Cover Band",
-      "kind": "custom",
-      "refersTo": "cover-band",
-      "description": "Flat bottle-green band carrying the screen headline figure at display size; overdue count in bold coral. No kicker above the figure.",
-      "html": "<header class=\"ds-cover\"><div class=\"ds-cover-display\">Friday</div><div class=\"ds-cover-date\">17 October 2026</div><div class=\"ds-cover-sum\"><span>3 tasks, 2 events, 1 bill due</span> <strong>1 overdue</strong></div></header>",
-      "css": ".ds-cover{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;background:#17352E;color:#F1F5F2;padding:24px 16px 32px;font-variant-numeric:tabular-nums}.ds-cover-display{font-size:44px;line-height:48px;font-weight:800;letter-spacing:-1.3px}.ds-cover-date{font-size:17px;line-height:24px;font-weight:700;margin-top:4px}.ds-cover-sum{margin-top:8px;font-size:16px;line-height:22px;font-weight:500;color:#A9C2B8}.ds-cover-sum strong{color:#F07167;font-weight:600}"
+      "name": "Money Title Tile",
+      "kind": "card",
+      "refersTo": "tile-money",
+      "description": "Teal tile with the menu name, month and the key figure.",
+      "html": "<section class=\"ds-tile-m\"><h1>Money</h1><p>October</p><strong>Rp 7.045.133</strong><small>Spent</small></section>",
+      "css": ".ds-tile-m{font-family:'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;background:#007780;color:#fff;border-radius:24px;padding:24px 20px 28px;display:flex;flex-direction:column}.ds-tile-m h1{margin:0;font-size:44px;line-height:48px;font-weight:800;letter-spacing:-1.5px}.ds-tile-m p{margin:8px 0 24px;color:#E3F2F2;font-size:17px;font-weight:600}.ds-tile-m strong{font-size:34px;line-height:40px;font-weight:800;letter-spacing:-1px;font-variant-numeric:tabular-nums}.ds-tile-m small{color:#E3F2F2;font-size:14px;font-weight:700}"
     },
     {
-      "name": "Stamp",
-      "kind": "custom",
-      "refersTo": "stamp",
-      "description": "The signature: rotated, double-ruled ink stamp recording state, pressed in once when fresh (260ms, exponential ease-out).",
-      "html": "<div class=\"ds-stamps\"><span class=\"ds-stamp ds-stamp-green ds-stamp-fresh\"><span>DONE 17 OCT</span></span><span class=\"ds-stamp ds-stamp-red\"><span>OVERDUE</span></span><span class=\"ds-stamp ds-stamp-violet\"><span>DUE 20 OCT</span></span><span class=\"ds-stamp ds-stamp-blue\"><span>TRANSFER</span></span></div>",
-      "css": ".ds-stamps{display:flex;gap:20px;flex-wrap:wrap;padding:24px;background:#FFFFFF}.ds-stamp{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;display:inline-block;border:2px solid currentColor;border-radius:6px;padding:2px;opacity:.92;transform:rotate(-6deg)}.ds-stamp>span{display:block;border:1px solid currentColor;border-radius:3px;padding:1px 6px;font-size:11px;line-height:15px;font-weight:800;letter-spacing:1.1px;white-space:nowrap}.ds-stamp-green{color:#1E7A4C}.ds-stamp-red{color:#B8322B}.ds-stamp-violet{color:#5B3FA8}.ds-stamp-blue{color:#2453A6}.ds-stamp-fresh{animation:ds-press 260ms cubic-bezier(0.16,1,0.3,1) both}.ds-stamps:hover .ds-stamp-fresh{animation:ds-press 260ms cubic-bezier(0.16,1,0.3,1) both}@keyframes ds-press{from{opacity:0;transform:rotate(-6deg) scale(1.5)}to{opacity:.92;transform:rotate(-6deg) scale(1)}}@media (prefers-reduced-motion:reduce){.ds-stamp-fresh{animation:none}}"
+      "name": "Status Pills",
+      "kind": "badge",
+      "refersTo": "status-done",
+      "description": "Done and paid inked in, due outlined, overdue red.",
+      "html": "<span class=\"ds-s done\">Paid 17 Oct</span><span class=\"ds-s due\">Due today</span><span class=\"ds-s over\">Overdue 14 Oct</span>",
+      "css": ".ds-s{font-family:'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;display:inline-block;margin-right:8px;padding:3px 10px;border:1.5px solid #17171C;border-radius:999px;font-size:12px;line-height:16px;font-weight:800}.ds-s.done{background:#17171C;color:#fff}.ds-s.due{color:#17171C}.ds-s.over{background:#D7263D;border-color:#D7263D;color:#fff}"
     },
     {
-      "name": "Side Rail",
-      "kind": "nav",
-      "refersTo": "rail",
-      "description": "Wide-web navigation (900px and up): bottle-green rail with the gold-foil wordmark and navigation items.",
-      "html": "<nav class=\"ds-rail\"><div class=\"ds-wordmark\"><span class=\"ds-seal\"><span></span></span>Lifeboat</div><a class=\"ds-rail-item\" aria-current=\"page\" href=\"#\">Today</a><a class=\"ds-rail-item\" href=\"#\">Calendar</a><a class=\"ds-rail-item\" href=\"#\">Money</a><a class=\"ds-rail-item\" href=\"#\">Net worth</a><a class=\"ds-rail-item\" href=\"#\">Settings</a></nav>",
-      "css": ".ds-rail{font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;width:240px;background:#17352E;padding:24px 16px;display:flex;flex-direction:column;gap:4px}.ds-wordmark{display:flex;align-items:center;gap:10px;color:#D2AA55;font-size:22px;line-height:28px;font-weight:700;letter-spacing:-0.3px;padding:0 8px 24px}.ds-seal{width:22px;height:22px;border:2px solid #D2AA55;border-radius:50%;padding:3px;box-sizing:border-box;display:inline-flex}.ds-seal span{flex:1;border:1px solid #D2AA55;border-radius:50%}.ds-rail-item{display:flex;align-items:center;min-height:44px;padding:0 16px;border-radius:12px;color:#A9C2B8;font-size:16px;font-weight:600;text-decoration:none}.ds-rail-item:hover,.ds-rail-item[aria-current=\"page\"]{background:#21443B;color:#F1F5F2}.ds-rail-item:focus-visible{outline:2px solid #93D3B6;outline-offset:2px}"
+      "name": "Overprint Mark",
+      "kind": "icon",
+      "refersTo": "overprint-green",
+      "description": "Turmeric dot with a teal dot multiplied over it; marks every bill.",
+      "html": "<span class=\"ds-mark\"><i></i><i></i></span>",
+      "css": ".ds-mark{position:relative;display:inline-block;width:17px;height:17px}.ds-mark i{position:absolute;width:12px;height:12px;border-radius:50%;background:#FFB511;left:0;top:0}.ds-mark i+i{left:5px;top:5px;background:#007780;mix-blend-mode:multiply}"
     },
     {
-      "name": "Task Check",
-      "kind": "custom",
-      "refersTo": "check",
-      "description": "24px round checkbox; filled stamp green with a white tick when done.",
-      "html": "<div class=\"ds-checks\"><button class=\"ds-check\" role=\"checkbox\" aria-checked=\"false\" aria-label=\"Mark done\"></button><button class=\"ds-check\" role=\"checkbox\" aria-checked=\"true\" aria-label=\"Done\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><polyline points=\"20 6 9 17 4 12\"/></svg></button></div>",
-      "css": ".ds-checks{display:flex;gap:16px;padding:16px;background:#FFFFFF}.ds-check{width:24px;height:24px;border-radius:50%;border:2px solid #52615B;background:transparent;color:#FFFFFF;display:inline-flex;align-items:center;justify-content:center;padding:0;cursor:pointer}.ds-check[aria-checked=\"true\"]{background:#1E7A4C;border-color:#1E7A4C}.ds-check:active{transform:scale(.9)}.ds-check:focus-visible{outline:2px solid #1E5244;outline-offset:2px}"
+      "name": "List Row",
+      "kind": "list",
+      "refersTo": "list-row",
+      "description": "White sheet row: title, subtitle, trailing amount in tabular figures.",
+      "html": "<div class=\"ds-row\"><div><b>Internet</b><small>BCA · Monthly</small></div><span>−Rp 450.000</span></div>",
+      "css": ".ds-row{font-family:'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;display:flex;justify-content:space-between;align-items:center;min-height:60px;padding:14px 16px;background:#fff;border-radius:20px;color:#17171C}.ds-row small{display:block;color:#5C5C63;font-size:14px}.ds-row span{font-weight:600;font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "New Button",
+      "kind": "button",
+      "refersTo": "new-button",
+      "description": "Floating ink pill on phones; opens New entry from every screen.",
+      "html": "<button class=\"ds-new\">+ New</button>",
+      "css": ".ds-new{font-family:'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;min-height:52px;padding:0 22px;border:0;border-radius:999px;background:#17171C;color:#fff;font-size:14px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.18)}"
+    },
+    {
+      "name": "Toast",
+      "kind": "feedback",
+      "refersTo": "toast",
+      "description": "Ink pill with an Undo action, after marking a bill paid.",
+      "html": "<div class=\"ds-toast\">Internet paid <u>Undo</u></div>",
+      "css": ".ds-toast{font-family:'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;display:flex;justify-content:space-between;align-items:center;min-height:52px;padding:0 20px;border-radius:999px;background:#17171C;color:#fff;font-size:14px;font-weight:700}"
     }
   ],
   "narrative": {
-    "northStar": "The Passport",
-    "overview": "Lifeboat reads like a personal passport for time and money. A flat bottle-green cover field owns the top of every screen and, on wide web, the side rail. Below it sits a cool mint page ground carrying white sheets, ruled by hairlines like the pages of a document. When an entry is resolved it is stamped, never erased: a rotated, double-ruled ink stamp records the state and the day.\n\nThe system is flat and type-led. The one number or date that matters for a screen sits directly on the cover band at display size, with no boxed stat cards around it. One grotesk family (Hanken Grotesk) carries everything, with tabular figures so amounts and dates line up. Colour is spent with intent: gold is foil, stamp inks are state, chart hues are data, and the deep pine accent is action. Density is calm: generous rows (56px minimum), one column up to 760px, and sections spaced 32px apart.\n\nIt deliberately refuses the category default of a grey dashboard of same-size cards with a blue accent and a donut chart.",
+    "northStar": "Overprint",
+    "overview": "Agenda and money printed in two spot inks on clean paper: turmeric for what is happening, sea teal for what you own, and the green they make where they overlap marks a bill. Each screen opens with a title tile named after its menu. Dark mode is a calm warm graphite with colour kept for meaning only.",
     "keyCharacteristics": [
-      "One unmodulated bottle-green cover band per screen; no gradients anywhere.",
-      "White sheets on a mint page, rows separated by hairline rules.",
-      "State shown as stamp ink (green, red, violet, blue), pressed in with a short motion.",
-      "Gold foil only on the wordmark and the today marker.",
-      "One type family, weight carries hierarchy, tabular figures for every amount.",
-      "Flat surfaces with no shadows; depth comes from tone."
+      "Two spot inks with one job each, plus their overprint for bills.",
+      "Title tiles carry the menu name, a short subtitle and one key figure.",
+      "One family, Bricolage Grotesque, heavy for titles, tabular for numbers.",
+      "Flat status pills: inked in, outlined, or red.",
+      "Monochrome warm graphite at night.",
+      "Flat surfaces; one shadow under the floating New button."
     ],
     "rules": [
-      {
-        "name": "The Foil Rule",
-        "body": "Gold is foil. It appears on the wordmark and the today marker and nowhere else: not on buttons, not in charts, not as a highlight.",
-        "section": "colors"
-      },
-      {
-        "name": "The Ink Is State Rule",
-        "body": "Stamp green, red, violet and blue mean done or paid, overdue, due or scheduled, and transfer. They are never decoration, never chart colours, never brand accents.",
-        "section": "colors"
-      },
-      {
-        "name": "The Cover Coral Rule",
-        "body": "On the cover band, overdue is shown in cover-alert-coral at bold weight. Stamp red does not go on the cover.",
-        "section": "colors"
-      },
-      {
-        "name": "The Separate Palettes Rule",
-        "body": "Chart hues stay clear of the four stamp inks and of gold. A chart with one series uses the accent, not a chart slot.",
-        "section": "colors"
-      },
-      {
-        "name": "The One Family Rule",
-        "body": "Hanken Grotesk only. Weight is chosen by font file (one family per weight) so Android renders it correctly.",
-        "section": "typography"
-      },
-      {
-        "name": "The Tabular Money Rule",
-        "body": "Every amount and every date that sits in a column uses tabular figures.",
-        "section": "typography"
-      },
-      {
-        "name": "The Fixed Date Rule",
-        "body": "Dates and times always format with the en-GB locale: day before month, 24-hour clock, on every device, so they match the English copy and the stamps.",
-        "section": "typography"
-      },
-      {
-        "name": "The Uppercase Belongs To Stamps Rule",
-        "body": "Uppercase with letter spacing is the stamp's voice. No other text is set in tracked capitals.",
-        "section": "typography"
-      },
-      {
-        "name": "The Flat Field Rule",
-        "body": "The cover band is one unmodulated colour. No gradients, no shadows, no glows; layering is shown by tone.",
-        "section": "elevation"
-      }
+      "The Two Inks Rule: turmeric means agenda and teal means money, everywhere.",
+      "The Overprint Rule: green appears only where the two inks overlap, and only marks a bill.",
+      "The Night Rule: dark mode is monochrome; colour must carry meaning.",
+      "The Title Rule: a tile title is the menu name, never a sentence; details go in a tooltip.",
+      "The Tabular Rule: amounts, times and dates in columns use tabular figures.",
+      "The Flat Rule: no shadows except the New button, no gradients, no glass."
     ],
     "dos": [
-      "Do put the screen's one headline figure directly on the cover band in the display style (800, 44px), with no box around it.",
-      "Do show every resolved entry with a stamp in its state ink, and press it in only when it is fresh.",
-      "Do keep gold to the wordmark and today's calendar marker.",
-      "Do show overdue counts on the cover in bold cover-alert-coral.",
-      "Do use tabular figures for amounts and dates, and format dates with en-GB (day before month, 24-hour).",
-      "Do assign chart colours in the fixed slot order (harbour cyan, bronze, rose, olive, then stone for Other), and use the accent for single-series charts.",
-      "Do group content in white sheets with hairline-ruled rows, sections 32px apart, inside a column no wider than 760px."
+      "Keep turmeric for the agenda and teal for money.",
+      "Use the menu name as the tile title.",
+      "Explain a number in its info tooltip.",
+      "Mark every bill with the overprint mark.",
+      "Ask once before deleting; offer Undo after a payment.",
+      "Run the dataviz validator before changing chart colours."
     ],
     "donts": [
-      "Don't use gradients or shadows anywhere, least of all on the cover band.",
-      "Don't use stamp green, red, violet or blue for decoration, branding or chart series.",
-      "Don't use gold on buttons, links, charts or highlights.",
-      "Don't put a small label, kicker or eyebrow above a cover figure; the screen title is for screen readers only.",
-      "Don't use cover-alert-coral at regular weight or off the cover band.",
-      "Don't wrap headline numbers in stat cards or build the screen as a grid of same-size cards.",
-      "Don't add a second type family or set any text other than stamps in tracked uppercase.",
-      "Don't rename the /wealth route back to /assets."
+      "Write descriptive sentences as titles.",
+      "Set turmeric text on white.",
+      "Use the overprint green for anything but bills.",
+      "Colour dark mode tiles by menu.",
+      "Reuse status colours or spot inks as chart series.",
+      "Use em dashes in copy."
     ]
   }
 }

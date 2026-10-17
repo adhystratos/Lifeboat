@@ -142,6 +142,15 @@ export type BillPayment = {
   next_due: string | null;
 };
 
+/** Reverses one payment made through `payBill`, if nothing has moved since. */
+export type BillPaymentUndo = {
+  /** The transaction `payBill` recorded. */
+  transaction_id: string;
+  bill_id: string;
+  due_on: string;
+  next_due: string | null;
+};
+
 export type NewAsset = {
   workspace_id: string;
   name: string;
@@ -186,7 +195,9 @@ export interface Repo {
 
   bills(): Promise<Bill[]>;
   createBill(row: NewBill): Promise<void>;
-  payBill(payment: BillPayment): Promise<void>;
+  /** Records the payment and returns the new transaction id. */
+  payBill(payment: BillPayment): Promise<string>;
+  undoBillPayment(undo: BillPaymentUndo): Promise<void>;
   deleteBill(id: string): Promise<void>;
 
   assets(): Promise<Asset[]>;

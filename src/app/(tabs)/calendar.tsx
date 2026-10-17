@@ -92,34 +92,28 @@ export default function CalendarScreen() {
   return (
     <Screen
       title="Calendar"
+      subtitle={`${monthName.format(shownMonth)} ${shownMonth.getUTCFullYear()}`}
+      tone="agenda"
       actions={
         <>
-          <IconButton icon="chevron-left" label="Previous month" onCover onPress={() => go(-1)} />
-          <IconButton icon="chevron-right" label="Next month" onCover onPress={() => go(1)} />
+          <IconButton icon="chevron-left" label="Previous month" onTile onPress={() => go(-1)} />
+          <IconButton icon="chevron-right" label="Next month" onTile onPress={() => go(1)} />
         </>
       }
-      cover={
-        <View style={styles.cover}>
-          <ThemedText type="display" themeColor="coverText">
-            {monthName.format(shownMonth)}
-          </ThemedText>
-          <View style={styles.coverLine}>
-            <ThemedText type="heading" themeColor="coverTextSecondary" numeric>
-              {shownMonth.getUTCFullYear()}
-            </ThemedText>
-            {month.slice(0, 7) !== today.slice(0, 7) || selected !== today ? (
-              <Button
-                label="Back to today"
-                variant="cover"
-                compact
-                onPress={() => {
-                  setMonth(addMonths(today, 0));
-                  setSelected(today);
-                }}
-              />
-            ) : null}
+      tile={
+        month.slice(0, 7) !== today.slice(0, 7) || selected !== today ? (
+          <View style={styles.tileRow}>
+            <Button
+              label="Back to today"
+              variant="tile"
+              compact
+              onPress={() => {
+                setMonth(addMonths(today, 0));
+                setSelected(today);
+              }}
+            />
           </View>
-        </View>
+        ) : null
       }>
       <SampleNotice />
 
@@ -157,12 +151,13 @@ export default function CalendarScreen() {
                     hovered && !isSelected && { backgroundColor: theme.background },
                     isSelected && !isToday && { borderColor: theme.accent, backgroundColor: theme.background },
                   ]}>
-                  <View style={[styles.numeral, isToday && { backgroundColor: theme.cover }]}>
+                  <View style={[styles.numeral, isToday && { borderColor: theme.todayMark }]}>
                     <ThemedText
                       numeric
                       style={[
                         styles.numeralText,
-                        { color: isToday ? theme.gold : inMonth ? theme.text : theme.textSecondary },
+                        { color: inMonth || isToday ? theme.text : theme.textSecondary },
+                        isToday && styles.todayText,
                         !inMonth && styles.outside,
                       ]}>
                       {Number(d.slice(8))}
@@ -175,7 +170,7 @@ export default function CalendarScreen() {
                           width: size,
                           height: size,
                           borderRadius: size / 2,
-                          backgroundColor: overdue ? theme.stampRed : inMonth ? theme.accent : theme.textSecondary,
+                          backgroundColor: overdue ? theme.danger : inMonth ? theme.accent : theme.textSecondary,
                         }}
                       />
                     ) : null}
@@ -195,7 +190,7 @@ export default function CalendarScreen() {
             </View>
           ))}
           <View style={styles.legendItem}>
-            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: theme.stampRed }} />
+            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: theme.danger }} />
             <ThemedText type="caption" themeColor="textSecondary">
               Something overdue
             </ThemedText>
@@ -227,8 +222,7 @@ export default function CalendarScreen() {
 }
 
 const styles = StyleSheet.create({
-  cover: { gap: Spacing.one, marginTop: Spacing.three },
-  coverLine: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.three, minHeight: 36 },
+  tileRow: { flexDirection: 'row' },
   week: { flexDirection: 'row', gap: Spacing.one },
   weekday: { flex: 1, textAlign: 'center' },
   cell: {
@@ -241,7 +235,8 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     minHeight: 64,
   },
-  numeral: { width: 34, height: 34, borderRadius: 17, alignItems: 'center', justifyContent: 'center' },
+  numeral: { width: 34, height: 34, borderRadius: 17, borderWidth: 2, borderColor: 'transparent', alignItems: 'center', justifyContent: 'center' },
+  todayText: { fontFamily: FontFiles.extrabold },
   numeralText: { fontFamily: FontFiles.bold, fontSize: 18, lineHeight: 22 },
   outside: { fontFamily: FontFiles.medium },
   dotSlot: { height: 14, alignItems: 'center', justifyContent: 'center' },

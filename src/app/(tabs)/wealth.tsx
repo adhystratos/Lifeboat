@@ -2,12 +2,11 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-import { Button, IconButton } from '@/components/button';
+import { Button, ConfirmDelete } from '@/components/button';
 import { CompositionBar, Part } from '@/components/composition-bar';
 import { AmountField } from '@/components/form';
-import { Icon } from '@/components/icon';
 import { SampleNotice } from '@/components/sample-notice';
-import { CoverFigure, EmptyState, Row, Screen, Section } from '@/components/screen';
+import { EmptyState, Row, Screen, Section, TileFigure } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
 import { DATE_LOCALE, Spacing } from '@/constants/theme';
 import { convertMinor, Currency, formatMoney, FxRate, localToday, netWorthPartial, parseAmount, toMajor } from '@/core';
@@ -34,6 +33,15 @@ const STALE_DAYS = 90;
 
 function daysSince(day: string, today: string) {
   return Math.round((Date.parse(today) - Date.parse(day)) / 86_400_000);
+}
+
+/** "updated today", "updated 3 days ago", or the date once it is a month old. */
+function updatedLabel(day: string, today: string) {
+  const days = daysSince(day, today);
+  if (days <= 0) return 'updated today';
+  if (days === 1) return 'updated yesterday';
+  if (days < 31) return `updated ${days} days ago`;
+  return `updated ${dateLabel(day)}`;
 }
 
 function tryConvert(minor: number, from: Currency, to: Currency, rates: FxRate[]): number | null {
@@ -89,29 +97,27 @@ export default function AssetsScreen() {
   return (
     <Screen
       title="Net worth"
-      actions={<IconButton icon="plus" label="Add an asset" onCover onPress={() => router.push('/new-asset')} />}
-      cover={
-        <CoverFigure value={totalsReady ? formatMoney(worth.total, base) : '…'} caption="Net worth">
-          {totalsError ? (
-            <ThemedText type="small" themeColor="coverTextSecondary" style={styles.missing}>
-              <Icon name="info" size={13} color="coverTextSecondary" />{' '}
-              Couldn&apos;t load everything the total needs: {totalsError.message}
-            </ThemedText>
-          ) : totalsReady ? (
-            <>
-              <ThemedText type="default" themeColor="coverTextSecondary" numeric>
-                Accounts {formatMoney(worth.accounts, base)} · Assets {formatMoney(worth.assets, base)} · Debts{' '}
-                {formatMoney(worth.liabilities, base)}
-              </ThemedText>
-              {worth.missing.length ? (
-                <ThemedText type="small" themeColor="coverTextSecondary" style={styles.missing}>
-                  <Icon name="info" size={13} color="coverTextSecondary" />{' '}
-                  Not yet included: amounts in {worth.missing.join(', ')}. No exchange rate to {base} is available yet.
-                </ThemedText>
-              ) : null}
-            </>
-          ) : null}
-        </CoverFigure>
+      subtitle={`In ${base}`}
+      tone="money"
+      tile={
+        <TileFigure
+          value={totalsReady ? formatMoney(worth.total, base) : '…'}
+          label={totalsError ? 'Not complete' : 'Total'}
+          info={
+            totalsError
+              ? `Couldn't load everything the total needs: ${totalsError.message}`
+              : totalsReady
+                ? [
+                    `Accounts ${formatMoney(worth.accounts, base)}, assets ${formatMoney(worth.assets, base)}, debts ${formatMoney(worth.liabilities, base)}.`,
+                    worth.missing.length
+                      ? `Not yet included: amounts in ${worth.missing.join(', ')}. No exchange rate to ${base} is available yet.`
+                      : null,
+                  ]
+                    .filter(Boolean)
+                    .join(' ')
+                : undefined
+          }
+        />
       }>
       <SampleNotice />
 
@@ -186,7 +192,7 @@ function HoldingRow({ kind, item, base, rates, today, workspaceId }: HoldingProp
       ? (ASSET_TYPES.find((t) => t.value === (item as Asset).type)?.label ?? 'Asset')
       : (LIABILITY_TYPES.find((t) => t.value === (item as Liability).type)?.label ?? 'Debt');
   const rate = kind === 'debt' && (item as Liability).interest_rate !== null ? `${(item as Liability).interest_rate}%` : null;
-  const subtitle = [typeLabel, rate, asOf ? `${kind === 'asset' ? 'valued' : 'as of'} ${dateLabel(asOf)}` : 'no value yet']
+  const subtitle = [typeLabel, rate, asOf ? updatedLabel(asOf, today) : 'no value yet']
     .filter(Boolean)
     .join(' · ');
 
@@ -205,7 +211,7 @@ function HoldingRow({ kind, item, base, rates, today, workspaceId }: HoldingProp
       <Row
         title={item.name}
         subtitle={
-          <ThemedText type="small" themeColor={stale ? 'stampViolet' : 'textSecondary'} numberOfLines={2}>
+          <ThemedText type={stale ? 'smallBold' : 'small'} themeColor={stale ? 'text' : 'textSecondary'} numberOfLines={2}>
             {subtitle}
             {stale ? ' · time to update' : ''}
           </ThemedText>
@@ -237,12 +243,10 @@ function HoldingRow({ kind, item, base, rates, today, workspaceId }: HoldingProp
             accessibilityLabel={kind === 'asset' ? `New value for ${item.name}` : `New balance for ${item.name}`}
           />
           <View style={styles.updateActions}>
-            <Button
+            <ConfirmDelete
               label="Delete"
-              variant="danger"
-              compact
-              icon="trash-2"
-              onPress={() => (kind === 'asset' ? deleteAsset.mutate(item.id) : deleteDebt.mutate(item.id))}
+              onConfirm={() => (kind === 'asset' ? deleteAsset.mutate(item.id) : deleteDebt.mutate(item.id))}
+              loading={deleteAsset.isPending || deleteDebt.isPending}
             />
             <Button
               label={kind === 'asset' ? 'Save value for today' : 'Save balance for today'}
@@ -259,7 +263,6 @@ function HoldingRow({ kind, item, base, rates, today, workspaceId }: HoldingProp
 }
 
 const styles = StyleSheet.create({
-  missing: { marginTop: Spacing.two },
   update: { paddingHorizontal: Spacing.three, paddingBottom: Spacing.three, gap: Spacing.three },
   updateActions: { flexDirection: 'row', justifyContent: 'space-between', gap: Spacing.two },
 });

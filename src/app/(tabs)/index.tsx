@@ -1,23 +1,22 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 
 import { AddRow, BillRow, EventRow, TaskRow } from '@/components/agenda-rows';
-import { IconButton } from '@/components/button';
 import { TextField } from '@/components/form';
 import { SampleNotice } from '@/components/sample-notice';
-import { EmptyState, Row, Screen, Section } from '@/components/screen';
-import { ThemedText } from '@/components/themed-text';
-import { DATE_LOCALE, Spacing } from '@/constants/theme';
+import { EmptyState, Row, Screen, Section, TileChip, TileChips } from '@/components/screen';
+import { DATE_LOCALE } from '@/constants/theme';
 import { addDays, billListStart, billOccurrences, dayOf, dayRange, eventOnDay, localDateTime, localToday } from '@/core';
 import { useTheme } from '@/hooks/use-theme';
 import { Bill, useBills, useCreateTask, useEvents, useTasks, useWorkspace } from '@/lib/queries';
 
-const weekday = new Intl.DateTimeFormat(DATE_LOCALE, { weekday: 'long' });
-const longDate = new Intl.DateTimeFormat(DATE_LOCALE, { day: 'numeric', month: 'long', year: 'numeric' });
+const longDate = new Intl.DateTimeFormat(DATE_LOCALE, { weekday: 'long', day: 'numeric', month: 'long' });
 
 /** Bills are listed from overdue up to this many days ahead. */
 const BILL_HORIZON = 7;
+
+const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
 export default function TodayScreen() {
   const today = localToday();
@@ -42,7 +41,7 @@ export default function TodayScreen() {
         (t.completed_at && dayOf(t.completed_at) === today && !(t.due_at && dayOf(t.due_at) > today)),
     );
     const anytime = all.filter((t) => !t.due_at && !t.completed_at);
-    // Open first, then by due time; done entries keep their place at the bottom with a stamp.
+    // Open first, then by due time; done entries keep their place at the bottom with their label.
     dueToday.sort(
       (a, b) =>
         Number(Boolean(a.completed_at)) - Number(Boolean(b.completed_at)) ||
@@ -65,20 +64,18 @@ export default function TodayScreen() {
   })();
 
   const openToday = groups.dueToday.filter((t) => !t.completed_at).length;
-  const doneToday = groups.dueToday.length - openToday;
   const billsDue = billItems.filter((b) => b.occurrence.status === 'due' || b.occurrence.status === 'overdue').length;
   const overdueCount = groups.overdue.length + billItems.filter((b) => b.occurrence.status === 'overdue').length;
   // The query also returns events that end exactly at midnight, such as yesterday's all-day events.
   const eventList = (events.data ?? []).filter((e) => eventOnDay(e.starts_at, e.ends_at, today));
 
-  const summary = [
-    `${openToday} ${openToday === 1 ? 'task' : 'tasks'} left`,
-    doneToday ? `${doneToday} done` : null,
-    `${eventList.length} ${eventList.length === 1 ? 'event' : 'events'}`,
-    billsDue ? `${billsDue} ${billsDue === 1 ? 'bill' : 'bills'} due` : null,
-  ]
-    .filter(Boolean)
-    .join(' · ');
+  const loading = tasks.isLoading || events.isLoading || bills.isLoading;
+  // Sections with nothing in them stay out of the way; a fully open day gets one line instead.
+  const showTasks = tasks.isLoading || Boolean(tasks.error) || groups.dueToday.length > 0;
+  const showSchedule = events.isLoading || eventList.length > 0;
+  const showBills = bills.isLoading || billItems.length > 0;
+  const nothingToday =
+    !loading && !tasks.error && !groups.overdue.length && !showTasks && !showSchedule && !showBills;
 
   function addTask() {
     const title = draft.trim();
@@ -92,26 +89,17 @@ export default function TodayScreen() {
   return (
     <Screen
       title="Today"
-      actions={<IconButton icon="plus" label="New entry" onCover onPress={() => router.push('/new')} />}
-      cover={
-        <View style={styles.cover}>
-          <ThemedText type="display" themeColor="coverText">
-            {weekday.format(now)}
-          </ThemedText>
-          <ThemedText type="heading" themeColor="coverText">
-            {longDate.format(now)}
-          </ThemedText>
-          <View style={styles.summary}>
-            <ThemedText type="default" themeColor="coverTextSecondary">
-              {summary}
-            </ThemedText>
-            {overdueCount ? (
-              <ThemedText type="defaultBold" themeColor="coverAlert">
-                {overdueCount} overdue
-              </ThemedText>
-            ) : null}
-          </View>
-        </View>
+      subtitle={longDate.format(now)}
+      tone="agenda"
+      tile={
+        loading ? null : (
+          <TileChips>
+            <TileChip label={`${openToday} to do`} />
+            {eventList.length ? <TileChip label={plural(eventList.length, 'event', 'events')} /> : null}
+            {billsDue ? <TileChip label={plural(billsDue, 'bill due', 'bills due')} /> : null}
+            {overdueCount ? <TileChip label={`${overdueCount} overdue`} alert /> : null}
+          </TileChips>
+        )
       }>
       <SampleNotice />
 
@@ -134,44 +122,45 @@ export default function TodayScreen() {
         </Section>
       ) : null}
 
-      <Section title="Tasks" action={{ label: 'New task', onPress: () => router.push('/new-task') }}>
-        {tasks.isLoading ? <Loading /> : null}
-        {tasks.error ? <EmptyState>Couldn&apos;t load tasks: {tasks.error.message}</EmptyState> : null}
-        {!tasks.isLoading && !groups.dueToday.length ? (
-          <EmptyState>Nothing due today. Type a task above and press Enter to add one.</EmptyState>
-        ) : null}
-        {groups.dueToday.map((t) => (
-          <TaskRow key={t.id} task={t} fresh={fresh.has(t.id)} onToggled={markFresh} />
-        ))}
-      </Section>
-
-      <Section title="Schedule" action={{ label: 'Calendar', onPress: () => router.push('/calendar') }}>
-        {events.isLoading ? <Loading /> : null}
-        {!events.isLoading && !eventList.length ? (
-          <EmptyState action={{ label: 'Add an event', onPress: () => router.push('/new-event') }}>
-            Your day is open. Events you add appear here in time order.
+      {nothingToday ? (
+        <Section>
+          <EmptyState action={{ label: 'Add something', onPress: () => router.push('/new') }}>
+            Nothing planned today.
           </EmptyState>
-        ) : null}
-        {eventList.map((e) => (
-          <EventRow key={e.id} event={e} />
-        ))}
-      </Section>
+        </Section>
+      ) : null}
 
-      <Section
-        title="Bills"
-        action={{ label: 'New bill', onPress: () => router.push('/new-bill') }}
-        note={billItems.length ? `Overdue and due in the next ${BILL_HORIZON} days.` : undefined}>
-        {bills.isLoading ? <Loading /> : null}
-        {!bills.isLoading && !billItems.length ? (
-          <EmptyState action={{ label: 'Add a bill', onPress: () => router.push('/new-bill') }}>
-            No bills due this week. Add rent, subscriptions or a regular income, and they will show up here when due.
-          </EmptyState>
-        ) : null}
-        {billItems.map(({ bill, occurrence }) => {
-          const key = `${bill.id}:${occurrence.day}`;
-          return <BillRow key={key} bill={bill} occurrence={occurrence} fresh={fresh.has(key)} onPaid={markFresh} />;
-        })}
-      </Section>
+      {showTasks ? (
+        <Section title="Tasks" action={{ label: 'New task', onPress: () => router.push('/new-task') }}>
+          {tasks.isLoading ? <Loading /> : null}
+          {tasks.error ? <EmptyState>Couldn&apos;t load tasks: {tasks.error.message}</EmptyState> : null}
+          {groups.dueToday.map((t) => (
+            <TaskRow key={t.id} task={t} fresh={fresh.has(t.id)} onToggled={markFresh} />
+          ))}
+        </Section>
+      ) : null}
+
+      {showSchedule ? (
+        <Section title="Schedule" action={{ label: 'Calendar', onPress: () => router.push('/calendar') }}>
+          {events.isLoading ? <Loading /> : null}
+          {eventList.map((e) => (
+            <EventRow key={e.id} event={e} />
+          ))}
+        </Section>
+      ) : null}
+
+      {showBills ? (
+        <Section
+          title="Bills"
+          action={{ label: 'New bill', onPress: () => router.push('/new-bill') }}
+          note={billItems.length ? `Overdue and due in the next ${BILL_HORIZON} days.` : undefined}>
+          {bills.isLoading ? <Loading /> : null}
+          {billItems.map(({ bill, occurrence }) => {
+            const key = `${bill.id}:${occurrence.day}`;
+            return <BillRow key={key} bill={bill} occurrence={occurrence} fresh={fresh.has(key)} onPaid={markFresh} />;
+          })}
+        </Section>
+      ) : null}
 
       {groups.anytime.length ? (
         <Section title="Anytime">
@@ -186,13 +175,9 @@ export default function TodayScreen() {
 }
 
 function Loading() {
-  return (
-    <Row title="Loading…" muted leading={<ActivityIndicator />} />
-  );
+  return <Row title="Loading…" muted leading={<ActivityIndicator />} />;
 }
 
 const styles = StyleSheet.create({
-  cover: { gap: Spacing.one, marginTop: Spacing.three },
-  summary: { flexDirection: 'row', flexWrap: 'wrap', columnGap: Spacing.three, marginTop: Spacing.two },
   quickAdd: { minHeight: 52 },
 });

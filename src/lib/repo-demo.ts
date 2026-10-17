@@ -345,8 +345,9 @@ export const demoRepo: Repo = {
       throw new Error(`This bill was already paid for ${due_on}, or no longer exists.`);
     }
     stored.next_due_on = next_due;
+    const txId = id('tx');
     s().transactions.push({
-      id: id('tx'),
+      id: txId,
       account_id: stored.account_id,
       type: stored.type,
       amount_minor: stored.amount_minor,
@@ -357,6 +358,16 @@ export const demoRepo: Repo = {
       transfer_amount_minor: null,
       created: counter,
     });
+    return txId;
+  },
+  async undoBillPayment({ transaction_id, bill_id, due_on, next_due }) {
+    const stored = s().bills.find((b) => b.id === bill_id);
+    const tx = s().transactions.find((t) => t.id === transaction_id);
+    if (!stored || !tx || stored.next_due_on !== next_due) {
+      throw new Error('This payment can no longer be undone.');
+    }
+    stored.next_due_on = due_on;
+    remove(s().transactions, transaction_id);
   },
   async deleteBill(billId) {
     remove(s().bills, billId);

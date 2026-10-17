@@ -5,13 +5,16 @@ import { DATE_LOCALE, Spacing } from '@/constants/theme';
 import { useNow } from '@/hooks/use-now';
 import { useTheme } from '@/hooks/use-theme';
 import { addDays, BillOccurrence, dayOf, describeRule, formatMoney, localToday, nextDueAfter } from '@/core';
-import { Bill, CalendarEvent, Task, useDeleteEvent, useDeleteTask, usePayBill, useToggleTask } from '@/lib/queries';
+import { confirmTap } from '@/lib/haptics';
+import { Bill, CalendarEvent, Task, useDeleteEvent, useDeleteTask, usePayBill, useToggleTask, useUndoBillPayment } from '@/lib/queries';
 
-import { Button } from './button';
+import { BillMark } from './bill-mark';
+import { Button, ConfirmDelete } from './button';
 import { Check } from './check';
 import { Row } from './screen';
-import { Stamp } from './stamp';
+import { StatusLabel } from './status-label';
 import { ThemedText } from './themed-text';
+import { useToast } from './toast';
 
 const time = new Intl.DateTimeFormat(DATE_LOCALE, { hour: '2-digit', minute: '2-digit', hour12: false });
 const weekdayShort = new Intl.DateTimeFormat(DATE_LOCALE, { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
@@ -61,7 +64,10 @@ export function TaskRow({ task, fresh, onToggled }: { task: Task; fresh?: boolea
             label={done ? `Mark "${task.title}" as not done` : `Mark "${task.title}" as done`}
             onToggle={() => {
               toggle.mutate({ id: task.id, completedAt: done ? null : new Date().toISOString() });
-              if (!done) onToggled?.(task.id);
+              if (!done) {
+                confirmTap();
+                onToggled?.(task.id);
+              }
             }}
           />
         }
@@ -70,9 +76,9 @@ export function TaskRow({ task, fresh, onToggled }: { task: Task; fresh?: boolea
         subtitle={subtitle}
         trailing={
           done ? (
-            <Stamp kind="done" day={dayOf(task.completed_at!)} fresh={fresh} />
+            <StatusLabel kind="done" day={dayOf(task.completed_at!)} fresh={fresh} />
           ) : overdue ? (
-            <Stamp kind="overdue" />
+            <StatusLabel kind="overdue" />
           ) : null
         }
         onPress={() => setOpen((o) => !o)}
@@ -80,7 +86,7 @@ export function TaskRow({ task, fresh, onToggled }: { task: Task; fresh?: boolea
       />
       {open ? (
         <RowActions>
-          <Button label="Delete task" variant="danger" compact icon="trash-2" onPress={() => remove.mutate(task.id)} loading={remove.isPending} />
+          <ConfirmDelete label="Delete task" onConfirm={() => remove.mutate(task.id)} loading={remove.isPending} />
         </RowActions>
       ) : null}
     </View>
@@ -118,13 +124,13 @@ export function EventRow({ event }: { event: CalendarEvent }) {
         title={event.title}
         muted={past}
         subtitle={[live ? 'Happening now' : null, event.location].filter(Boolean).join(' · ') || undefined}
-        trailing={live ? <View style={[styles.liveDot, { backgroundColor: theme.stampViolet }]} /> : null}
+        trailing={live ? <View style={[styles.liveDot, { backgroundColor: theme.todayMark }]} /> : null}
         onPress={() => setOpen((o) => !o)}
         accessibilityHint="Shows more options"
       />
       {open ? (
         <RowActions>
-          <Button label="Delete event" variant="danger" compact icon="trash-2" onPress={() => remove.mutate(event.id)} loading={remove.isPending} />
+          <ConfirmDelete label="Delete event" onConfirm={() => remove.mutate(event.id)} loading={remove.isPending} />
         </RowActions>
       ) : null}
     </View>
@@ -147,36 +153,41 @@ export function BillRow({
   onPaid?: (key: string) => void;
 }) {
   const pay = usePayBill();
+  const undo = useUndoBillPayment();
+  const toast = useToast();
   const today = localToday();
   const income = bill.type === 'income';
   const payable = occurrence.status !== 'paid' && occurrence.day === bill.next_due_on;
-  const stamp =
+  const status =
     occurrence.status === 'paid' ? (
-      <Stamp kind="paid" label={income ? 'Received' : 'Paid'} day={fresh ? today : undefined} fresh={fresh} />
+      <StatusLabel kind="paid" label={income ? 'Received' : 'Paid'} day={fresh ? today : undefined} fresh={fresh} />
     ) : occurrence.status === 'overdue' ? (
-      <Stamp kind="overdue" day={occurrence.day} />
+      <StatusLabel kind="overdue" day={occurrence.day} />
     ) : occurrence.status === 'due' ? (
-      <Stamp kind="due" label="Due today" />
+      <StatusLabel kind="due" label="Due today" />
     ) : (
-      <Stamp kind="scheduled" label="Due" day={occurrence.day} />
+      <StatusLabel kind="scheduled" label="Due" day={occurrence.day} />
     );
 
   return (
     <View style={styles.bill}>
       <View style={styles.billTop}>
+        <View style={styles.billMark}>
+          <BillMark />
+        </View>
         <View style={styles.billText}>
           <ThemedText numberOfLines={1}>{bill.name}</ThemedText>
           <ThemedText type="small" themeColor="textSecondary" numberOfLines={1}>
             {bill.account.name} · {describeRule(bill.recurrence_rule)}
           </ThemedText>
         </View>
-        <ThemedText type="defaultBold" numeric themeColor={income ? 'stampGreen' : 'text'}>
+        <ThemedText type="defaultBold" numeric themeColor={income ? 'positive' : 'text'}>
           {income ? '+' : '−'}
           {formatMoney(bill.amount_minor, bill.account.currency)}
         </ThemedText>
       </View>
       <View style={styles.billBottom}>
-        {stamp}
+        {status}
         {payable ? (
           <Button
             label={income ? 'Mark received' : 'Mark paid'}
@@ -184,17 +195,29 @@ export function BillRow({
             variant="plain"
             icon="check"
             loading={pay.isPending}
-            onPress={() =>
+            onPress={() => {
+              const next_due = nextDueAfter(bill, occurrence.day);
               pay.mutate(
+                { bill, due_on: occurrence.day, paid_on: today, next_due },
                 {
-                  bill,
-                  due_on: occurrence.day,
-                  paid_on: today,
-                  next_due: nextDueAfter(bill, occurrence.day),
+                  onSuccess: (transaction_id) => {
+                    confirmTap();
+                    onPaid?.(`${bill.id}:${occurrence.day}`);
+                    toast({
+                      message: `${bill.name} ${income ? 'received' : 'paid'}`,
+                      action: {
+                        label: 'Undo',
+                        onPress: () =>
+                          undo.mutate(
+                            { transaction_id, bill_id: bill.id, due_on: occurrence.day, next_due },
+                            { onError: (e) => toast({ message: e.message }) },
+                          ),
+                      },
+                    });
+                  },
                 },
-                { onSuccess: () => onPaid?.(`${bill.id}:${occurrence.day}`) },
-              )
-            }
+              );
+            }}
           />
         ) : null}
       </View>
@@ -224,10 +247,11 @@ const styles = StyleSheet.create({
   timeCol: { width: 48, alignItems: 'flex-start' },
   liveDot: { width: 10, height: 10, borderRadius: 5 },
   actions: { flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: Spacing.three, paddingBottom: Spacing.three },
-  bill: { paddingHorizontal: Spacing.three, paddingVertical: 14, gap: Spacing.two },
+  bill: { paddingHorizontal: Spacing.three, paddingVertical: Spacing.three, gap: 10 },
   billTop: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.three },
+  billMark: { width: 28, paddingTop: 3, alignItems: 'center' },
   billText: { flex: 1, gap: 2 },
-  billBottom: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.three, minHeight: 36 },
+  billBottom: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.three, minHeight: 40, paddingLeft: 44 },
   add: { paddingHorizontal: Spacing.three, paddingVertical: 14 },
   pressed: { opacity: 0.6 },
 });

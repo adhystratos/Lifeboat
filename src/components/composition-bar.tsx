@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Pressable, StyleSheet, useColorScheme, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { ChartColors } from '@/constants/chart-palette';
 import { Spacing } from '@/constants/theme';
 import { Currency, formatMoney } from '@/core';
-import { useTheme } from '@/hooks/use-theme';
+import { useScheme, useTheme } from '@/hooks/use-theme';
 
 import { ThemedText } from './themed-text';
 
@@ -32,7 +32,7 @@ export function CompositionBar({
   currency: Currency;
 }) {
   const theme = useTheme();
-  const scheme = useColorScheme() === 'dark' ? 'dark' : 'light';
+  const scheme = useScheme();
   const palette = ChartColors[scheme];
   const colorOf = (p: Part) => (p.slot === 'other' ? palette.other : palette.categorical[p.slot]);
   const [active, setActive] = useState<string | null>(null);

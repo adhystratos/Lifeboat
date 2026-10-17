@@ -1,24 +1,25 @@
 /**
- * Chart colours for the Passport world: harbour cyan, bronze, rose and olive,
- * plus a stone neutral for "Other". They stay clear of the four stamp inks
- * (green, red, violet, blue), which are reserved for an entry's state, and of
- * the foil gold, which is reserved for the wordmark and the today marker.
+ * Chart colours for the Overprint world: periwinkle, tangerine, orchid and
+ * olive, plus a stone neutral for "Other". They stay clear of the two inks
+ * (turmeric for the agenda, teal for money), the bill green and the overdue
+ * red, which all carry meaning elsewhere. Dark mode uses its own, dustier
+ * steps so charts stay calm at night.
  *
  * Follows the dataviz method: slots are assigned in this fixed order (never
- * cycled, never by rank) and dark mode has its own steps. Validated with the
- * dataviz `validate_palette.js` against the sheets (#FFFFFF light, #14231F
- * dark, 17 Oct 2026): all checks pass in both modes.
+ * cycled, never by rank). Validated with the dataviz `validate_palette.js`
+ * against the sheets (#FFFFFF light, #1B1B1A dark, 17 Oct 2026): all checks
+ * pass in both modes.
  *
- * Single-series charts (spending by category) use the theme accent instead.
+ * Single-series charts (spending by category) use the money ink instead.
  * More than four groups fold into `other`.
  */
 export const ChartColors = {
   light: {
-    categorical: ['#0E8FA6', '#B5702A', '#B4477C', '#6E8A1E'],
-    other: '#8C9792',
+    categorical: ['#5470D6', '#D9722E', '#B84C8F', '#8A8F1E'],
+    other: '#8C8C86',
   },
   dark: {
-    categorical: ['#1FA0B8', '#B97834', '#CF5F96', '#7F9C2A'],
-    other: '#6F7C76',
+    categorical: ['#6F87D0', '#C4804A', '#BC649C', '#8F9636'],
+    other: '#5E5D59',
   },
 } as const;

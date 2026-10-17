@@ -40,8 +40,10 @@ Agenda and money in one ledger, multi-currency from the ground up. A bill is bot
 
 ## Brand Commitments
 
-- Working name: Lifeboat (Beta).
+- Working name: Lifeboat (Beta), written as a lowercase wordmark next to the overprint mark (a turmeric dot with a teal dot printed over it).
+- Visual identity "Overprint", chosen by the owner on 17 Oct 2026: turmeric for the agenda, sea teal for money, green where they overlap for bills; bright in light mode, calm monochrome graphite in dark mode; Bricolage Grotesque. DESIGN.md holds the rules.
 - Owner's writing rules apply to all copy: plain language, no em dashes.
+- Screen titles are the menu's name (Today, Money), never a descriptive sentence; extra detail goes in a short subtitle or an info tooltip (owner's correction, 17 Oct 2026).
 
 ## Evidence on Hand
 
@@ -54,6 +56,8 @@ No real user data, testimonials or screenshots exist. Any sample data shown in d
 3. One entry, two views: a bill or event is entered once and appears wherever it matters.
 4. Calm and private: a personal ledger, not a social or gamified app.
 5. Fast capture: logging something takes seconds on a phone.
+
+6. Forgiving: deletes ask once, and marking a bill paid can be undone for a few seconds.
 
 ## Accessibility & Inclusion
 

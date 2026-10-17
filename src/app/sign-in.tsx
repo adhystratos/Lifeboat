@@ -4,11 +4,12 @@ import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 're
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/button';
+import { TileScope } from '@/components/screen';
 import { Field, TextField } from '@/components/form';
 import { ThemedText } from '@/components/themed-text';
 import { Wordmark } from '@/components/wordmark';
-import { Radius, Spacing } from '@/constants/theme';
-import { useTheme } from '@/hooks/use-theme';
+import { Radius, Spacing, Tiles } from '@/constants/theme';
+import { useScheme, useTheme } from '@/hooks/use-theme';
 import { canUseDemo, useAuth } from '@/lib/auth';
 import { isSupabaseConfigured, requireSupabase } from '@/lib/supabase';
 
@@ -18,6 +19,8 @@ import { isSupabaseConfigured, requireSupabase } from '@/lib/supabase';
  */
 export default function SignInScreen() {
   const theme = useTheme();
+  const scheme = useScheme();
+  const tile = Tiles[scheme].agenda;
   const insets = useSafeAreaInsets();
   const { enterDemo } = useAuth();
   const [email, setEmail] = useState('');
@@ -46,19 +49,20 @@ export default function SignInScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={[styles.fill, { backgroundColor: theme.cover }]}
+      style={[styles.fill, { backgroundColor: tile.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <StatusBar style="light" />
+      <StatusBar style="auto" />
       <ScrollView
         contentContainerStyle={[styles.scroll, { paddingTop: insets.top + Spacing.six, paddingBottom: insets.bottom + Spacing.five }]}
         keyboardShouldPersistTaps="handled">
+        <TileScope tone="agenda">
         <View style={styles.column}>
           <View style={styles.brand}>
-            <Wordmark size="large" />
-            <ThemedText type="title" themeColor="coverText" style={styles.tagline}>
+            <Wordmark size="large" outline={scheme === 'light' ? tile.text : undefined} />
+            <ThemedText type="title" style={[styles.tagline, { color: tile.text }]}>
               Your days and your money, in one ledger.
             </ThemedText>
-            <ThemedText themeColor="coverTextSecondary">
+            <ThemedText style={{ color: tile.textSecondary }}>
               Tasks, events and bills next to every account, asset and debt, in rupiah, euro, dollar and zloty.
             </ThemedText>
           </View>
@@ -115,13 +119,14 @@ export default function SignInScreen() {
 
           {canUseDemo ? (
             <View style={styles.demo}>
-              <Button label="Explore with sample data" variant="cover" icon="compass" onPress={enterDemo} />
-              <ThemedText type="small" themeColor="coverTextSecondary" style={styles.center}>
+              <Button label="Explore with sample data" variant="tile" icon="compass" onPress={enterDemo} />
+              <ThemedText type="small" style={[styles.center, { color: tile.textSecondary }]}>
                 Invented entries, kept only on this screen. Nothing is saved.
               </ThemedText>
             </View>
           ) : null}
         </View>
+        </TileScope>
       </ScrollView>
     </KeyboardAvoidingView>
   );

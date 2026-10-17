@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Currency } from '@/core';
 
-import type { BillPayment, Repo, Task } from './repo';
+import type { BillPayment, BillPaymentUndo, Repo, Task } from './repo';
 import { repo } from './repo-active';
 
 export type * from './repo';
@@ -17,7 +17,7 @@ function useRefresh() {
 }
 
 /** A mutation that calls one repo method and refreshes the given queries. */
-function useRepoMutation<T>(run: (r: Repo, input: T) => Promise<void>, refresh: string[]) {
+function useRepoMutation<T, R = void>(run: (r: Repo, input: T) => Promise<R>, refresh: string[]) {
   const invalidate = useRefresh();
   return useMutation({
     mutationFn: (input: T) => run(repo(), input),
@@ -108,6 +108,9 @@ export const useBills = () => useQuery({ queryKey: ['bills'], queryFn: () => rep
 export const useCreateBill = () => useRepoMutation((r, row: Parameters<Repo['createBill']>[0]) => r.createBill(row), ['bills']);
 
 export const usePayBill = () => useRepoMutation((r, payment: BillPayment) => r.payBill(payment), MONEY);
+
+export const useUndoBillPayment = () =>
+  useRepoMutation((r, undo: BillPaymentUndo) => r.undoBillPayment(undo), MONEY);
 
 export const useDeleteBill = () => useRepoMutation((r, id: string) => r.deleteBill(id), ['bills']);
 
